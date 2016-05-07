@@ -124,17 +124,6 @@ if($_POST['submit'])
 			alert("Invalid Username / Password!");
 		</script>
 
-		<section class="login">
-	<div class="titulo">User Login</div>
-	<form action="userLogin.php" method="post" >
-    	<input type="text" required title="Username required" placeholder="Username" data-icon="U" name="username">
-        <input type="password" required title="Password required" placeholder="Password" data-icon="x" name="password">
-        <div class="olvido">
-            <div class="col"><a href="#" title="Recuperar Password">Forgot Password?</a></div>
-        </div>
-        <button class="enviar" type="submit" value="Submit" name="submit">Login</button> 
-    </form>
-</section>
 
 	<?php 
 		
@@ -147,27 +136,23 @@ else if($_SESSION['username'] && $_SESSION['isUser'] == true && $_SESSION['isDoc
 	header("Location: index.php");
 }
 
-else
-{
+
 ?>
 
 
 
-<section class="login">
-	<div class="titulo">User Login</div>
-	<form action="userLogin.php" method="post" >
-    	<input type="text" required title="Username required" placeholder="Username"  name="username">
-        <input type="password" required title="Password required" placeholder="Password"  name="password">
-        <div class="olvido">
-            <div class="col"><a href="#" title="Recuperar Password">Forgot Password?</a></div>
-        </div>
-        <button class="enviar" type="submit" value="Submit" name="submit">Login</button> 
-    </form>
-</section>
+        <section class="login">
+        	<div class="titulo">User Login</div>
+        	<form action="userLogin.php" method="post" >
+            	<input type="text" required title="Username required" placeholder="Username"  name="username">
+                <input type="password" required title="Password required" placeholder="Password"  name="password">
+                <div class="olvido">
+                    <div class="col"><a href="#" title="Recuperar Password">Forgot Password?</a></div>
+                </div>
+                <button class="enviar" type="submit" value="Submit" name="submit">Login</button> 
+            </form>
+        </section>
 
-<?php 
-}
- ?>
 
  	</div>
 

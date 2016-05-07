@@ -46,7 +46,7 @@ License: Creative Commons Attribution
         			<ul class="sf-menu dropdown">
 
     			
-                		<li class="selected"><a href="index.php"><i class="fa fa-home"></i> Home</a></li>
+                		<li><a href="index.php"><i class="fa fa-home"></i> Home</a></li>
 
                     
         				<li><a href="#"><i class="fa fa-database"></i> All Products</a> </li>
@@ -119,21 +119,9 @@ if($_POST['submit'])
 		
 		?>
 
-	<script type="text/javascript">
+	   <script type="text/javascript">
 			alert("Invalid Username / Password!");
-		</script>
-
-		<section class="login">
-	<div class="titulo">Doctor Login</div>
-	<form action="doctorLogin.php" method="post" >
-    	<input type="text" required title="Username required" placeholder="Username" data-icon="U" name="username">
-        <input type="password" required title="Password required" placeholder="Password" data-icon="x" name="password">
-        <div class="olvido">
-            <div class="col"><a href="#" title="Recuperar Password">Forgot Password?</a></div>
-        </div>
-        <button class="enviar" type="submit" value="Submit" name="submit">Login</button> 
-    </form>
-</section>
+		</script>		
 
 	<?php 
 		
@@ -146,25 +134,22 @@ else if($_SESSION['username'] && $_SESSION['isUser'] == false && $_SESSION['isDo
 	header("Location: index.php");
 }
 
-else
-{
+
 ?>
 
-<section class="login">
-	<div class="titulo">Doctor Login</div>
-	<form action="doctorLogin.php" method="post" >
-    	<input type="text" required title="Username required" placeholder="Username"  name="username">
-        <input type="password" required title="Password required" placeholder="Password"  name="password">
-        <div class="olvido">
-            <div class="col"><a href="#" title="Recuperar Password">Forgot Password?</a></div>
-        </div>
-        <button class="enviar" type="submit" value="Submit" name="submit">Login</button> 
-    </form>
-</section>
+        <section class="login">
+        	<div class="titulo">Doctor Login</div>
+        	<form action="doctorLogin.php" method="post" >
+            	<input type="text" required title="Username required" placeholder="Username"  name="username">
+                <input type="password" required title="Password required" placeholder="Password"  name="password">
+                <div class="olvido">
+                    <div class="col"><a href="#" title="Recuperar Password">Forgot Password?</a></div>
+                </div>
+                <button class="enviar" type="submit" value="Submit" name="submit">Login</button> 
+            </form>
+        </section>
 
-<?php 
-}
- ?>
+
 
  	</div>
 

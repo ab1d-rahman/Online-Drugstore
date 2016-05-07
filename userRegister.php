@@ -89,24 +89,32 @@ if($_SESSION['username'])
 }
 
 if($_POST['submit'])
-{
-	if(empty($_POST['username']) || empty($_POST['password']) || empty($_POST['email']) || empty($_POST['name']))
+{	
+
+	include_once "database_helper.php";
+
+	$name = $_POST['name'];
+	$username = $_POST['username'];
+	$password = $_POST['password'];
+	$email = $_POST['email'];
+	$image = addslashes($_FILES['image']['tmp_name']);
+	$imageName = addslashes($_FILES['image']['name']);
+	$image = file_get_contents($image);	
+	$image = base64_encode($image);
+
+	if(getimagesize($_FILES['image']['tmp_name']) == FALSE)
 	{
-		echo "<h2>You need to fill all the fields!.</h2><br>";
+		?>
+		<script type="text/javascript">
+		alert("That is not a valid image file!");
+		</script>
+		<?php
 	}
 
 	else
 	{
-		include_once "database_helper.php";
 
-		$name = $_POST['name'];
-		$username = $_POST['username'];
-		$password = $_POST['password'];
-		$email = $_POST['email'];
-		$specialty = $_POST['specialty'];
-
-
-		if($db->insert('userInfo',array('name', 'username', 'password', 'email'), array($name, $username, $password, $email), array('anything')))
+		if($db->insert('userInfo',array('name', 'username', 'password', 'email', 'image'), array($name, $username, $password, $email, $image),              array('anything')))
 		{
 			?>
 			<script type="text/javascript">
@@ -121,8 +129,9 @@ if($_POST['submit'])
 			alert("Username Already Exists!");
 			</script>
 			<?php
-		}		
-	}
+		}	
+	}	
+	
 } 
 
 
@@ -136,11 +145,13 @@ if($_POST['submit'])
 
 		<section class="login">
 			<div class="titulo">User Registration</div>
-				<form action="userRegister.php" method="post" >
+				<form action="userRegister.php" method="post" enctype="multipart/form-data">
 					<input type="text" required title="Name required" placeholder="Name" name="name"> 
 			    	<input type="text" required title="Username required" placeholder="Username"  name="username">
 			        <input type="password" required title="Password required" placeholder="Password"  name="password">
 			        <input type="text" required title="Email required" placeholder="Email" name="email">
+			        <br> <br>
+			        Image: <input type="file" name="image" required>
 			        <button class="enviar" type="submit" value="Submit" name="submit">Register</button> 
 			    </form>
 		</section>
