@@ -135,6 +135,8 @@ if($_SESSION['isDoc'] == true)
 			echo "<h3>Name: $name<br>Email: $email<br>Specialty: $specialty<br></h3>";
 		}
 
+		echo "<img height=\"300\" width=\"300\" src=\"data:image;base64," . $row[6] . "\">";
+
 		$sql = "SELECT * FROM doctorSchedule WHERE dID='$dID' order by date asc, time asc";
 		$query = mysqli_query($dbCon, $sql);
 		if($query){
