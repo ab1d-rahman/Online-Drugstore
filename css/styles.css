@@ -31,7 +31,8 @@ th {
 }
 
 td {
-	border-bottom: 1px solid #ccc;
+	border-bottom: 2px solid #ccc;
+	vertical-align: middle;
 }
 
 code, blockquote {
@@ -433,10 +434,7 @@ a.button-slider {
 
 a.button-slider i { padding-right: 5px; }
 
-img {
-	max-width: 100%;
-	height: auto;
-}
+
 
 #body {
 	background: none;

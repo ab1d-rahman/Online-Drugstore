@@ -119,10 +119,11 @@ $sql = "SELECT * FROM doctorInfo order by name asc";
 $query = mysqli_query($dbCon, $sql);
 if($query){
 
-echo "<table><tr><th>ID</th><th>Name</th><th>Email</th><th>Specialty</th></tr>";
+echo "<table><tr><th>ID</th><th>Name</th><th>Email</th><th>Specialty</th><th></th></tr>";
 while($row = mysqli_fetch_assoc($query)) {
-        echo "<tr><td>".$row["dID"]."</td><td><a href=\"doctorProfile.php?dID=".$row["dID"]."\">".$row["name"]."</a></td><td>".$row["email"]."</td><td>".$row["specialty"]."</td></tr>";
+        echo "<tr><td>".$row["dID"]."</td><td><a href=\"doctorProfile.php?dID=".$row["dID"]."\">".$row["name"]."</a></td><td>".$row["email"]."</td><td>".$row["specialty"]."</td><td><img src=\"data:image;base64," . $row["image"] . "\" height=\"100\" width=\"100\"></td></tr>";
     }
+
 echo "</table>";
 }
 
