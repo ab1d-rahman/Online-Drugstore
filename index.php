@@ -37,6 +37,7 @@ License: Creative Commons Attribution
 
 error_reporting(~E_NOTICE);
 session_start();
+session_regenerate_id();
 
 ?>
 <div id="container">

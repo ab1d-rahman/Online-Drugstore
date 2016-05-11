@@ -83,6 +83,8 @@ License: Creative Commons Attribution
 
 error_reporting(~E_NOTICE);
 session_start();
+session_regenerate_id();
+
 if($_SESSION['username'])
 {
 	header("Location: index.php");
@@ -92,11 +94,22 @@ if($_POST['submit'])
 {	
 
 	include_once "database_helper.php";
+	include_once "connection.php";
+	include_once "myFunctions.php";
 
 	$name = $_POST['name'];
+	$name = cleanInput($dbCon, $name);
+
 	$username = $_POST['username'];
+	$username = cleanInput($dbCon, $username);
+
 	$password = $_POST['password'];
+	$password = cleanInput($dbCon, $password);
+
 	$email = $_POST['email'];
+	$email = cleanInput($dbCon, $email);
+
+
 	$image = addslashes($_FILES['image']['tmp_name']);
 	$imageName = addslashes($_FILES['image']['name']);
 	$image = file_get_contents($image);	
@@ -118,7 +131,7 @@ if($_POST['submit'])
 		{
 			?>
 			<script type="text/javascript">
-			alert("Registration Successful");
+			alert("Registration Successful.");
 			</script>
 			<?php
 		}

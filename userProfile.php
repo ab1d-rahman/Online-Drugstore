@@ -35,6 +35,7 @@ License: Creative Commons Attribution
 
 error_reporting(~E_NOTICE);
 session_start();
+session_regenerate_id();
 
 ?>
 
@@ -105,6 +106,7 @@ session_start();
 
 include_once("connection.php");
 include_once("database_helper.php");
+include_once("myFunctions.php");
 
 if($_SESSION['isUser'] == true)
 {   
@@ -132,6 +134,7 @@ if($_SESSION['isUser'] == true)
     {
         $row = mysqli_fetch_row($query);
         $name = $row[1];
+        $name = preventXSS($name);
         $email = $row[3];
 
         echo "<img src=\"data:image;base64," . $row[5] . "\" style=\"float:right; margin: 0 0 10px 10px;\" height=\"250\" width=\"250\">";
