@@ -818,3 +818,33 @@ div.social-icons a {
     font: 12px Arial;
 }
 
+#products_box {
+
+	width: 950px;
+	height: auto;
+	text-align: center;
+	margin-left: 10px;
+	float: left;
+	margin-bottom: 10px;
+	//border: solid black;
+
+}
+
+#single_product {
+
+	float: left;
+	margin-left: 20px;
+	padding: 10px;
+	margin-bottom: 10px;
+	text-align: center;
+
+}
+
+#banner {
+
+	text-align: left;
+	margin-bottom: 10px;
+	background: #353637;
+	color: white;
+	border-radius: 3px;
+}

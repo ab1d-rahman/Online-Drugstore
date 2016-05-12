@@ -39,6 +39,10 @@ error_reporting(~E_NOTICE);
 session_start();
 session_regenerate_id();
 
+include_once "database_helper.php";
+include_once "connection.php";
+include_once "myFunctions.php";
+
 ?>
 <div id="container">
 
@@ -123,9 +127,14 @@ session_regenerate_id();
 
 
 
-
+         <div id="products_box">
+        <h2 id="banner"> Latest Products </h2>
+        <?php 
+        getProducts($dbCon); 
+        ?>
+        </div>
         
-        <aside class="sidebar small-sidebar right-sidebar">
+        <div class="sidebar small-sidebar right-sidebar" >
 	
             <ul>	
                <li>
@@ -140,10 +149,12 @@ session_regenerate_id();
                 </li>  
             </ul>
 		
-        </aside>
+        </div>
 
 
     	<div class="clear"> </div>
+
+
 
     </div>
 
