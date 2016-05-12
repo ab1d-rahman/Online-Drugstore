@@ -105,6 +105,7 @@ if($_POST['submit'])
 
 	$password = $_POST['password'];
 	$password = cleanInput($dbCon, $password);
+	$password = hashPassword($password);
 
 	$email = $_POST['email'];
 	$email = cleanInput($dbCon, $email);

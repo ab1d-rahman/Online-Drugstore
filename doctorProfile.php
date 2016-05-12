@@ -131,7 +131,7 @@ if($_SESSION['isDoc'] == true)
 		{
 			$row = mysqli_fetch_row($query);
 			$name = $row[1];
-			$email = $row[3];
+			$email = $row[4];
 			$specialty = $row[5];
 
 			echo "<img src=\"data:image;base64," . $row[6] . "\" style=\"float:right; margin: 0 0 10px 10px;\" height=\"250\" width=\"250\">";
@@ -139,6 +139,7 @@ if($_SESSION['isDoc'] == true)
 		}
 
 		
+		echo "<br><br><br><br><br><h2>Schedule</h2>";
 
 		$sql = "SELECT * FROM doctorSchedule WHERE dID='$dID' order by date asc, time asc";
 		$query = mysqli_query($dbCon, $sql);
@@ -169,12 +170,14 @@ if($_SESSION['isDoc'] == true)
 		{
 			$row = mysqli_fetch_row($query);
 			$name = $row[1];
-			$email = $row[3];
+			$email = $row[4];
 			$specialty = $row[5];
 
 			echo "<img src=\"data:image;base64," . $row[6] . "\" style=\"float:right; margin: 0 0 10px 10px;\" height=\"250\" width=\"250\">";
 			echo "<h3>Name: $name<br>Email: $email<br>Specialty: $specialty<br></h3>";
 		}
+
+		echo "<br><br><br><br><br><h2>Schedule</h2>";
 
 		$sql = "SELECT * FROM doctorSchedule WHERE dID='$dID' order by date asc, time asc";
 		$query = mysqli_query($dbCon, $sql);
@@ -251,13 +254,15 @@ else
 	{
 		$row = mysqli_fetch_row($query);
 		$name = $row[1];
-		$email = $row[3];
+		$email = $row[4];
 		$specialty = $row[5];
 
 		echo "<img src=\"data:image;base64," . $row[6] . "\" style=\"float:right; margin: 0 0 10px 10px;\" height=\"250\" width=\"250\">";
 		echo "<h3>Name: $name<br>Email: $email<br>Specialty: $specialty<br></h3>";
 	}
 
+	echo "<br><br><br><br><br><h2>Schedule</h2>";
+	
 	$sql = "SELECT * FROM doctorSchedule WHERE dID='$dID' order by date asc, time asc";
 	$query = mysqli_query($dbCon, $sql);
 	if($query)

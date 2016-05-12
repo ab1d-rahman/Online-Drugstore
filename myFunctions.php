@@ -7,4 +7,9 @@ function cleanInput($conn, $value)
 	return $value;
 }
 
+function hashPassword($value)
+{
+	return password_hash($value, PASSWORD_DEFAULT, ['cost' => 12]);
+}
+
 ?>

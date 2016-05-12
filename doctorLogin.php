@@ -86,13 +86,17 @@ License: Creative Commons Attribution
 error_reporting(~E_NOTICE);
 session_start();
 session_regenerate_id();
+include_once "database_helper.php";
+include_once "connection.php";
+include_once "myFunctions.php";
 
 if($_POST['submit'])
 {
-	include_once("connection.php");
 
-	$username = $_POST['username'];
-	$password = $_POST['password'];
+    $username = $_POST['username'];
+    $username = cleanInput($dbCon, $username);
+    $password = $_POST['password'];
+    $password = cleanInput($dbCon, $password);
 
 	$sql = "SELECT username, password, dID, name FROM doctorInfo WHERE username='$username'";
 	$query = mysqli_query($dbCon, $sql);
@@ -106,7 +110,7 @@ if($_POST['submit'])
 		//echo "this $DBusenrame $DBpassword";
 	}
 
-	if($username == $DBusenrame && $password == $DBpassword)
+	if($username == $DBusenrame && password_verify($password, $DBpassword) == true)
 	{
 		$_SESSION['username'] = $username;
 		$_SESSION['name'] = $row[3];

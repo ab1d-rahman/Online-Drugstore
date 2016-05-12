@@ -46,7 +46,7 @@ License: Creative Commons Attribution
         			<ul class="sf-menu dropdown">
 
     			
-                		<li class="selected"><a href="index.php"><i class="fa fa-home"></i> Home</a></li>
+                		<li><a href="index.php"><i class="fa fa-home"></i> Home</a></li>
 
                     
         				<li><a href="#"><i class="fa fa-database"></i> All Products</a> </li>
@@ -87,12 +87,18 @@ error_reporting(~E_NOTICE);
 session_start();
 session_regenerate_id();
 
+include_once "database_helper.php";
+include_once "connection.php";
+include_once "myFunctions.php";
+
 if($_POST['submit'])
 {
-	include_once("connection.php");
 
 	$username = $_POST['username'];
+    $username = cleanInput($dbCon, $username);
 	$password = $_POST['password'];
+    $password = cleanInput($dbCon, $password);
+
 
 	
 
@@ -107,7 +113,8 @@ if($_POST['submit'])
 		//echo "this $DBusenrame $DBpassword";
 	}
 
-	if($username == $DBusenrame && $password == $DBpassword)
+
+	if($username == $DBusenrame && password_verify($password, $DBpassword) == true)
 	{
 		$_SESSION['username'] = $username;
 		$_SESSION['name'] = $row[3];

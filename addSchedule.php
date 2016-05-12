@@ -108,17 +108,21 @@ session_start();
 	
 
 <?php
-
+include_once "database_helper.php";
+include_once "connection.php";
+include_once "myFunctions.php";
 
 
 if($_POST['submit'])
 {
-	include_once "database_helper.php";
 
 	$dID = $_SESSION['dID'];
 	$time = $_POST['time'].":00";
-	$date = substr($_POST['date'], 6, 4) . substr($_POST['date'], 2, 4) . substr($_POST['date'], 0, 2);
-	$maxapp = $_POST['maxapp'];
+    $time = cleanInput($dbCon, $time);
+	$date = substr($_POST['date'], 6, 4) . substr($_POST['date'], 2, 4) . substr($_POST['date'], 0, 2);    
+    $date = cleanInput($dbCon, $date);
+	$maxapp = $_POST['maxapp'];    
+    $maxapp = cleanInput($dbCon, $maxapp);
 	$apptaken = 0;
 
 

@@ -82,6 +82,10 @@ error_reporting(~E_NOTICE);
 session_start();
 session_regenerate_id();
 
+include_once "database_helper.php";
+include_once "connection.php";
+include_once "myFunctions.php";
+
 if($_SESSION['username'])
 {
 	header("Location: index.php");
@@ -93,15 +97,24 @@ if($_POST['submit'])
 	{
 		echo "<h2>You need to fill all the fields!.</h2><br>";
 	}*/
-
 	
-	include_once "database_helper.php";
 
 	$name = $_POST['name'];
+	$name = cleanInput($dbCon, $name);
+
 	$username = $_POST['username'];
+	$username = cleanInput($dbCon, $username);
+
 	$password = $_POST['password'];
+	$password = cleanInput($dbCon, $password);
+	$password = hashPassword($password);
+
+
 	$email = $_POST['email'];
+	$email = cleanInput($dbCon, $email);
+
 	$specialty = $_POST['specialty'];
+	
 	$image = addslashes($_FILES['image']['tmp_name']);
 	$imageName = addslashes($_FILES['image']['name']);
 	$image = file_get_contents($image);	

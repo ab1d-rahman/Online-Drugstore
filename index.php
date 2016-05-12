@@ -125,7 +125,7 @@ session_regenerate_id();
 
 
         
-        <aside class="sidebar big-sidebar right-sidebar">
+        <aside class="sidebar small-sidebar right-sidebar">
 	
             <ul>	
                <li>
