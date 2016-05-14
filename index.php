@@ -144,9 +144,9 @@ include_once "myFunctions.php";
                <li>
                     <h4>Categories</h4>
                     <ul class="blocklist">
-                        <li><a class="selected" href="index.html">SOMETHING</a></li>
-                        <li><a href="examples.html">SOMETHING</a></li>
-                        <li><a href="three-column.html">SOMETHING</a></li>
+                        <li><a href="category.php?category=laptop">Laptops</a></li>
+                        <li><a href="category.php?category=mobile">Mobiles</a></li>
+                        <li><a href="#">SOMETHING</a></li>
                         <li><a href="#">SOMETHING</a></li>
                         <li><a href="#">SOMETHING</a></li>
                     </ul>

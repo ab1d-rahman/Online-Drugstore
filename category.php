@@ -6,7 +6,7 @@
 
 <link rel="stylesheet" href="css/reset.css" type="text/css" />
 <link rel="stylesheet" href="css/styles.css" type="text/css" />
-<link href="http://maxcdn.bootstrapcdn.com/font-awesome/4.1.0/css/font-awesome.min.css" rel="stylesheet">
+<link rel="stylesheet" href="font-awesome/css/font-awesome.min.css" type="text/css">
 
 
 <!--[if lt IE 9]>
@@ -43,9 +43,9 @@ include_once "database_helper.php";
 include_once "connection.php";
 include_once "myFunctions.php";
 
-if($_POST['submit'])
+if($_GET['category'])
 {
-    $query = cleanInput($dbCon, $_POST['query']);
+    $category = cleanInput($dbCon, $_GET['category']);
 }
 
 ?>
@@ -53,62 +53,79 @@ if($_POST['submit'])
 
     <div id="header"> 
 
-	   <div class="width">
+       <div class="width">
 
-    	   <h1><a href="index.php">Online<strong>DrugStore</strong></a></h1>
-		      <nav>
-	
-        			<ul class="sf-menu dropdown">
+           <h1><a href="index.php">Online<strong>DrugStore</strong></a></h1>
+              <nav>
+    
+                    <ul class="sf-menu dropdown">
 
-    			
-                		<li class="selected"><a href="index.php"><i class="fa fa-home"></i> Home</a></li>
+                
+                        <li class="selected"><a href="index.php"><i class="fa fa-home"></i> Home</a></li>
 
                     
-        				<li><a href="#"><i class="fa fa-database"></i> All Products</a> </li>
+                        <li><a href="#"><i class="fa fa-database"></i> All Products</a> </li>
                     
-        				<li><a href="#"><i class="fa fa-phone"></i> Contact</a></li>
+                        <li><a href="#"><i class="fa fa-phone"></i> Contact</a></li>
 
-        				<?php
-        				if($_SESSION['username'])
-        				{
-        				?>				
-        					<li><a href=<?php if($_SESSION['isUser'] == true) echo "userProfile.php"; else echo "doctorProfile.php" ?>><i class="fa fa-user"></i> <?php echo $_SESSION['name']; ?> </a>
-        					<li><a href="logout.php"><i class="fa fa-sign-in"></i> Logout </a></li>
+                        <?php
+                        if($_SESSION['username'])
+                        {
+                        ?>              
+                            <li><a href=<?php if($_SESSION['isUser'] == true) echo "userProfile.php"; else echo "doctorProfile.php" ?>><i class="fa fa-user"></i> <?php echo $_SESSION['name']; ?> </a>
+                            <li><a href="logout.php"><i class="fa fa-sign-in"></i> Logout </a></li>
 
-        				<?php
-        				}
+                        <?php
+                        }
 
-        				else
-        				{
-        				?>
+                        else
+                        {
+                        ?>
                         <li><a href="#"><i class="fa fa-sign-in"></i> Sign In</a>
-                        	<ul>
-                        			<li><a href="userLogin.php">As User</a></li>
-                           			<li><a href="doctorLogin.php">As Doctor</a></li>
-                        	</ul>
+                            <ul>
+                                    <li><a href="userLogin.php">As User</a></li>
+                                    <li><a href="doctorLogin.php">As Doctor</a></li>
+                            </ul>
                         </li>
                         <li><a href="#"><i class="fa fa-key"></i> Register</a>
-                        	<ul>
-                        			<li><a href="userRegister.php">As User</a></li>
-                           			<li><a href="doctorRegister.php">As Doctor</a></li>
-                        	</ul>
+                            <ul>
+                                    <li><a href="userRegister.php">As User</a></li>
+                                    <li><a href="doctorRegister.php">As Doctor</a></li>
+                            </ul>
                         </li>
                         <?php
-                    	}
+                        }
                         ?>
 
-           			</ul>
+                    </ul>
 
-    			
-    		  </nav>
-       	</div>
+                
+              </nav>
+        </div>
 
-	    <div class="clear"></div>
+        <div class="clear"></div>
 
        
     </div>
 
-    
+
+
+
+    <div id="intro">
+
+        <div class="width">
+          
+            <div class="intro-content">
+        
+                    <h2>Want an appoinment from a doctor? </h2>
+                    <p>Find a doctor now!</p>                                       
+                    <p><a href="availDoctors.php" class="button button-reversed button-slider"><i class="fa fa-info"></i> Doctor List</a></p>
+
+            </div>
+                    
+        </div>            
+
+    </div>
 
 
     <div id="body" class="width">
@@ -119,37 +136,35 @@ if($_POST['submit'])
         </form>
 
 
-        <div id="products_box">
-        <h2 id="banner"> Search results for: <?php echo $query; ?></h2>
-
+         <div id="products_box">
+        <h2 id="banner"> Product Category: <?php echo $category; ?> </h2>
         <?php 
-        if($_POST['submit'])
+        if($_GET['category'])
         {
-            searchProducts($dbCon, $query); 
+            categorizeProducts($dbCon, $category);
         }
         ?>
-
         </div>
         
         <div class="sidebar small-sidebar right-sidebar" >
-	
-            <ul>	
+    
+            <ul>    
                <li>
                     <h4>Categories</h4>
                     <ul class="blocklist">
-                        <li><a class="selected" href="index.html">SOMETHING</a></li>
-                        <li><a href="examples.html">SOMETHING</a></li>
-                        <li><a href="three-column.html">SOMETHING</a></li>
+                        <li><a href="category.php?category=laptop">Laptops</a></li>
+                        <li><a href="category.php?category=mobile">Mobiles</a></li>
+                        <li><a href="#">SOMETHING</a></li>
                         <li><a href="#">SOMETHING</a></li>
                         <li><a href="#">SOMETHING</a></li>
                     </ul>
                 </li>  
             </ul>
-		
+        
         </div>
 
 
-    	<div class="clear"> </div>
+        <div class="clear"> </div>
 
 
 
@@ -164,7 +179,7 @@ if($_POST['submit'])
         
         <ul class="endfooter">
 
-        	<li><h4>SHARE</h4></li>
+            <li><h4>SHARE</h4></li>
 
             <li>Share our website on social media. <br /><br />
 

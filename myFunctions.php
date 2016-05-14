@@ -67,5 +67,31 @@ function searchProducts($dbCon, $query)
 	}
 }
 
+function categorizeProducts($dbCon, $category)
+{
+	$sql = "SELECT * FROM products WHERE category = '$category'";
+	$query = mysqli_query($dbCon, $sql);
+
+	if($query)
+	{
+		while($row = mysqli_fetch_assoc($query))
+		{			
+			$prodName = $row["name"];
+			$prodPrice = $row["price"];
+
+			echo "
+			<div id='single_product'>
+			$prodName <br>
+			<img src=\"data:image;base64," . $row["image"] . "\" height=\"180\" width=\"180\">
+			<br>
+			$prodPrice TK <br>
+			<a href='#'> Details </a> <br>
+			<a class='button' id='link' href='#' >Add To Cart!</a>
+			</div>
+
+			";
+		}
+	}
+}
 
 ?>
