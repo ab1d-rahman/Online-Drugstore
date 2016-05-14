@@ -6,7 +6,7 @@
 
 <link rel="stylesheet" href="css/reset.css" type="text/css" />
 <link rel="stylesheet" href="css/styles.css" type="text/css" />
-<link rel="stylesheet" href="font-awesome/css/font-awesome.min.css" type="text/css">
+<link href="http://maxcdn.bootstrapcdn.com/font-awesome/4.1.0/css/font-awesome.min.css" rel="stylesheet">
 
 
 <!--[if lt IE 9]>
@@ -48,79 +48,62 @@ include_once "myFunctions.php";
 
     <div id="header"> 
 
-       <div class="width">
+	   <div class="width">
 
-           <h1><a href="index.php">Online<strong>DrugStore</strong></a></h1>
-              <nav>
-    
-                    <ul class="sf-menu dropdown">
+    	   <h1><a href="index.php">Online<strong>DrugStore</strong></a></h1>
+		      <nav>
+	
+        			<ul class="sf-menu dropdown">
 
-                
-                        <li class="selected"><a href="index.php"><i class="fa fa-home"></i> Home</a></li>
+    			
+                		<li class="selected"><a href="index.php"><i class="fa fa-home"></i> Home</a></li>
 
                     
-                        <li><a href="#"><i class="fa fa-database"></i> All Products</a> </li>
+        				<li><a href="#"><i class="fa fa-database"></i> All Products</a> </li>
                     
-                        <li><a href="#"><i class="fa fa-phone"></i> Contact</a></li>
+        				<li><a href="#"><i class="fa fa-phone"></i> Contact</a></li>
 
-                        <?php
-                        if($_SESSION['username'])
-                        {
-                        ?>              
-                            <li><a href=<?php if($_SESSION['isUser'] == true) echo "userProfile.php"; else echo "doctorProfile.php" ?>><i class="fa fa-user"></i> <?php echo $_SESSION['name']; ?> </a>
-                            <li><a href="logout.php"><i class="fa fa-sign-in"></i> Logout </a></li>
+        				<?php
+        				if($_SESSION['username'])
+        				{
+        				?>				
+        					<li><a href=<?php if($_SESSION['isUser'] == true) echo "userProfile.php"; else echo "doctorProfile.php" ?>><i class="fa fa-user"></i> <?php echo $_SESSION['name']; ?> </a>
+        					<li><a href="logout.php"><i class="fa fa-sign-in"></i> Logout </a></li>
 
-                        <?php
-                        }
+        				<?php
+        				}
 
-                        else
-                        {
-                        ?>
+        				else
+        				{
+        				?>
                         <li><a href="#"><i class="fa fa-sign-in"></i> Sign In</a>
-                            <ul>
-                                    <li><a href="userLogin.php">As User</a></li>
-                                    <li><a href="doctorLogin.php">As Doctor</a></li>
-                            </ul>
+                        	<ul>
+                        			<li><a href="userLogin.php">As User</a></li>
+                           			<li><a href="doctorLogin.php">As Doctor</a></li>
+                        	</ul>
                         </li>
                         <li><a href="#"><i class="fa fa-key"></i> Register</a>
-                            <ul>
-                                    <li><a href="userRegister.php">As User</a></li>
-                                    <li><a href="doctorRegister.php">As Doctor</a></li>
-                            </ul>
+                        	<ul>
+                        			<li><a href="userRegister.php">As User</a></li>
+                           			<li><a href="doctorRegister.php">As Doctor</a></li>
+                        	</ul>
                         </li>
                         <?php
-                        }
+                    	}
                         ?>
 
-                    </ul>
+           			</ul>
 
-                
-              </nav>
-        </div>
+    			
+    		  </nav>
+       	</div>
 
-        <div class="clear"></div>
+	    <div class="clear"></div>
 
        
     </div>
 
-
-
-
-    <div id="intro">
-
-        <div class="width">
-          
-            <div class="intro-content">
-        
-                    <h2>Want an appoinment from a doctor? </h2>
-                    <p>Find a doctor now!</p>                                       
-                    <p><a href="availDoctors.php" class="button button-reversed button-slider"><i class="fa fa-info"></i> Doctor List</a></p>
-
-            </div>
-                    
-        </div>            
-
-    </div>
+    
 
 
     <div id="body" class="width">
@@ -131,16 +114,21 @@ include_once "myFunctions.php";
         </form>
 
 
-         <div id="products_box">
-        <h2 id="banner"> Latest Products </h2>
+        <div id="products_box">
+        <h2 id="banner"> Search results for: <?php echo $_POST['query']; ?></h2>
+
         <?php 
-        getProducts($dbCon); 
+        if($_POST['submit'])
+        {
+            searchProducts($dbCon, $_POST['query']); 
+        }
         ?>
+
         </div>
         
         <div class="sidebar small-sidebar right-sidebar" >
-    
-            <ul>    
+	
+            <ul>	
                <li>
                     <h4>Categories</h4>
                     <ul class="blocklist">
@@ -152,11 +140,11 @@ include_once "myFunctions.php";
                     </ul>
                 </li>  
             </ul>
-        
+		
         </div>
 
 
-        <div class="clear"> </div>
+    	<div class="clear"> </div>
 
 
 
@@ -171,7 +159,7 @@ include_once "myFunctions.php";
         
         <ul class="endfooter">
 
-            <li><h4>SHARE</h4></li>
+        	<li><h4>SHARE</h4></li>
 
             <li>Share our website on social media. <br /><br />
 

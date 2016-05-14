@@ -95,8 +95,10 @@ if($_POST['submit'])
 {	
 
 	$name = $_POST['name'];
-
 	$price = $_POST['price'];
+	$description = $_POST['description'];
+	$category = $_POST['category'];
+	$keywords = $_POST['keywords'];
 
 	$image = addslashes($_FILES['image']['tmp_name']);
 	$imageName = addslashes($_FILES['image']['name']);
@@ -115,7 +117,8 @@ if($_POST['submit'])
 	else
 	{
 
-		if($db->insert('products',array('name', 'price', 'image'), array($name, $price, $image), array('anything')))
+		if($db->insert('products',array('name', 'price', 'category', 'description', 'keywords', 'image'), array($name, $price, $category, $description, 
+			$keywords, $image), array('anything')))
 		{
 			?>
 			<script type="text/javascript">
@@ -149,6 +152,13 @@ if($_POST['submit'])
 				<form action="addProduct.php" method="post" enctype="multipart/form-data">
 					<input type="text" required title="Name"  placeholder="Name" name="name"> 
 			    	<input type="text" required title="Price"  placeholder="Price"  name="price">
+			    	<textarea name="description" cols="29" rows="10" placeholder="Product Description"></textarea>
+			    	<textarea name="keywords" cols="29" rows="2" placeholder="Keywords"></textarea>
+			    	<br><br> Category: 
+					<select name="category">
+					  <option value="Mobile">Mobile</option>
+					  <option value="Laptop">Laptop</option>
+					</select> 
 			        <br> <br>
 			        Image: <input type="file" name="image" required>
 			        <button class="enviar" type="submit" value="Submit" name="submit">Insert</button> 
