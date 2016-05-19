@@ -111,21 +111,6 @@ if($_GET['category'])
 
 
 
-    <div id="intro">
-
-        <div class="width">
-          
-            <div class="intro-content">
-        
-                    <h2>Want an appoinment from a doctor? </h2>
-                    <p>Find a doctor now!</p>                                       
-                    <p><a href="availDoctors.php" class="button button-reversed button-slider"><i class="fa fa-info"></i> Doctor List</a></p>
-
-            </div>
-                    
-        </div>            
-
-    </div>
 
 
     <div id="body" class="width">
@@ -152,11 +137,16 @@ if($_GET['category'])
                <li>
                     <h4>Categories</h4>
                     <ul class="blocklist">
-                        <li><a href="category.php?category=laptop">Laptops</a></li>
-                        <li><a href="category.php?category=mobile">Mobiles</a></li>
-                        <li><a href="#">SOMETHING</a></li>
-                        <li><a href="#">SOMETHING</a></li>
-                        <li><a href="#">SOMETHING</a></li>
+                        <?php 
+                        
+                        if($category == "laptop") echo "<li><a class='selected' href='category.php?category=laptop'>Laptops</a></li>";
+                        else echo "<li><a href='category.php?category=laptop'>Laptops</a></li>";
+                        if($category == "mobile") echo "<li><a class='selected' href='category.php?category=mobile'>Mobiles</a></li>";
+                        else echo "<li><a href='category.php?category=mobile'>Mobiles</a></li>";
+                        echo "<li><a href='#'>SOMETHING</a></li>";
+                        echo "<li><a href='#'>SOMETHING</a></li>";
+                        echo "<li><a href='#'>SOMETHING</a></li>";
+                        ?>
                     </ul>
                 </li>  
             </ul>

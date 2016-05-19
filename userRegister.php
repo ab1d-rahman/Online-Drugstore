@@ -44,7 +44,7 @@ License: Creative Commons Attribution
         			<ul class="sf-menu dropdown">
 
     			
-                		<li class="selected"><a href="index.php"><i class="fa fa-home"></i> Home</a></li>
+                		<li><a href="index.php"><i class="fa fa-home"></i> Home</a></li>
 
                     
         				<li><a href="#"><i class="fa fa-database"></i> All Products</a> </li>
@@ -85,6 +85,9 @@ error_reporting(~E_NOTICE);
 session_start();
 session_regenerate_id();
 
+
+include_once "controllers/userController.php";
+
 if($_SESSION['username'])
 {
 	header("Location: index.php");
@@ -92,29 +95,6 @@ if($_SESSION['username'])
 
 if($_POST['submit'])
 {	
-
-	include_once "database_helper.php";
-	include_once "connection.php";
-	include_once "myFunctions.php";
-
-	$name = $_POST['name'];
-	$name = cleanInput($dbCon, $name);
-
-	$username = $_POST['username'];
-	$username = cleanInput($dbCon, $username);
-
-	$password = $_POST['password'];
-	$password = cleanInput($dbCon, $password);
-	$password = hashPassword($password);
-
-	$email = $_POST['email'];
-	$email = cleanInput($dbCon, $email);
-
-
-	$image = addslashes($_FILES['image']['tmp_name']);
-	$imageName = addslashes($_FILES['image']['name']);
-	$image = file_get_contents($image);	
-	$image = base64_encode($image);
 
 	if(getimagesize($_FILES['image']['tmp_name']) == FALSE)
 	{
@@ -127,8 +107,16 @@ if($_POST['submit'])
 
 	else
 	{
-
-		if($db->insert('userInfo',array('name', 'username', 'password', 'email', 'image'), array($name, $username, $password, $email, $image),              array('anything')))
+		$data = array(
+			'name' => $_POST['name'], 
+			'username' => $_POST['username'],
+			'password' => $_POST['password'],
+			'email' => $_POST['email'],
+			'image' => $_FILES['image']['tmp_name']
+		);
+		
+		// echo $userController->registerUser($data);
+		if($userController->registerUser($data) == "Successful")
 		{
 			?>
 			<script type="text/javascript">
@@ -144,6 +132,8 @@ if($_POST['submit'])
 			</script>
 			<?php
 		}	
+
+
 	}	
 	
 } 

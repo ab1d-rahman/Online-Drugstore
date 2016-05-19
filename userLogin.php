@@ -87,46 +87,25 @@ error_reporting(~E_NOTICE);
 session_start();
 session_regenerate_id();
 
-include_once "database_helper.php";
-include_once "connection.php";
-include_once "myFunctions.php";
+include_once "controllers/userController.php";
+
 
 if($_POST['submit'])
 {
-
-	$username = $_POST['username'];
-    $username = cleanInput($dbCon, $username);
-	$password = $_POST['password'];
-    $password = cleanInput($dbCon, $password);
-
-
-	
-
-	$sql = "SELECT username, password, uID, name FROM userInfo WHERE username='$username'";
-	$query = mysqli_query($dbCon, $sql);
-
-	if($query)
-	{
-		$row = mysqli_fetch_row($query);
-		$DBusenrame = $row[0];
-		$DBpassword = $row[1];
-		//echo "this $DBusenrame $DBpassword";
-	}
+    $data = array(            
+            'username' => $_POST['username'],
+            'password' => $_POST['password']            
+        );
 
 
-	if($username == $DBusenrame && password_verify($password, $DBpassword) == true)
-	{
-		$_SESSION['username'] = $username;
-		$_SESSION['name'] = $row[3];
-		$_SESSION['isDoc'] = false;
-		$_SESSION['isUser'] = true;
-		$_SESSION['uID'] = $row[2];
+
+	if($userController->loginUser($data) == "Successful")
+	{		
 		header("Location: index.php");
 	}
 
 	else 
-	{
-		
+	{		
 		?>
 
 		<script type="text/javascript">
