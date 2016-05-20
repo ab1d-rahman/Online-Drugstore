@@ -39,13 +39,13 @@ error_reporting(~E_NOTICE);
 session_start();
 session_regenerate_id();
 
-include_once "database_helper.php";
-include_once "connection.php";
-include_once "myFunctions.php";
+include_once "controllers/productController.php";
 
 if($_POST['submit'])
 {
-    $query = cleanInput($dbCon, $_POST['query']);
+    $query = $_POST['query'];
+    $query = htmlspecialchars($query, ENT_QUOTES, 'UTF-8');
+    $query =  mysqli_real_escape_string(mysqli_connect("localhost", "root", "root", "doctor"), $query);
 }
 
 ?>
@@ -61,7 +61,7 @@ if($_POST['submit'])
         			<ul class="sf-menu dropdown">
 
     			
-                		<li class="selected"><a href="index.php"><i class="fa fa-home"></i> Home</a></li>
+                		<li><a href="index.php"><i class="fa fa-home"></i> Home</a></li>
 
                     
         				<li><a href="#"><i class="fa fa-database"></i> All Products</a> </li>
@@ -125,7 +125,23 @@ if($_POST['submit'])
         <?php 
         if($_POST['submit'])
         {
-            searchProducts($dbCon, $query); 
+            $data = $productController->getSearchedProducts($query);
+
+            foreach ($data as $d) 
+            {
+                echo "
+                    <div id='single_product'>".
+                    $d[0]." <br>
+                    <img src=\"data:image;base64," . $d[2] . "\" height=\"180\" width=\"180\">
+                    <br>".
+                    $d[1]." TK <br>
+                    <a href='#'> Details </a> <br>
+                    <a class='button' id='link' href='#' >Add To Cart!</a>
+                    </div>
+
+                    ";
+            }
+
         }
         ?>
 

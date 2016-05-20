@@ -8,26 +8,8 @@
 <link rel="stylesheet" href="css/styles.css" type="text/css" />
 <link rel="stylesheet" href="font-awesome/css/font-awesome.min.css" type="text/css">
 
-
-<!--[if lt IE 9]>
-<script src="http://html5shiv.googlecode.com/svn/trunk/html5.js"></script>
-<![endif]
-
-<script type="text/javascript" src="js/jquery.js"></script>
-<script type="text/javascript" src="js/slider.js"></script>
-<script type="text/javascript" src="js/superfish.js"></script>
-
-<script type="text/javascript" src="js/custom.js"></script> -->
-
 <meta name="viewport" content="width=device-width, minimum-scale=1.0, maximum-scale=1.0" />
 
-<!--
-city, a free CSS web template by ZyPOP (zypopwebtemplates.com/)
-
-Download: http://zypopwebtemplates.com/
-
-License: Creative Commons Attribution
-//-->
 </head>
 
 
@@ -39,9 +21,8 @@ error_reporting(~E_NOTICE);
 session_start();
 session_regenerate_id();
 
-include_once "database_helper.php";
-include_once "connection.php";
-include_once "myFunctions.php";
+include_once "controllers/productController.php";
+
 
 ?>
 <div id="container">
@@ -134,7 +115,24 @@ include_once "myFunctions.php";
          <div id="products_box">
         <h2 id="banner"> Latest Products </h2>
         <?php 
-        getProducts($dbCon); 
+
+        $data = $productController->getAllProducts();
+
+        foreach ($data as $d) 
+        {
+            echo "
+                <div id='single_product'>".
+                $d[0]." <br>
+                <img src=\"data:image;base64," . $d[2] . "\" height=\"180\" width=\"180\">
+                <br>".
+                $d[1]." TK <br>
+                <a href='#'> Details </a> <br>
+                <a class='button' id='link' href='#' >Add To Cart!</a>
+                </div>
+
+                ";
+        }
+
         ?>
         </div>
         
