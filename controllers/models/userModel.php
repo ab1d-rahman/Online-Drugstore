@@ -6,7 +6,7 @@ include_once "myFunctions.php";
 session_start();
 session_regenerate_id();
 
-function insert($data)
+function insertUser($data)
 {
 	$dbCon = mysqli_connect("localhost", "root", "root", "doctor");
 
@@ -30,7 +30,7 @@ function insert($data)
 	return $query;
 }
 
-function authenticate($data)
+function authenticateUser($data)
 {
 	$dbCon = mysqli_connect("localhost", "root", "root", "doctor");
 	
@@ -64,6 +64,37 @@ function authenticate($data)
 }
 	
 
+function checkAppointment($sID, $uID)
+{
+	$dbCon = mysqli_connect("localhost", "root", "root", "doctor");
+	$sql = "SELECT * FROM appointments WHERE sID='$sID' AND uID='$uID'";
+	$query = mysqli_query($dbCon, $sql);
+	return mysqli_num_rows($query);
+}
+
+function makeAppointment($sID, $uID)
+{
+	$dbCon = mysqli_connect("localhost", "root", "root", "doctor");
+
+	$sql = "SELECT * FROM doctorSchedule WHERE sID='$sID'";
+	$query = mysqli_query($dbCon, $sql);
+
+	$_sql = "SELECT * FROM appointments WHERE sID='$sID' AND uID='$uID'";
+	$_query = mysqli_query($dbCon, $_sql);
+
+	if(mysqli_num_rows($query) == 1 && mysqli_num_rows($_query) == 0)
+	{
+		$sql = "INSERT INTO appointments (sID, uID) VALUES ('$sID', '$uID')";
+		$query = mysqli_query($dbCon, $sql);		
+
+		$sql = "UPDATE doctorSchedule SET apptaken = apptaken + 1 WHERE sID='$sID'";
+		$query = mysqli_query($dbCon, $sql);
+
+		return $query;
+	}
+
+	return null;
+}
 
 
 ?>

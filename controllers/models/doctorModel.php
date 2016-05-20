@@ -6,7 +6,7 @@ include_once "myFunctions.php";
 session_start();
 session_regenerate_id();
 
-function insert($data)
+function insertDoctor($data)
 {
 	$dbCon = mysqli_connect("localhost", "root", "root", "doctor");
 
@@ -32,7 +32,7 @@ function insert($data)
 	return $query;
 }
 
-function authenticate($data)
+function authenticateDoctor($data)
 {
 	$dbCon = mysqli_connect("localhost", "root", "root", "doctor");
 	
@@ -64,7 +64,7 @@ function authenticate($data)
 
 }
 
-function profile($dID)
+function profileDoctor($dID)
 {
 	$dbCon = mysqli_connect("localhost", "root", "root", "doctor");
 

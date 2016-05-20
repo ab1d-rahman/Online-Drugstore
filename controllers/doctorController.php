@@ -13,7 +13,7 @@ class doctorController
 
 	public function registerDoctor($data)
 	{		
-		if(insert($data)) return "Successful";
+		if(insertDoctor($data)) return "Successful";
 		return "Error";
 	}
 
@@ -21,13 +21,13 @@ class doctorController
 
 	public function loginDoctor($data)
 	{
-		if(authenticate($data)) return "Successful";
+		if(authenticateDoctor($data)) return "Successful";
 		return "Error";
 	}
 
 	public function  getDoctorProfile($dID)
 	{
-		return profile($dID);
+		return profileDoctor($dID);
 	}
 
 	public function getDoctorSchedule($dID)

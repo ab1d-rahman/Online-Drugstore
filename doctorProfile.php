@@ -90,6 +90,7 @@ session_regenerate_id();
 <?php
 
 include_once "controllers/doctorController.php";
+include_once "controllers/userController.php";
 
 
 if($_SESSION['isDoc'] == true)
@@ -178,91 +179,67 @@ else
 	if($_GET['sID'] && $_SESSION['isUser'] == true)
 	{
 		$sID = $_GET['sID'];	
-		$sql = "SELECT * FROM doctorSchedule WHERE sID='$sID'";
-		$query = mysqli_query($dbCon, $sql);
 
-		$_sql = "SELECT * FROM appointments WHERE sID='$sID' AND uID='$uID'";
-		$_query = mysqli_query($dbCon, $_sql);
-
-		if(mysqli_num_rows($query) == 1 && mysqli_num_rows($_query) == 0)
+		if($userController->takeAppointment($sID, $uID) == "Successful") 
 		{
-
-			//$sql = "SELECT dID FROM doctorSchedule WHERE id='$sID'";
-			//$query = mysqli_query($dbCon, $sql);
-			//$row = mysqli_fetch_row($query);
-			//$dID = $row[0];
-
-
-			if($db->insert('appointments',array('sID', 'uID'), array($sID, $uID), array('anything'))) 
-			{
-				?>
-
-				<script type="text/javascript">
-				alert("Appointment Successfully Taken!");
-				</script>
-				<?php
-			}
-
-			$sql = "UPDATE doctorSchedule SET apptaken = apptaken + 1 WHERE sID='$sID'";
-			$query = mysqli_query($dbCon, $sql);
+			?>
+			<script type="text/javascript">
+			alert("Appointment Successfully Taken!");
+			</script>
+			<?php
 		}
+
+		else 
+		{
+			?>
+			<script type="text/javascript">
+			alert("Error");
+			</script>
+			<?php
+		}			
+		
 	}
+
 
 	else if($_GET['sID'] && $_SESSION['isUser'] == false)
 	{
 		?>
 
-	<script type="text/javascript">
+		<script type="text/javascript">
 			alert("You have to be logged in as a user to make an appointment!");
 		</script>
 		<?php
 	}
 
+
+	$data = $doctorController->getDoctorProfile($dID);
+
+	echo "<img src=\"data:image;base64," . $data['image'] . "\" style=\"float:right; margin: 0 0 10px 10px;\" height=\"250\" width=\"250\">";
+	echo "<h3>Name: ". $data['name'] . "<br><br>Email: ". $data['email'] . "<br><br>Specialty: ". $data['specialty'] . "</h3>";	
+
 	
-
-
-	$sql = "SELECT * FROM doctorInfo WHERE dID='$dID'";
-	$query = mysqli_query($dbCon, $sql);
-	if($query)
-	{
-		$row = mysqli_fetch_row($query);
-		$name = $row[1];
-		$email = $row[4];
-		$specialty = $row[5];
-
-		echo "<img src=\"data:image;base64," . $row[6] . "\" style=\"float:right; margin: 0 0 10px 10px;\" height=\"250\" width=\"250\">";
-		echo "<h3>Name: $name<br>Email: $email<br>Specialty: $specialty<br></h3>";
-	}
-
 	echo "<br><br><br><br><br><h2>Schedule</h2>";
-	
-	$sql = "SELECT * FROM doctorSchedule WHERE dID='$dID' order by date asc, time asc";
-	$query = mysqli_query($dbCon, $sql);
-	if($query)
+
+	$data = $doctorController->getDoctorSchedule($dID);
+
+	echo "<table><tr><th>Date</th><th>Time</th><th>Maximum<br>Appointments</th><th>Appointments<br>Taken</th><th></th></tr>";
+	foreach ($data as $d) 
 	{
-		echo "<table><tr><th>Date</th><th>Time</th><th>Maximum<br>Appointments</th><th>Appointments<br>Taken</th><th>Availability</th></tr>";
-		while($row = mysqli_fetch_assoc($query)) 
-		{
-			$sID = $row["sID"];
-			$_sql = "SELECT * FROM appointments WHERE sID='$sID' AND uID='$uID'";
-			$_query = mysqli_query($dbCon, $_sql);
-			if(mysqli_num_rows($_query) == 0)
-			{
-				$date = substr($row["date"], 8, 2) . substr($row["date"], 4, 4) . substr($row["date"], 0, 4);
-		        echo "<tr><td>".$date."</td><td>".$row["time"]."</td><td>".$row["maxapp"]."</td><td>".$row["apptaken"]."</td>
-		        <td><a class=\"button\" href=\"doctorProfile.php?sID=".$row["sID"]."&dID=$dID\">Make Appointment</a></td></tr><br>";
-		    }
-		    else
-		    {
-		    	$date = substr($row["date"], 8, 2) . substr($row["date"], 4, 4) . substr($row["date"], 0, 4);
-		        echo "<tr><td>".$date."</td><td>".$row["time"]."</td><td>".$row["maxapp"]."</td><td>".$row["apptaken"]."</td>
+		$date = substr($d[0], 8, 2) . substr($d[0], 4, 4) . substr($d[0], 0, 4);
+
+		if($userController->appointmentTaken($d[4], $uID) == 0)
+				echo "<tr><td>".$date."</td><td>".$d[1]."</td><td>".$d[2]."</td><td>".$d[3]."</td>
+		        <td><a class=\"button\" href=\"doctorProfile.php?sID=".$d[4]."&dID=$dID\">Make Appointment</a></td></tr><br>";
+
+
+		else echo "<tr><td>".$date."</td><td>".$d[1]."</td><td>".$d[2]."</td><td>".$d[3]."</td>
 		        <td>Appointment Taken</td></tr><br>";
-		    }
-		    
-		}
-		echo "</table>";
 	}
+
+	echo "</table>";	
 }
+
+
 
 ?>
 
@@ -311,4 +288,3 @@ else
 
 </body>
 </html>
-

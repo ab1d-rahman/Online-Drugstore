@@ -13,7 +13,7 @@ class userController
 
 	public function registerUser($data)
 	{		
-		if(insert($data)) return "Successful";
+		if(insertUser($data)) return "Successful";
 		return "Error";
 	}
 
@@ -21,8 +21,19 @@ class userController
 
 	public function loginUser($data)
 	{
-		if(authenticate($data)) return "Successful";
+		if(authenticateUser($data)) return "Successful";
 		return "Error";
+	}
+
+	public function takeAppointment($sID, $uID)
+	{
+		if(makeAppointment($sID, $uID)) return "Successful";
+		return "Error";
+	}
+
+	public function appointmentTaken($sID, $uID)
+	{
+		return checkAppointment($sID, $uID);
 	}
 }
 
