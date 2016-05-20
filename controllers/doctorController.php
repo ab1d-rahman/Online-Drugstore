@@ -24,6 +24,29 @@ class doctorController
 		if(authenticate($data)) return "Successful";
 		return "Error";
 	}
+
+	public function  getDoctorProfile($dID)
+	{
+		return profile($dID);
+	}
+
+	public function getDoctorSchedule($dID)
+	{
+		return schedule($dID);
+	}
+
+	public function addDoctorSchedule($data)
+	{
+		if(addSchedule($data)) return "Successful";
+		return "Error";
+	}
+
+	public function cancelDoctorSchedule($sID)
+	{
+		deleteSchedule($sID);
+	}
+
+
 }
 
 

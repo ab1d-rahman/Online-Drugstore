@@ -1,7 +1,7 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-<title>city - Free CSS Template by ZyPOP</title>
+<title>Add Schedule</title>
 
 
 <link rel="stylesheet" href="css/reset.css" type="text/css" />
@@ -9,25 +9,8 @@
 <link href="http://maxcdn.bootstrapcdn.com/font-awesome/4.1.0/css/font-awesome.min.css" rel="stylesheet">
 
 
-<!--[if lt IE 9]>
-<script src="http://html5shiv.googlecode.com/svn/trunk/html5.js"></script>
-<![endif]
-
-<script type="text/javascript" src="js/jquery.js"></script>
-<script type="text/javascript" src="js/slider.js"></script>
-<script type="text/javascript" src="js/superfish.js"></script>
-
-<script type="text/javascript" src="js/custom.js"></script> -->
-
 <meta name="viewport" content="width=device-width, minimum-scale=1.0, maximum-scale=1.0" />
 
-<!--
-city, a free CSS web template by ZyPOP (zypopwebtemplates.com/)
-
-Download: http://zypopwebtemplates.com/
-
-License: Creative Commons Attribution
-//-->
 </head>
 <body>
 
@@ -37,11 +20,6 @@ error_reporting(~E_NOTICE);
 session_start();
 session_regenerate_id();
 
-?>
-<?php
-
-error_reporting(~E_NOTICE);
-session_start();
 
 ?>
 <div id="container">
@@ -108,32 +86,41 @@ session_start();
 	
 
 <?php
-include_once "database_helper.php";
-include_once "connection.php";
-include_once "myFunctions.php";
+
+
+
+include_once "controllers/doctorController.php";
 
 
 if($_POST['submit'])
-{
+{   
 
-	$dID = $_SESSION['dID'];
-	$time = $_POST['time'].":00";
-    $time = cleanInput($dbCon, $time);
-	$date = substr($_POST['date'], 6, 4) . substr($_POST['date'], 2, 4) . substr($_POST['date'], 0, 2);    
-    $date = cleanInput($dbCon, $date);
-	$maxapp = $_POST['maxapp'];    
-    $maxapp = cleanInput($dbCon, $maxapp);
-	$apptaken = 0;
+    $data = array(
+            'dID' => $_SESSION['dID'], 
+            'date' => $_POST['date'],
+            'time' => $_POST['time'],
+            'maxapp' => $_POST['maxapp'],
+            'apptaken' => $_POST['apptaken']
+        );
+	
 
 
-	if($db->insert('doctorSchedule',array('dID', 'date', 'time', 'maxapp', 'apptaken'), array($dID, $date, $time, $maxapp, $apptaken), array('anything')))
+	if($doctorController->addDoctorSchedule($data) == "Successful")
 	{
-			?>
-			<script type="text/javascript">
-			alert("Schedule Successfully Added");
-			</script>
-			<?php
+		?>
+		<script type="text/javascript">
+		alert("Schedule Successfully Added");
+		</script>
+		<?php
 	} 	
+    else
+    {
+        ?>
+        <script type="text/javascript">
+        alert("Error!");
+        </script>
+        <?php
+    }
 	
 } 
 

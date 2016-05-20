@@ -1,7 +1,7 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-<title>city - Free CSS Template by ZyPOP</title>
+<title>Doctor Profile</title>
 
 
 <link rel="stylesheet" href="css/reset.css" type="text/css" />
@@ -9,25 +9,10 @@
 <link href="http://maxcdn.bootstrapcdn.com/font-awesome/4.1.0/css/font-awesome.min.css" rel="stylesheet">
 
 
-<!--[if lt IE 9]>
-<script src="http://html5shiv.googlecode.com/svn/trunk/html5.js"></script>
-<![endif]
-
-<script type="text/javascript" src="js/jquery.js"></script>
-<script type="text/javascript" src="js/slider.js"></script>
-<script type="text/javascript" src="js/superfish.js"></script>
-
-<script type="text/javascript" src="js/custom.js"></script> -->
 
 <meta name="viewport" content="width=device-width, minimum-scale=1.0, maximum-scale=1.0" />
 
-<!--
-city, a free CSS web template by ZyPOP (zypopwebtemplates.com/)
 
-Download: http://zypopwebtemplates.com/
-
-License: Creative Commons Attribution
-//-->
 </head>
 <body>
 
@@ -104,60 +89,48 @@ session_regenerate_id();
 
 <?php
 
-include_once("connection.php");
-include_once("database_helper.php");
+include_once "controllers/doctorController.php";
+
 
 if($_SESSION['isDoc'] == true)
 {	
 
 	if($_GET['sID'])		// Doctor Pressed Cancel Appointment
 	{
-		$sID = $_GET['sID'];
-		$sql = "DELETE FROM appointments WHERE sID='$sID'";
-		$query = mysqli_query($dbCon, $sql);
-
-		$sql = "DELETE FROM doctorSchedule WHERE sID='$sID'";
-		$query = mysqli_query($dbCon, $sql);
+		$doctorController->cancelDoctorSchedule($_GET['sID']);
 	}
 
 	$dID = $_SESSION['dID'];
-	if(isset($_GET['dID']) && $dID == $_GET['dID'] || empty($_GET['dID']))   // Doctor visiting his own profile
+	if((isset($_GET['dID']) && $dID == $_GET['dID']) || (empty($_GET['dID']) && $_SESSION['isDoc'] == true))   // Doctor visiting his own profile
 	{
 
-		$sql = "SELECT * FROM doctorInfo WHERE dID='$dID'";
-		$query = mysqli_query($dbCon, $sql);
+		
+		$data = $doctorController->getDoctorProfile($dID);
 
-		if($query)
-		{
-			$row = mysqli_fetch_row($query);
-			$name = $row[1];
-			$email = $row[4];
-			$specialty = $row[5];
-
-			echo "<img src=\"data:image;base64," . $row[6] . "\" style=\"float:right; margin: 0 0 10px 10px;\" height=\"250\" width=\"250\">";
-			echo "<h3>Name: $name<br>Email: $email<br>Specialty: $specialty</h3>";
-		}
+		echo "<img src=\"data:image;base64," . $data['image'] . "\" style=\"float:right; margin: 0 0 10px 10px;\" height=\"250\" width=\"250\">";
+		echo "<h3>Name: ". $data['name'] . "<br><br>Email: ". $data['email'] . "<br><br>Specialty: ". $data['specialty'] . "</h3>";
+		
 
 		
 		echo "<br><br><br><br><br><h2>Schedule</h2>";
 
-		$sql = "SELECT * FROM doctorSchedule WHERE dID='$dID' order by date asc, time asc";
-		$query = mysqli_query($dbCon, $sql);
-		if($query){
+		$data = $doctorController->getDoctorSchedule($dID);
 
 		echo "<table><tr><th>Date</th><th>Time</th><th>Maximum<br>Appointments</th><th>Appointments<br>Taken</th><th></th></tr>";
-		while($row = mysqli_fetch_assoc($query)) {
-			$date = substr($row["date"], 8, 2) . substr($row["date"], 4, 4) . substr($row["date"], 0, 4);
-		        echo "<tr><td>".$date."</td><td>".$row["time"]."</td><td>".$row["maxapp"]."</td><td>".$row["apptaken"]."</td>
-		        <td><a class=\"button\" href=\"doctorProfile.php?sID=".$row["sID"]."\">Cancel Appointments</a></td></tr><br>";
-		    }
-		}
+		foreach ($data as $d) 
+		{
+			$date = substr($d[0], 8, 2) . substr($d[0], 4, 4) . substr($d[0], 0, 4);
 
-		?>
+			echo "<tr><td>". $date ."</td><td>". $d[1] ."</td><td>". $d[2] ."</td><td>". $d[3] ."</td>
+		        <td><a class=\"button\" href=\"doctorProfile.php?sID=". $d[4] ."\">Cancel Appointments</a></td></tr><br>";
+		}		
 
+	
+		echo "
 		</table> <br> <br>
-		<a class="button" id="link" href="addSchedule.php">Add Schedule!</a>
-		<?php 
+		<a class=\"button\" id=\"link\" href=\"addSchedule.php\">Add Schedule!</a>
+		";
+		
 	}
 
 	else 																		// Doctor visiting another doctor's profile
