@@ -80,7 +80,7 @@ function getItemsAndPrice($uID)
 
 	$sql = "SELECT * FROM cart WHERE uID='$uID'";
 	$query = mysqli_query($dbCon, $sql);
-	
+
 	while($row = mysqli_fetch_assoc($query)) 
 	{
 		$items++;
@@ -100,5 +100,34 @@ function getItemsAndPrice($uID)
 
 	return $data;
 
+}
+
+function cartItems($uID)
+{
+	$dbCon = mysqli_connect("localhost", "root", "root", "doctor");
+
+	$sql = "SELECT * FROM cart WHERE uID='$uID'";
+	$query = mysqli_query($dbCon, $sql);
+
+	$r = 0;
+
+	while($row = mysqli_fetch_assoc($query)) 
+	{
+		$pID = $row['pID'];
+
+		$_sql = "SELECT name, price FROM products WHERE pID='$pID'";
+		$_query = mysqli_query($dbCon, $_sql);
+		$_row = mysqli_fetch_row($_query);
+		// echo $row['quantity'] . " " . $pID . " " . $_row[0] . "\n";
+
+		$data[$r][0] = $_row[0];
+		$data[$r][1] = $row['quantity'];
+		$data[$r][2] = $_row[1];
+		$data[$r][3] = $pID;
+
+		$r++;
+	}
+
+	return $data;
 }
 ?>

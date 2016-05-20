@@ -29,6 +29,11 @@ class productController
 	{
 		return getItemsAndPrice($uID);
 	}
+
+	public function getCartItems($uID)
+	{
+		return cartItems($uID);
+	}
 }
 
 

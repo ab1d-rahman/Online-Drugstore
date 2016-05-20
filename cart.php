@@ -1,7 +1,7 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-<title>Home</title>
+<title>Cart</title>
 
 
 <link rel="stylesheet" href="css/reset.css" type="text/css" />
@@ -23,41 +23,21 @@ session_regenerate_id();
 
 include_once "controllers/productController.php";
 
-if(isset($_GET['addToCart']))
+
+if($_SESSION['isUser'] == false)
 {
-    if($_SESSION['isUser'] == false)
-    {
-        ?>
-        <script type="text/javascript">
-            alert("You need to be logged in as a user to add items to cart.");
-        </script>
+    ?>
+    <script type="text/javascript">
+        alert("You need to be logged in as a user to view this page.");
+    </script>
 
-        <?php 
-    }
+    <?php 
 
-    else
-    {
-        if($productController->addProductToCart($_GET['pID'], $_SESSION['uID']) == "Successful")
-        {
-            ?>
-            <script type="text/javascript">
-                alert("Product successfully added to cart");
-            </script>
-
-            <?php 
-        }
-
-        else
-        {
-            ?>
-            <script type="text/javascript">
-                alert("Error: Already added to cart/ No such product");
-            </script>
-
-            <?php 
-        }
-    }
+    header("Location: index.php");
 }
+
+    
+
 
 
 ?>
@@ -121,27 +101,6 @@ if(isset($_GET['addToCart']))
     </div>
 
 
-
-
-    <div id="intro">
-
-        <div class="width">
-          
-            <div class="intro-content">
-        
-                    <h2>Want an appoinment from a doctor? </h2>
-                    <p>Find a doctor now!</p>                                       
-                    <p><a href="availDoctors.php" class="button button-reversed button-slider"><i class="fa fa-info"></i> Doctor List</a></p>
-
-            </div>
-                    
-        </div>            
-
-    </div>
-
-    
-
-
     <div id="body" class="width">
 
         <div id="cart">
@@ -152,63 +111,34 @@ if(isset($_GET['addToCart']))
 
             ?>
             
-            <a class="button" href="cart.php"> Go To Cart </a>
+            <a class="button" href="#"> Go To Cart </a>
 
         </div>
 
-        <form class="form-wrapper cf" action="search.php" method="post">
-            <input type="text" placeholder="Search for any product..." required name="query"> <br>
-            <button type="submit" name="submit" value="Submit">Search</button>
-        </form>
+        <h2 style="text-align: center; font-weight: bold;">Shopping Cart</h2>
+        <table><tr><th>#</th><th>Product Name</th><th>Quantity</th><th>Unit Price</th><th></th><th></th></tr>
 
+        <?php 
 
-        <div id="products_box">
-            <h2 id="banner"> Latest Products </h2>
-            <?php 
+            $data = $productController->getCartItems($_SESSION['uID']);
 
-            $data = $productController->getAllProducts();
-
+            $cnt = 0;
             foreach ($data as $d) 
             {
-                echo "
-                    <div id='single_product'>".
-                    $d[0]." <br>
-                    <img src=\"data:image;base64," . $d[2] . "\" height=\"180\" width=\"180\">
-                    <br>".
-                    $d[1]." TK <br>
-                    <a href='#'> Details </a> <br>
-                    <a class='button' id='link' href='index.php?addToCart&pID=" . $d[3] . "' >Add To Cart!</a>
-                    </div>
-
-                    ";
+                $cnt++;
+                echo "<tr><td>". $cnt ."</td><td>". $d[0] ."</td><td>". $d[1] ."</td><td>". $d[2] ."</td>
+                    <td><a class=\"button\" href=\"doctorProfile.php?sID=". $d[3] ."\">Remove From Cart</a></td></tr><br>";
             }
 
-            ?>
-        </div>
-        
-        <div class="sidebar small-sidebar right-sidebar" >
-    
-            <ul>    
-               <li>
-                    <h4>Categories</h4>
-                    <ul class="blocklist">
-                        <li><a href="category.php?category=laptop">Laptops</a></li>
-                        <li><a href="category.php?category=mobile">Mobiles</a></li>
-                        <li><a href="#">SOMETHING</a></li>
-                        <li><a href="#">SOMETHING</a></li>
-                        <li><a href="#">SOMETHING</a></li>
-                    </ul>
-                </li>  
-            </ul>
-        
-        </div>
-
-
-        <div class="clear"> </div>
-
-
+        ?>
+        </table>
 
     </div>
+
+
+    
+
+    
 
 </div>
 

@@ -439,7 +439,7 @@ a.button-slider i { padding-right: 5px; }
 #body {
 	background: none;
 	margin: 25px auto 0;
-	padding-top: 100px;
+	padding-top: 50px;
 }
 
 #content {
@@ -989,14 +989,12 @@ div.social-icons a {
 
 #cart {
 
-	width: 1800px
+	width: 1200px;
 	height: auto;
 	background: #222;
 	color: white;
 	text-align: right;
-	margin-top: 10px;
-	margin-left: 50px;
-	margin-right: 50px;
+	margin-bottom: 15px;
 	padding-top: 10px;
 	padding-bottom: 10px;
 	padding-right: 50px;
