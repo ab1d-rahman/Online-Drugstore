@@ -1,7 +1,7 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-<title>city - Free CSS Template by ZyPOP</title>
+<title>Doctor Registration</title>
 
 
 <link rel="stylesheet" href="css/reset.css" type="text/css" />
@@ -9,25 +9,8 @@
 <link href="http://maxcdn.bootstrapcdn.com/font-awesome/4.1.0/css/font-awesome.min.css" rel="stylesheet">
 
 
-<!--[if lt IE 9]>
-<script src="http://html5shiv.googlecode.com/svn/trunk/html5.js"></script>
-<![endif]
-
-<script type="text/javascript" src="js/jquery.js"></script>
-<script type="text/javascript" src="js/slider.js"></script>
-<script type="text/javascript" src="js/superfish.js"></script>
-
-<script type="text/javascript" src="js/custom.js"></script> -->
-
 <meta name="viewport" content="width=device-width, minimum-scale=1.0, maximum-scale=1.0" />
 
-<!--
-city, a free CSS web template by ZyPOP (zypopwebtemplates.com/)
-
-Download: http://zypopwebtemplates.com/
-
-License: Creative Commons Attribution
-//-->
 </head>
 
 <body>
@@ -82,9 +65,7 @@ error_reporting(~E_NOTICE);
 session_start();
 session_regenerate_id();
 
-include_once "database_helper.php";
-include_once "connection.php";
-include_once "myFunctions.php";
+include_once "controllers/doctorController.php";
 
 if($_SESSION['username'])
 {
@@ -93,35 +74,7 @@ if($_SESSION['username'])
 
 if($_POST['submit'])
 {
-	/*if(empty($_POST['username']) || empty($_POST['password']) || empty($_POST['email']) || empty($_POST['name']) || empty($_POST['specialty']))
-	{
-		echo "<h2>You need to fill all the fields!.</h2><br>";
-	}*/
 	
-
-	$name = $_POST['name'];
-	$name = cleanInput($dbCon, $name);
-
-	$username = $_POST['username'];
-	$username = cleanInput($dbCon, $username);
-
-	$password = $_POST['password'];
-	$password = cleanInput($dbCon, $password);
-	$password = hashPassword($password);
-
-
-	$email = $_POST['email'];
-	$email = cleanInput($dbCon, $email);
-
-	$specialty = $_POST['specialty'];
-	
-	$image = addslashes($_FILES['image']['tmp_name']);
-	$imageName = addslashes($_FILES['image']['name']);
-	$image = file_get_contents($image);	
-	$image = base64_encode($image);
-
-	
-
 	if(getimagesize($_FILES['image']['tmp_name']) == FALSE)
 	{
 		?>
@@ -133,8 +86,16 @@ if($_POST['submit'])
 
 	else
 	{
+		$data = array(
+			'name' => $_POST['name'], 
+			'username' => $_POST['username'],
+			'password' => $_POST['password'],
+			'email' => $_POST['email'],
+			'specialty' => $_POST['specialty'],
+			'image' => $_FILES['image']['tmp_name']
+		);
 
-		if($db->insert('doctorInfo',array('name', 'username', 'password', 'email', 'specialty', 'image'), array($name, $username, $password, $email, $specialty, $image), array('anything'))) 
+		if($doctorController->registerDoctor($data) == "Successful") 
 		{
 			?>
 			<script type="text/javascript">

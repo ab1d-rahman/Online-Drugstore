@@ -1,33 +1,18 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-<title>city - Free CSS Template by ZyPOP</title>
+<title>Doctor Login</title>
 
 
 <link rel="stylesheet" href="css/reset.css" type="text/css" />
 <link rel="stylesheet" href="css/styles.css" type="text/css" />
-<link href="http://maxcdn.bootstrapcdn.com/font-awesome/4.1.0/css/font-awesome.min.css" rel="stylesheet">
+<link rel="stylesheet" href="font-awesome/css/font-awesome.min.css" type="text/css">
 
 
-<!--[if lt IE 9]>
-<script src="http://html5shiv.googlecode.com/svn/trunk/html5.js"></script>
-<![endif]
-
-<script type="text/javascript" src="js/jquery.js"></script>
-<script type="text/javascript" src="js/slider.js"></script>
-<script type="text/javascript" src="js/superfish.js"></script>
-
-<script type="text/javascript" src="js/custom.js"></script> -->
 
 <meta name="viewport" content="width=device-width, minimum-scale=1.0, maximum-scale=1.0" />
 
-<!--
-city, a free CSS web template by ZyPOP (zypopwebtemplates.com/)
 
-Download: http://zypopwebtemplates.com/
-
-License: Creative Commons Attribution
-//-->
 </head>
 
 
@@ -86,43 +71,24 @@ License: Creative Commons Attribution
 error_reporting(~E_NOTICE);
 session_start();
 session_regenerate_id();
-include_once "database_helper.php";
-include_once "connection.php";
-include_once "myFunctions.php";
+
+include_once "controllers/doctorController.php";
 
 if($_POST['submit'])
 {
+    $data = array(            
+            'username' => $_POST['username'],
+            'password' => $_POST['password']            
+        );
 
-    $username = $_POST['username'];
-    $username = cleanInput($dbCon, $username);
-    $password = $_POST['password'];
-    $password = cleanInput($dbCon, $password);
-
-	$sql = "SELECT username, password, dID, name FROM doctorInfo WHERE username='$username'";
-	$query = mysqli_query($dbCon, $sql);
-
-	if($query)
-	{
-		$row = mysqli_fetch_row($query);
-		$DBusenrame = $row[0];
-		$DBpassword = $row[1];
-		$DBid = $row[2];
-		//echo "this $DBusenrame $DBpassword";
-	}
-
-	if($username == $DBusenrame && password_verify($password, $DBpassword) == true)
-	{
-		$_SESSION['username'] = $username;
-		$_SESSION['name'] = $row[3];
-		$_SESSION['dID'] = $row[2];
-		$_SESSION['isDoc'] = true;
-		$_SESSION['isUser'] = false;
-		header("Location: index.php");
-	}
+    
+    if($doctorController->loginDoctor($data) == "Successful")
+    {       
+        header("Location: index.php");
+    }
 
 	else 
-	{
-		
+	{		
 		?>
 
 	   <script type="text/javascript">

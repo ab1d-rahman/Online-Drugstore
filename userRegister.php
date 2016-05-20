@@ -115,7 +115,7 @@ if($_POST['submit'])
 			'image' => $_FILES['image']['tmp_name']
 		);
 		
-		// echo $userController->registerUser($data);
+		
 		if($userController->registerUser($data) == "Successful")
 		{
 			?>
