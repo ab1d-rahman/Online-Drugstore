@@ -19,8 +19,16 @@ class productController
 		return searchedProducts($query);
 	}
 	
-
+	public function addProductToCart($pID, $uID)
+	{
+		if(addToCart($pID, $uID)) return "Successful";
+		return "Error";
+	}
 	
+	public function getTotalItemsAndPrice($uID)
+	{
+		return getItemsAndPrice($uID);
+	}
 }
 
 

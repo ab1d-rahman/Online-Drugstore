@@ -986,3 +986,18 @@ div.social-icons a {
     border: 0;
     padding: 0;
 }    
+
+#cart {
+
+	width: 1800px
+	height: auto;
+	background: #222;
+	color: white;
+	text-align: right;
+	margin-top: 10px;
+	margin-left: 50px;
+	margin-right: 50px;
+	padding-top: 10px;
+	padding-bottom: 10px;
+	padding-right: 50px;
+}

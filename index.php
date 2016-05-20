@@ -23,6 +23,42 @@ session_regenerate_id();
 
 include_once "controllers/productController.php";
 
+if(isset($_GET['addToCart']))
+{
+    if($_SESSION['isUser'] == false)
+    {
+        ?>
+        <script type="text/javascript">
+            alert("You need to be logged in as a user to add items to cart.");
+        </script>
+
+        <?php 
+    }
+
+    else
+    {
+        if($productController->addProductToCart($_GET['pID'], $_SESSION['uID']) == "Successful")
+        {
+            ?>
+            <script type="text/javascript">
+                alert("Product successfully added to cart");
+            </script>
+
+            <?php 
+        }
+
+        else
+        {
+            ?>
+            <script type="text/javascript">
+                alert("Error: Already added to cart/ No such product");
+            </script>
+
+            <?php 
+        }
+    }
+}
+
 
 ?>
 <div id="container">
@@ -103,6 +139,18 @@ include_once "controllers/productController.php";
 
     </div>
 
+    <div id="cart">
+        <?php 
+
+        $data = $productController->getTotalItemsAndPrice($_SESSION['uID']);
+        echo "Shopping Cart - ( Items: " . $data['items'] . "   -- Total Price: " . $data['price'] ." TK )";
+
+        ?>
+        
+        <a class="button" href="#"> Go To Cart </a>
+
+    </div>
+
 
     <div id="body" class="width">
 
@@ -127,7 +175,7 @@ include_once "controllers/productController.php";
                 <br>".
                 $d[1]." TK <br>
                 <a href='#'> Details </a> <br>
-                <a class='button' id='link' href='#' >Add To Cart!</a>
+                <a class='button' id='link' href='index.php?addToCart&pID=" . $d[3] . "' >Add To Cart!</a>
                 </div>
 
                 ";
