@@ -34,6 +34,16 @@ class productController
 	{
 		return cartItems($uID);
 	}
+
+	public function updateTheCart($uID, $update, $updatePID)
+	{
+		updateCart($uID, $update, $updatePID);
+	}
+
+	public function removeProductFromCart($pID, $uID)
+	{
+		removeFromCart($pID, $uID);
+	}
 }
 
 

@@ -130,4 +130,36 @@ function cartItems($uID)
 
 	return $data;
 }
+
+function updateCart($uID, $update, $updatePID)
+{
+	$dbCon = mysqli_connect("localhost", "root", "root", "doctor");
+
+	$cnt = count($update);
+
+	for($i=0; $i<$cnt; $i++)
+	{
+		if($update[$i] && $update[$i]>0)
+		{
+			$quantity = $update[$i];
+			$quantity = cleanInput($dbCon, $quantity);
+			$pID = $updatePID[$i];
+
+			$sql = "UPDATE cart SET quantity = '$quantity' WHERE uID='$uID' AND pID='$pID'";
+			$query = mysqli_query($dbCon, $sql);
+		}
+	}
+}
+
+function removeFromCart($pID, $uID)
+{
+	$dbCon = mysqli_connect("localhost", "root", "root", "doctor");
+
+	$pID = cleanInput($dbCon, $pID);
+	
+	$sql = "DELETE FROM cart WHERE uID='$uID' AND pID='$pID'";
+	$query = mysqli_query($dbCon, $sql);
+}
+
+
 ?>

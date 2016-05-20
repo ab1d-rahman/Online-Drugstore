@@ -53,7 +53,7 @@ if($_SESSION['isUser'] == false)
                     <ul class="sf-menu dropdown">
 
                 
-                        <li class="selected"><a href="index.php"><i class="fa fa-home"></i> Home</a></li>
+                        <li><a href="index.php"><i class="fa fa-home"></i> Home</a></li>
 
                     
                         <li><a href="#"><i class="fa fa-database"></i> All Products</a> </li>
@@ -103,35 +103,54 @@ if($_SESSION['isUser'] == false)
 
     <div id="body" class="width">
 
-        <div id="cart">
-            <?php 
-
-            $data = $productController->getTotalItemsAndPrice($_SESSION['uID']);
-            echo "Shopping Cart - ( Items: " . $data['items'] . "   -- Total Price: " . $data['price'] ." TK )";
-
-            ?>
-            
-            <a class="button" href="#"> Go To Cart </a>
-
-        </div>
 
         <h2 style="text-align: center; font-weight: bold;">Shopping Cart</h2>
-        <table><tr><th>#</th><th>Product Name</th><th>Quantity</th><th>Unit Price</th><th></th><th></th></tr>
+        <form method="post" action="cart.php">
+        <table><tr><th>#</th><th>Product Name</th><th>Quantity</th><th>Unit Price</th><th>Update Quantity</th><th></th></tr>
 
         <?php 
 
+            if(isset($_POST['submit']))
+            {
+                $update = $_POST['update'];  
+                $updatePID = $_POST['updatePID']; 
+
+                $productController->updateTheCart($_SESSION['uID'], $update, $updatePID);
+            }
+
+            if(isset($_GET['remove']))
+            {
+                $productController->removeProductFromCart($_GET['pID'], $_SESSION['uID']);
+            }
+
             $data = $productController->getCartItems($_SESSION['uID']);
+            $totalPriceData = $productController->getTotalItemsAndPrice($_SESSION['uID']);
 
             $cnt = 0;
             foreach ($data as $d) 
             {
                 $cnt++;
-                echo "<tr><td>". $cnt ."</td><td>". $d[0] ."</td><td>". $d[1] ."</td><td>". $d[2] ."</td>
-                    <td><a class=\"button\" href=\"doctorProfile.php?sID=". $d[3] ."\">Remove From Cart</a></td></tr><br>";
+                echo "<tr><td>". $cnt ."</td><td>". $d[0] ."</td><td>". $d[1] ."</td><td>". $d[2] ." TK</td>
+                    <td>
+                    <input type=\"text\" size=\"5\" name=\"update[]\">
+                    <input type=\"hidden\" name=\"updatePID[]\" value=\"". $d[3] ."\">
+                    </td>
+                    <td><a class=\"button\" href=\"cart.php?remove&pID=". $d[3] ."\">Remove From Cart</a></td></tr><br>";
             }
+
+            echo "<tr><td></td><td style=\"font-weight: bold;\">Total Price</td><td></td><td style=\"font-weight: bold;\">" . $totalPriceData['price'] . " TK</td><td></td><td></td></tr>";
 
         ?>
         </table>
+
+            <br>
+            <input class="submitButton" type="submit" name="submit" value="Update Cart"></input>
+        </form>
+
+        <br> <br>
+        <form method="post" action="checkout.php">
+            <input class="submitButton" type="submit" name="submit" value="Checkout"></input>
+        </form>
 
     </div>
 

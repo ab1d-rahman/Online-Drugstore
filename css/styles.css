@@ -999,3 +999,19 @@ div.social-icons a {
 	padding-bottom: 10px;
 	padding-right: 50px;
 }
+
+.submitButton { 
+  
+    background: linear-gradient(#2F65D0, #214791);
+    background-color: #2A5BBB;
+    color: #FFFFFF;
+    display: inline-block;
+    font-weight: bold;
+    font-size: 100%;
+    padding: 10px 15px;
+    border: 1px solid #214791;
+    text-shadow: 1px 1px 0 #214791;
+    border-radius: 5px;
+    text-decoration: none;
+    text-transform: uppercase;
+}
