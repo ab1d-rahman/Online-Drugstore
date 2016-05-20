@@ -1,6 +1,6 @@
 <?php 
 
-include_once "doctorModel.php";
+include_once "models/doctorModel.php";
 
 class doctorController
 {
