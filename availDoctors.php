@@ -1,33 +1,16 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-<title>city - Free CSS Template by ZyPOP</title>
+<title>Available Doctors</title>
 
 
 <link rel="stylesheet" href="css/reset.css" type="text/css" />
 <link rel="stylesheet" href="css/styles.css" type="text/css" />
-<link href="http://maxcdn.bootstrapcdn.com/font-awesome/4.1.0/css/font-awesome.min.css" rel="stylesheet">
+<link rel="stylesheet" href="font-awesome/css/font-awesome.min.css" type="text/css">
 
-
-<!--[if lt IE 9]>
-<script src="http://html5shiv.googlecode.com/svn/trunk/html5.js"></script>
-<![endif]
-
-<script type="text/javascript" src="js/jquery.js"></script>
-<script type="text/javascript" src="js/slider.js"></script>
-<script type="text/javascript" src="js/superfish.js"></script>
-
-<script type="text/javascript" src="js/custom.js"></script> -->
 
 <meta name="viewport" content="width=device-width, minimum-scale=1.0, maximum-scale=1.0" />
 
-<!--
-city, a free CSS web template by ZyPOP (zypopwebtemplates.com/)
-
-Download: http://zypopwebtemplates.com/
-
-License: Creative Commons Attribution
-//-->
 </head>
 <body>
 
@@ -107,20 +90,20 @@ session_regenerate_id();
 
 <?php
 
-include_once("connection.php");
 
+include_once "controllers/doctorController.php";
 
-$sql = "SELECT * FROM doctorInfo order by name asc";
-$query = mysqli_query($dbCon, $sql);
-if($query){
+$data = $doctorController->getAllDoctors();
 
 echo "<table><tr><th>ID</th><th>Name</th><th>Email</th><th>Specialty</th><th></th></tr>";
-while($row = mysqli_fetch_assoc($query)) {
-        echo "<tr><td>".$row["dID"]."</td><td><a href=\"doctorProfile.php?dID=".$row["dID"]."\">".$row["name"]."</a></td><td>".$row["email"]."</td><td>".$row["specialty"]."</td><td><img src=\"data:image;base64," . $row["image"] . "\" height=\"100\" width=\"100\"></td></tr>";
-    }
+foreach ($data as $d) 
+{
+    echo "<tr><td>".$d[0]."</td><td><a href=\"doctorProfile.php?dID=".$d[0]."\">".$d[1]."</a></td><td>".$d[2]."</td><td>".$d[3]."</td><td><img src=\"data:image;base64," . $d[4] . "\" height=\"100\" width=\"100\"></td></tr>";
+}
 
 echo "</table>";
-}
+
+
 
 ?>
 

@@ -145,5 +145,25 @@ function deleteSchedule($sID)
 	
 
 
+function allDoctors()
+{
+	$dbCon = mysqli_connect("localhost", "root", "root", "doctor");
+
+	$sql =  "SELECT * FROM doctorInfo order by name asc";
+	$query = mysqli_query($dbCon, $sql);
+	$r = 0;
+
+	while($row = mysqli_fetch_assoc($query)) 
+	{
+		$data[$r][0] = $row['dID'];
+		$data[$r][1] = $row['name'];
+		$data[$r][2] = $row['email'];
+		$data[$r][3] = $row['specialty'];
+		$data[$r][4] = $row['image'];
+		$r++;
+	}
+
+	return $data;
+}
 
 ?>

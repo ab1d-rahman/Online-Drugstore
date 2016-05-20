@@ -46,6 +46,10 @@ class doctorController
 		deleteSchedule($sID);
 	}
 
+	public function getAllDoctors()
+	{
+		return allDoctors();
+	}
 
 }
 
