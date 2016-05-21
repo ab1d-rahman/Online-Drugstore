@@ -61,8 +61,90 @@ function authenticateUser($data)
 
 	return null;
 
-
 }
+
+function userProfile($uID)
+{
+	$dbCon = mysqli_connect("localhost", "root", "root", "doctor");
+
+	$sql = "SELECT * FROM userInfo WHERE uID='$uID'";
+	$query = mysqli_query($dbCon, $sql);
+
+	if($query)
+	{
+		$row = mysqli_fetch_row($query);
+
+		$data = array(            
+            'name' => $row[1],
+            'email' => $row[4],
+            'image' => $row[5]        
+        );
+
+        return $data;
+	}
+
+	return null;
+}
+
+function userAppointments($uID)
+{
+	$dbCon = mysqli_connect("localhost", "root", "root", "doctor");
+
+	$sql = "SELECT * FROM appointments WHERE uID='$uID'";
+    $query = mysqli_query($dbCon, $sql);
+    if($query)
+    {
+    	$r = 0;
+    	while($row = mysqli_fetch_assoc($query))
+        {
+        	$aID = $row["aID"];
+            $sID = $row["sID"];
+            $sql = "SELECT * FROM doctorSchedule WHERE sID='$sID'";
+            $_query = mysqli_query($dbCon, $sql);
+            $_row = mysqli_fetch_assoc($_query);
+            $appDate = $_row["date"];
+            $appTime = $_row["time"];
+            $dID = $_row["dID"];
+
+            $sql = "SELECT * FROM doctorInfo WHERE dID='$dID'";
+            $_query = mysqli_query($dbCon, $sql);
+            $_row = mysqli_fetch_assoc($_query);
+            $doctorName = $_row["name"];
+
+            $appDate = substr($appDate, 8, 2) . substr($appDate, 4, 4) . substr($appDate, 0, 4); 
+
+            $data[$r][0] = $appDate;
+			$data[$r][1] = $appTime;
+			$data[$r][2] = $doctorName;
+			$data[$r][3] = $aID; 
+			$data[$r][4] = $sID;
+
+			$r++;              
+       
+        }
+
+        return $data;
+    }
+
+    return $data;
+}
+
+function deleteAppointment($uID, $aID, $sID)
+{
+	$dbCon = mysqli_connect("localhost", "root", "root", "doctor");
+
+	$aID = cleanInput($dbCon, $aID);
+	$sID = cleanInput($dbCon, $sID);
+
+	$sql = "DELETE FROM appointments WHERE aID='$aID' AND uID='$uID'";
+    $query = mysqli_query($dbCon, $sql);
+    if($query)
+    {
+    	$sql = "UPDATE doctorSchedule SET apptaken = apptaken - 1 WHERE sID='$sID'";
+        $query = mysqli_query($dbCon, $sql);
+    }
+}
+
 
 function authenticateAdmin($data)
 {

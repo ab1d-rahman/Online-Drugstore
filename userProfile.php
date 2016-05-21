@@ -37,6 +37,8 @@ error_reporting(~E_NOTICE);
 session_start();
 session_regenerate_id();
 
+include_once "controllers/userController.php";
+
 ?>
 
 <div id="container">
@@ -104,9 +106,6 @@ session_regenerate_id();
 
 <?php
 
-include_once("connection.php");
-include_once("database_helper.php");
-include_once("myFunctions.php");
 
 if($_SESSION['isUser'] == true)
 {   
@@ -116,61 +115,29 @@ if($_SESSION['isUser'] == true)
 
     if($_GET['aID'] && $_GET['sID'])        // User Pressed Cancel Appointment
     {
-        $sID = $_GET['sID'];
-        $aID = $_GET['aID'];
-
-        $sql = "DELETE FROM appointments WHERE aID='$aID'";
-        $query = mysqli_query($dbCon, $sql);
-
-        $sql = "UPDATE doctorSchedule SET apptaken = apptaken - 1 WHERE sID='$sID'";
-        $query = mysqli_query($dbCon, $sql);
+        $userController->cancelUserAppointment($uID, $_GET['aID'], $_GET['sID']);
     }
     
 
-    $sql = "SELECT * FROM userInfo WHERE uID='$uID'";
-    $query = mysqli_query($dbCon, $sql);
+    $data = $userController->getUserProfile($uID);
 
-    if($query)
-    {
-        $row = mysqli_fetch_row($query);
-        $name = $row[1];
-        $name = preventXSS($name);
-        $email = $row[3];
-
-        echo "<img src=\"data:image;base64," . $row[5] . "\" style=\"float:right; margin: 0 0 10px 10px;\" height=\"250\" width=\"250\">";
-        echo "<h3>Name: $name<br>Email: $email<br></h3>";
-    }
-
+    echo "<img src=\"data:image;base64," . $data['image'] . "\" style=\"float:right; margin: 0 0 10px 10px;\" height=\"250\" width=\"250\">";
+    echo "<h3>Name: ". $data['name'] . "<br><br>Email: ". $data['email'] . "</h3>";
     
+    echo "<br><br><br><br><br><h2>My Appointments</h2>";
 
-    $sql = "SELECT * FROM appointments WHERE uID='$uID'";
-    $query = mysqli_query($dbCon, $sql);
-    if($query)
+
+    $data = $userController->getUserAppointments($uID);
+
+    echo "<table><tr><th>Appointment Date</th><th>Appointment Time</th><th>Appointment<br>With</th><th></th></tr>";
+        
+    foreach ($data as $d) 
     {
-
-        echo "<table><tr><th>Appointment Date</th><th>Appointment Time</th><th>Appointment<br>With</th><th></th></tr>";
-        while($row = mysqli_fetch_assoc($query))
-        {
-            $sID = $row["sID"];
-            $sql = "SELECT * FROM doctorSchedule WHERE sID='$sID'";
-            $_query = mysqli_query($dbCon, $sql);
-            $_row = mysqli_fetch_assoc($_query);
-            $appDate = $_row["date"];
-            $appTime = $_row["time"];
-            $dID = $_row["dID"];
-
-            $sql = "SELECT * FROM doctorInfo WHERE dID='$dID'";
-            $_query = mysqli_query($dbCon, $sql);
-            $_row = mysqli_fetch_assoc($_query);
-            $doctorName = $_row["name"];
-
-            $appDate = substr($appDate, 8, 2) . substr($appDate, 4, 4) . substr($appDate, 0, 4);
-
-                echo "<tr><td>".$appDate."</td><td>".$appTime."</td><td>".$doctorName."</td>
-                <td><a class=\"button\" href=\"userProfile.php?aID=".$row["aID"]."&sID=$sID\">Cancel Appointments</a></td></tr><br>";
-       
-        }
+        echo "<tr><td>".$d[0]."</td><td>".$d[1]."</td><td>".$d[2]."</td>
+        <td><a class=\"button\" href=\"userProfile.php?aID=".$d[3]."&sID=".$d[4]."\">Cancel Appointment</a></td></tr><br>";
     }
+        
+    
 
     ?>
 

@@ -27,7 +27,7 @@ class doctorController
 
 	public function  getDoctorProfile($dID)
 	{
-		return profileDoctor($dID);
+		return doctorProfile($dID);
 	}
 
 	public function getDoctorSchedule($dID)

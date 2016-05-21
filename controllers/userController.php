@@ -41,6 +41,21 @@ class userController
 		if(authenticateAdmin($data)) return "Successful";
 		return "Error";
 	}
+
+	public function  getUserProfile($uID)
+	{
+		return userProfile($uID);
+	}
+
+	public function getUserAppointments($uID)
+	{
+		return userAppointments($uID);
+	}
+
+	public function cancelUserAppointment($uID, $aID, $sID)
+	{
+		deleteAppointment($uID, $aID, $sID);
+	}
 }
 
 

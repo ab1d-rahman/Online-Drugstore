@@ -113,7 +113,7 @@ if($_SESSION['isDoc'] == true)
 		
 
 		
-		echo "<br><br><br><br><br><h2>Schedule</h2>";
+		echo "<br><br><br><br><br><h2>My Schedule</h2>";
 
 		$data = $doctorController->getDoctorSchedule($dID);
 
@@ -220,8 +220,13 @@ else
 		$date = substr($d[0], 8, 2) . substr($d[0], 4, 4) . substr($d[0], 0, 4);
 
 		if($userController->appointmentTaken($d[4], $uID) == 0)
-				echo "<tr><td>".$date."</td><td>".$d[1]."</td><td>".$d[2]."</td><td>".$d[3]."</td>
+		{
+			if($d[2] > $d[3]) echo "<tr><td>".$date."</td><td>".$d[1]."</td><td>".$d[2]."</td><td>".$d[3]."</td>
 		        <td><a class=\"button\" href=\"doctorProfile.php?sID=".$d[4]."&dID=$dID\">Make Appointment</a></td></tr><br>";
+
+		    else echo "<tr><td>".$date."</td><td>".$d[1]."</td><td>".$d[2]."</td><td>".$d[3]."</td>
+		        <td>Appointment Unavailable!</td></tr><br>";
+		}
 
 
 		else echo "<tr><td>".$date."</td><td>".$d[1]."</td><td>".$d[2]."</td><td>".$d[3]."</td>

@@ -65,7 +65,7 @@ function authenticateDoctor($data)
 
 }
 
-function profileDoctor($dID)
+function doctorProfile($dID)
 {
 	$dbCon = mysqli_connect("localhost", "root", "root", "doctor");
 
