@@ -62,6 +62,11 @@ class productController
 		if(deleteProduct($data)) return "Successful";
 		return "Error";
 	}
+
+	public function getProductByCategory($category)
+	{
+		return categoricalProducts($category);
+	}
 }
 
 

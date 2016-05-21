@@ -209,11 +209,16 @@ if(isset($_GET['addToCart']))
                <li>
                     <h4>Categories</h4>
                     <ul class="blocklist">
-                        <li><a class="selected" href="index.html">SOMETHING</a></li>
-                        <li><a href="examples.html">SOMETHING</a></li>
-                        <li><a href="three-column.html">SOMETHING</a></li>
-                        <li><a href="#">SOMETHING</a></li>
-                        <li><a href="#">SOMETHING</a></li>
+                        <li><a href="category.php?category=1" style="font-weight: bold;">Anti-infectives</a></li>
+                        <li><a href="category.php?category=2" style="font-weight: bold;">Cough and Cold Relief</a></li>
+                        <li><a href="category.php?category=3" style="font-weight: bold;">Diabetes Managements</a></li>
+                        <li><a href="category.php?category=4" style="font-weight: bold;">Digestion and Nausea</a></li>
+                        <li><a href="category.php?category=5" style="font-weight: bold;">Eye, Nose and Ear Care</a></li>
+                        <li><a href="category.php?category=6" style="font-weight: bold;">Oral Care</a></li>
+                        <li><a href="category.php?category=7" style="font-weight: bold;">Pain and Fever Relief</a></li>
+                        <li><a href="category.php?category=8" style="font-weight: bold;">Respiratory and Cardiovascular</a></li>
+                        <li><a href="category.php?category=9" style="font-weight: bold;">Skin Care</a></li>
+                        <li><a href="category.php?category=10" style="font-weight: bold;">Vitamins and Minerals</a></li>
                     </ul>
                 </li>  
             </ul>

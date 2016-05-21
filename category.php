@@ -1,7 +1,7 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-<title>city - Free CSS Template by ZyPOP</title>
+<title>Category</title>
 
 
 <link rel="stylesheet" href="css/reset.css" type="text/css" />
@@ -9,25 +9,10 @@
 <link rel="stylesheet" href="font-awesome/css/font-awesome.min.css" type="text/css">
 
 
-<!--[if lt IE 9]>
-<script src="http://html5shiv.googlecode.com/svn/trunk/html5.js"></script>
-<![endif]
-
-<script type="text/javascript" src="js/jquery.js"></script>
-<script type="text/javascript" src="js/slider.js"></script>
-<script type="text/javascript" src="js/superfish.js"></script>
-
-<script type="text/javascript" src="js/custom.js"></script> -->
 
 <meta name="viewport" content="width=device-width, minimum-scale=1.0, maximum-scale=1.0" />
 
-<!--
-city, a free CSS web template by ZyPOP (zypopwebtemplates.com/)
 
-Download: http://zypopwebtemplates.com/
-
-License: Creative Commons Attribution
-//-->
 </head>
 
 
@@ -39,13 +24,50 @@ error_reporting(~E_NOTICE);
 session_start();
 session_regenerate_id();
 
-include_once "database_helper.php";
-include_once "connection.php";
-include_once "myFunctions.php";
+include_once "controllers/productController.php";
+
+$categoryMap =  array("", "Anti-infectives", "Cough and Cold Relief", "Diabetes Managements", "Digestion and Nausea", 
+                        "Eye, Nose and Ear Care", "Oral Care", "Pain and Fever Relief", "Respiratory and Cardiovascular", "Skin Care", "Vitamins and Minerals");
 
 if($_GET['category'])
 {
-    $category = cleanInput($dbCon, $_GET['category']);
+    $category = $categoryMap[$_GET['category']];
+}
+
+if(isset($_GET['addToCart']))
+{
+    if($_SESSION['isUser'] == false)
+    {
+        ?>
+        <script type="text/javascript">
+            alert("You need to be logged in as a user to add items to cart.");
+        </script>
+
+        <?php 
+    }
+
+    else
+    {
+        if($productController->addProductToCart($_GET['pID'], $_SESSION['uID']) == "Successful")
+        {
+            ?>
+            <script type="text/javascript">
+                alert("Product successfully added to cart");
+            </script>
+
+            <?php 
+        }
+
+        else
+        {
+            ?>
+            <script type="text/javascript">
+                alert("Error: Already added to cart/ No such product");
+            </script>
+
+            <?php 
+        }
+    }
 }
 
 ?>
@@ -61,7 +83,7 @@ if($_GET['category'])
                     <ul class="sf-menu dropdown">
 
                 
-                        <li class="selected"><a href="index.php"><i class="fa fa-home"></i> Home</a></li>
+                        <li><a href="index.php"><i class="fa fa-home"></i> Home</a></li>
 
                     
                         <li><a href="#"><i class="fa fa-database"></i> All Products</a> </li>
@@ -115,7 +137,20 @@ if($_GET['category'])
 
     <div id="body" class="width">
 
-        <form class="form-wrapper cf" action="search.php" method="post">
+        <div id="cart">
+            <?php 
+
+            $data = $productController->getTotalItemsAndPrice($_SESSION['uID']);
+            echo "Shopping Cart - ( Items: " . $data['items'] . "   -- Total Price: " . $data['price'] ." TK )";
+
+            ?>
+            
+            <a class="button" href="cart.php"> Go To Cart </a>
+
+        </div>
+
+
+        <form class="form-wrapper cf" action="search.php" method="get">
             <input type="text" placeholder="Search for any product..." required name="query"> <br>
             <button type="submit" name="submit" value="Submit">Search</button>
         </form>
@@ -126,7 +161,27 @@ if($_GET['category'])
         <?php 
         if($_GET['category'])
         {
-            categorizeProducts($dbCon, $category);
+            $data = $productController->getProductByCategory($category);
+
+            foreach ($data as $d) 
+            {
+                echo "
+                    <div id='single_product'>".
+                    $d[0]." <br>";
+
+                if($_SESSION['isAdmin'] == true)
+                {
+                    echo "Product ID: " . $d[3] . "<br>";
+                }
+
+                echo"<img src=\"data:image;base64," . $d[2] . "\" height=\"180\" width=\"180\">
+                    <br>Price: ". $d[1]." TK <br>
+                    <a href='#'> Details </a> <br>
+                    <a class='button' id='link' href='category.php?category=".$_GET['category']."&addToCart&pID=" . $d[3] . "' >Add To Cart!</a>
+                    </div>
+
+                    ";
+            }
         }
         ?>
         </div>
@@ -139,13 +194,38 @@ if($_GET['category'])
                     <ul class="blocklist">
                         <?php 
                         
-                        if($category == "laptop") echo "<li><a class='selected' href='category.php?category=laptop'>Laptops</a></li>";
-                        else echo "<li><a href='category.php?category=laptop'>Laptops</a></li>";
-                        if($category == "mobile") echo "<li><a class='selected' href='category.php?category=mobile'>Mobiles</a></li>";
-                        else echo "<li><a href='category.php?category=mobile'>Mobiles</a></li>";
-                        echo "<li><a href='#'>SOMETHING</a></li>";
-                        echo "<li><a href='#'>SOMETHING</a></li>";
-                        echo "<li><a href='#'>SOMETHING</a></li>";
+                        if($_GET['category'] == 1) echo "<li><a class='selected' href='category.php?category=1'>Anti-infectives</a></li>";
+                        else echo "<li><a style=\"font-weight: bold;\" href='category.php?category=1'>Anti-infectives</a></li>";
+
+                        if($_GET['category'] == 2) echo "<li><a class='selected' href='category.php?category=2'>Cough and Cold Relief</a></li>";
+                        else echo "<li><a style=\"font-weight: bold;\" href='category.php?category=2'>Cough and Cold Relief</a></li>";
+
+                        if($_GET['category'] == 3) echo "<li><a class='selected' href='category.php?category=3'>Diabetes Managements</a></li>";
+                        else echo "<li><a style=\"font-weight: bold;\" href='category.php?category=3'>Diabetes Managements</a></li>";
+
+                        if($_GET['category'] == 4) echo "<li><a class='selected' href='category.php?category=4'>Digestion and Nausea</a></li>";
+                        else echo "<li><a style=\"font-weight: bold;\" href='category.php?category=4'>Digestion and Nausea</a></li>";
+
+                        if($_GET['category'] == 5) echo "<li><a class='selected' href='category.php?category=5'>Eye, Nose and Ear Care</a></li>";
+                        else echo "<li><a style=\"font-weight: bold;\" href='category.php?category=5'>Eye, Nose and Ear Care</a></li>";
+
+                        if($_GET['category'] == 6) echo "<li><a class='selected' href='category.php?category=6'>Oral Care</a></li>";
+                        else echo "<li><a style=\"font-weight: bold;\" href='category.php?category=6'>Oral Care</a></li>";
+
+                        if($_GET['category'] == 7) echo "<li><a class='selected' href='category.php?category=7'>Pain and Fever Relief</a></li>";
+                        else echo "<li><a style=\"font-weight: bold;\" href='category.php?category=7'>Pain and Fever Relief</a></li>";
+
+                        if($_GET['category'] == 8) echo "<li><a class='selected' href='category.php?category=8'>Respiratory and Cardiovascular</a></li>";
+                        else echo "<li><a style=\"font-weight: bold;\" href='category.php?category=8'>Respiratory and Cardiovascular</a></li>";
+
+                        if($_GET['category'] == 9) echo "<li><a class='selected' href='category.php?category=9'>Skin Care</a></li>";
+                        else echo "<li><a style=\"font-weight: bold;\" href='category.php?category=9'>Skin Care</a></li>";
+
+                        if($_GET['category'] == 10) echo "<li><a class='selected' href='category.php?category=10'>Vitamins and Minerals</a></li>";
+                        else echo "<li><a style=\"font-weight: bold;\" href='category.php?category=10'>Vitamins and Minerals</a></li>";
+
+
+                        
                         ?>
                     </ul>
                 </li>  
