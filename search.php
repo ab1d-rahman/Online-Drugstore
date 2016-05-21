@@ -41,12 +41,50 @@ session_regenerate_id();
 
 include_once "controllers/productController.php";
 
-if($_POST['submit'])
+if($_GET['submit'])
 {
-    $query = $_POST['query'];
+    $query = $_GET['query'];
     $query = htmlspecialchars($query, ENT_QUOTES, 'UTF-8');
     $query =  mysqli_real_escape_string(mysqli_connect("localhost", "root", "root", "doctor"), $query);
 }
+
+
+if(isset($_GET['addToCart']))
+{
+    if($_SESSION['isUser'] == false)
+    {
+        ?>
+        <script type="text/javascript">
+            alert("You need to be logged in as a user to add items to cart.");
+        </script>
+
+        <?php 
+    }
+
+    else
+    {
+        if($productController->addProductToCart($_GET['pID'], $_SESSION['uID']) == "Successful")
+        {
+            ?>
+            <script type="text/javascript">
+                alert("Product successfully added to cart");
+            </script>
+
+            <?php 
+        }
+
+        else
+        {
+            ?>
+            <script type="text/javascript">
+                alert("Error: Already added to cart/ No such product");
+            </script>
+
+            <?php 
+        }
+    }
+}
+
 
 ?>
 <div id="container">
@@ -113,7 +151,20 @@ if($_POST['submit'])
 
     <div id="body" class="width">
 
-        <form class="form-wrapper cf" action="search.php" method="post">
+        <div id="cart">
+            <?php 
+
+            $data = $productController->getTotalItemsAndPrice($_SESSION['uID']);
+            echo "Shopping Cart - ( Items: " . $data['items'] . "   -- Total Price: " . $data['price'] ." TK )";
+
+            ?>
+            
+            <a class="button" href="cart.php"> Go To Cart </a>
+
+        </div>
+
+
+        <form class="form-wrapper cf" action="search.php" method="get">
             <input type="text" placeholder="Search for any product..." required name="query"> <br>
             <button type="submit" name="submit" value="Submit">Search</button>
         </form>
@@ -123,7 +174,7 @@ if($_POST['submit'])
         <h2 id="banner"> Search results for: <?php echo $query; ?></h2>
 
         <?php 
-        if($_POST['submit'])
+        if($_GET['submit'])
         {
             $data = $productController->getSearchedProducts($query);
 
@@ -141,7 +192,7 @@ if($_POST['submit'])
                 echo"<img src=\"data:image;base64," . $d[2] . "\" height=\"180\" width=\"180\">
                     <br>Price: ". $d[1]." TK <br>
                     <a href='#'> Details </a> <br>
-                    <a class='button' id='link' href='index.php?addToCart&pID=" . $d[3] . "' >Add To Cart!</a>
+                    <a class='button' id='link' href='search.php?query=".$query."&submit=Submit&addToCart&pID=" . $d[3] . "' >Add To Cart!</a>
                     </div>
 
                     ";

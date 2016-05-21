@@ -157,7 +157,7 @@ if(isset($_GET['addToCart']))
 
         </div>
 
-        <form class="form-wrapper cf" action="search.php" method="post">
+        <form class="form-wrapper cf" action="search.php" method="get">
             <input type="text" placeholder="Search for any product..." required name="query"> <br>
             <button type="submit" name="submit" value="Submit">Search</button>
         </form>
