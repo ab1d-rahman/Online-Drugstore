@@ -138,36 +138,28 @@ if($_SESSION['isDoc'] == true)
 	{
 		$dID = $_GET['dID'];
 
-		$sql = "SELECT * FROM doctorInfo WHERE dID='$dID'";
-		$query = mysqli_query($dbCon, $sql);
-		if($query)
-		{
-			$row = mysqli_fetch_row($query);
-			$name = $row[1];
-			$email = $row[4];
-			$specialty = $row[5];
+		$data = $doctorController->getDoctorProfile($dID);
 
-			echo "<img src=\"data:image;base64," . $row[6] . "\" style=\"float:right; margin: 0 0 10px 10px;\" height=\"250\" width=\"250\">";
-			echo "<h3>Name: $name<br>Email: $email<br>Specialty: $specialty<br></h3>";
-		}
+		echo "<img src=\"data:image;base64," . $data['image'] . "\" style=\"float:right; margin: 0 0 10px 10px;\" height=\"250\" width=\"250\">";
+		echo "<h3>Name: ". $data['name'] . "<br><br>Email: ". $data['email'] . "<br><br>Specialty: ". $data['specialty'] . "</h3>";
+		
 
+		
 		echo "<br><br><br><br><br><h2>Schedule</h2>";
 
-		$sql = "SELECT * FROM doctorSchedule WHERE dID='$dID' order by date asc, time asc";
-		$query = mysqli_query($dbCon, $sql);
-		if($query){
+		$data = $doctorController->getDoctorSchedule($dID);
 
-		echo "<table><tr><th>Date</th><th>Time</th><th>Maximum<br>Appointments</th><th>Appointments<br>Taken</th></tr>";
-		while($row = mysqli_fetch_assoc($query)) {
-			$date = substr($row["date"], 8, 2) . substr($row["date"], 4, 4) . substr($row["date"], 0, 4);
-		        echo "<tr><td>".$date."</td><td>".$row["time"]."</td><td>".$row["maxapp"]."</td><td>".$row["apptaken"]."</td>
-		        </tr><br>";
-		    }
-		}
+		echo "<table><tr><th>Date</th><th>Time</th><th>Maximum<br>Appointments</th><th>Appointments<br>Taken</th><th></th></tr>";
+		foreach ($data as $d) 
+		{
+			$date = substr($d[0], 8, 2) . substr($d[0], 4, 4) . substr($d[0], 0, 4);
 
-		?>
-		</table> <br> <br>
-		<?php 
+			echo "<tr><td>". $date ."</td><td>". $d[1] ."</td><td>". $d[2] ."</td><td>". $d[3] ."</td>
+		        <td></td></tr><br>";
+		}		
+
+	
+		echo "</table>";
 	}
 	
 }
