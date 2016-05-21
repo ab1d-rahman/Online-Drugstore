@@ -1,13 +1,12 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-<title>Doctor Login</title>
+<title>Admin Login</title>
 
 
 <link rel="stylesheet" href="css/reset.css" type="text/css" />
 <link rel="stylesheet" href="css/styles.css" type="text/css" />
 <link rel="stylesheet" href="font-awesome/css/font-awesome.min.css" type="text/css">
-
 
 
 <meta name="viewport" content="width=device-width, minimum-scale=1.0, maximum-scale=1.0" />
@@ -42,7 +41,6 @@
                 			<ul>
 	                			<li><a href="userLogin.php">As User</a></li>
 	                   			<li><a href="doctorLogin.php">As Doctor</a></li>
-                                <li><a href="adminLogin.php">As Admin</a></li>
                 			</ul>
                 		</li>
 
@@ -73,7 +71,8 @@ error_reporting(~E_NOTICE);
 session_start();
 session_regenerate_id();
 
-include_once "controllers/doctorController.php";
+include_once "controllers/userController.php";
+
 
 if($_POST['submit'])
 {
@@ -82,19 +81,21 @@ if($_POST['submit'])
             'password' => $_POST['password']            
         );
 
-    
-    if($doctorController->loginDoctor($data) == "Successful")
-    {       
-        header("Location: index.php");
-    }
+
+
+	if($userController->loginAdmin($data) == "Successful")
+	{		
+		header("Location: index.php");
+	}
 
 	else 
 	{		
 		?>
 
-	   <script type="text/javascript">
+		<script type="text/javascript">
 			alert("Invalid Username / Password!");
-		</script>		
+		</script>
+
 
 	<?php 
 		
@@ -102,7 +103,7 @@ if($_POST['submit'])
 	}
 } 
 
-else if($_SESSION['username'] && $_SESSION['isUser'] == false && $_SESSION['isDoc'] == true)
+else if($_SESSION['username'])
 {
 	header("Location: index.php");
 }
@@ -110,9 +111,11 @@ else if($_SESSION['username'] && $_SESSION['isUser'] == false && $_SESSION['isDo
 
 ?>
 
+
+
         <section class="login">
-        	<div class="titulo">Doctor Login</div>
-        	<form action="doctorLogin.php" method="post" >
+        	<div class="titulo">Admin Login</div>
+        	<form action="adminLogin.php" method="post" >
             	<input type="text" required title="Username required" placeholder="Username"  name="username">
                 <input type="password" required title="Password required" placeholder="Password"  name="password">
                 <div class="olvido">
@@ -123,10 +126,9 @@ else if($_SESSION['username'] && $_SESSION['isUser'] == false && $_SESSION['isDo
         </section>
 
 
-
  	</div>
 
-</div>
+ </div>
 
 
 <div id="footer">

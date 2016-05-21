@@ -6,6 +6,29 @@ include_once "myFunctions.php";
 session_start();
 session_regenerate_id();	
 
+function insertProduct($data)
+{
+	$dbCon = mysqli_connect("localhost", "root", "root", "doctor");
+
+
+	$name = cleanInput($dbCon, $data['name']);
+	$price = cleanInput($dbCon, $data['price']);
+	$description = cleanInput($dbCon, $data['description']);
+	$category = cleanInput($dbCon, $data['category']);
+	$keywords = cleanInput($dbCon, $data['keywords']);
+
+
+	$image = addslashes($data['image']);
+	$image = file_get_contents($image);	
+	$image = base64_encode($image);
+
+
+	$sql = "INSERT INTO products (name, price, category, description, keywords, image) 
+			VALUES ('$name', '$price', '$category', '$description', '$keywords', '$image')";
+	$query = mysqli_query($dbCon, $sql);
+	return $query;
+}
+
 
 function allProducts()
 {
@@ -26,6 +49,82 @@ function allProducts()
 
 	return $data;
 }
+
+function updateProduct($data)
+{
+	$dbCon = mysqli_connect("localhost", "root", "root", "doctor");
+
+	$pID = $data['pID'];
+	// echo implode(" ",$data);
+	$sql = "UPDATE products SET ";
+
+	if($data['name'])
+	{
+		$name = $data['name'];
+		$sql = $sql . "name = '$name',";
+
+	} 
+
+	if($data['price'])
+	{
+		$price = $data['price'];
+		$sql = $sql . " price = '$price',";
+
+	} 
+
+	if($data['description'])
+	{
+		$description= $data['description'];
+		$sql = $sql . " description = '$description',";
+
+	} 
+
+	if($data['keywords'])
+	{
+		$keywords = $data['keywords'];
+		$sql = $sql . " keywords = '$keywords',";
+
+	} 
+
+	if($data['category'])
+	{
+		$category = $data['category'];
+		$sql = $sql . " category = '$category',";
+
+	} 
+
+	if($data['image'])
+	{
+		$image = addslashes($data['image']);
+		$image = file_get_contents($image);	
+		$image = base64_encode($image);
+		$sql = $sql . " image = '$image',";
+
+	} 
+
+	$sql = rtrim($sql, ',');
+
+	$sql = $sql . " WHERE pID='$pID'";
+
+	// echo "\n" . $sql;
+
+	$query = mysqli_query($dbCon, $sql);
+
+	return $query;
+}
+
+
+function deleteProduct($pID)
+{
+	$dbCon = mysqli_connect("localhost", "root", "root", "doctor");
+
+	$pID = cleanInput($dbCon, $pID);
+	
+	$sql = "DELETE FROM products WHERE pID='$pID'";
+	$query = mysqli_query($dbCon, $sql);
+	return $query;
+}
+
 
 function searchedProducts($query)
 {

@@ -44,6 +44,24 @@ class productController
 	{
 		removeFromCart($pID, $uID);
 	}
+
+	public function addProduct($data)
+	{
+		if(insertProduct($data)) return "Successful";
+		return "Error";
+	}
+
+	public function editProduct($data)
+	{
+		if(updateProduct($data)) return "Successful";
+		return "Error";
+	}
+
+	public function removeProduct($data)
+	{
+		if(deleteProduct($data)) return "Successful";
+		return "Error";
+	}
 }
 
 

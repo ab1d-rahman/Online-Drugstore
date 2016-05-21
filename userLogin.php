@@ -1,12 +1,12 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-<title>city - Free CSS Template by ZyPOP</title>
+<title>User Login</title>
 
 
 <link rel="stylesheet" href="css/reset.css" type="text/css" />
 <link rel="stylesheet" href="css/styles.css" type="text/css" />
-<link href="http://maxcdn.bootstrapcdn.com/font-awesome/4.1.0/css/font-awesome.min.css" rel="stylesheet">
+<link rel="stylesheet" href="font-awesome/css/font-awesome.min.css" type="text/css">
 
 
 <!--[if lt IE 9]>
@@ -57,6 +57,7 @@ License: Creative Commons Attribution
                 			<ul>
 	                			<li><a href="userLogin.php">As User</a></li>
 	                   			<li><a href="doctorLogin.php">As Doctor</a></li>
+                                <li><a href="adminLogin.php">As Admin</a></li>
                 			</ul>
                 		</li>
 

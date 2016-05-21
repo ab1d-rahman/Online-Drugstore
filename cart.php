@@ -64,7 +64,7 @@ if($_SESSION['isUser'] == false)
                         if($_SESSION['username'])
                         {
                         ?>              
-                            <li><a href=<?php if($_SESSION['isUser'] == true) echo "userProfile.php"; else echo "doctorProfile.php" ?>><i class="fa fa-user"></i> <?php echo $_SESSION['name']; ?> </a>
+                            <li><a href=<?php if($_SESSION['isUser'] == true) echo "userProfile.php"; else if($_SESSION['isDoc'] == true) echo "doctorProfile.php"; else echo "adminActions.php"; ?>><i class="fa fa-user"></i> <?php echo $_SESSION['name']; ?> </a>
                             <li><a href="logout.php"><i class="fa fa-sign-in"></i> Logout </a></li>
 
                         <?php

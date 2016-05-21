@@ -72,8 +72,8 @@ if($_POST['submit'])
         				if($_SESSION['username'])
         				{
         				?>				
-        					<li><a href=<?php if($_SESSION['isUser'] == true) echo "userProfile.php"; else echo "doctorProfile.php" ?>><i class="fa fa-user"></i> <?php echo $_SESSION['name']; ?> </a>
-        					<li><a href="logout.php"><i class="fa fa-sign-in"></i> Logout </a></li>
+        					<li><a href=<?php if($_SESSION['isUser'] == true) echo "userProfile.php"; else if($_SESSION['isDoc'] == true) echo "doctorProfile.php"; else echo "adminActions.php"; ?>><i class="fa fa-user"></i> <?php echo $_SESSION['name']; ?> </a>
+                            <li><a href="logout.php"><i class="fa fa-sign-in"></i> Logout </a></li>
 
         				<?php
         				}
@@ -131,12 +131,17 @@ if($_POST['submit'])
             {
                 echo "
                     <div id='single_product'>".
-                    $d[0]." <br>
-                    <img src=\"data:image;base64," . $d[2] . "\" height=\"180\" width=\"180\">
-                    <br>".
-                    $d[1]." TK <br>
+                    $d[0]." <br>";
+
+                if($_SESSION['isAdmin'] == true)
+                {
+                    echo "Product ID: " . $d[3] . "<br>";
+                }
+
+                echo"<img src=\"data:image;base64," . $d[2] . "\" height=\"180\" width=\"180\">
+                    <br>Price: ". $d[1]." TK <br>
                     <a href='#'> Details </a> <br>
-                    <a class='button' id='link' href='#' >Add To Cart!</a>
+                    <a class='button' id='link' href='index.php?addToCart&pID=" . $d[3] . "' >Add To Cart!</a>
                     </div>
 
                     ";

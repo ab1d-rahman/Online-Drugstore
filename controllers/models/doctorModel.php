@@ -53,7 +53,8 @@ function authenticateDoctor($data)
 			$_SESSION['username'] = $username;
 			$_SESSION['name'] = $row[3];
 			$_SESSION['isDoc'] = true;
-			$_SESSION['isUser'] = false;
+			$_SESSION['isUser'] = false;			
+			$_SESSION['isAdmin'] = false;
 			$_SESSION['dID'] = $row[2];
 			return "Success";
 		}

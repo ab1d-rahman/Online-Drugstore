@@ -38,6 +38,7 @@
                 			<ul>
 	                			<li><a href="userLogin.php">As User</a></li>
 	                   			<li><a href="doctorLogin.php">As Doctor</a></li>
+	                   			<li><a href="adminLogin.php">As Admin</a></li>
                 			</ul>
                 		</li>
 

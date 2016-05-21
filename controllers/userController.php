@@ -35,6 +35,12 @@ class userController
 	{
 		return checkAppointment($sID, $uID);
 	}
+
+	public function loginAdmin($data)
+	{
+		if(authenticateAdmin($data)) return "Successful";
+		return "Error";
+	}
 }
 
 

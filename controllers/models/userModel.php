@@ -51,8 +51,43 @@ function authenticateUser($data)
 			$_SESSION['username'] = $username;
 			$_SESSION['name'] = $row[3];
 			$_SESSION['isDoc'] = false;
-			$_SESSION['isUser'] = true;
+			$_SESSION['isUser'] = true;			
+			$_SESSION['isAdmin'] = false;
 			$_SESSION['uID'] = $row[2];
+			return "Success";
+		}
+		return null;
+	}
+
+	return null;
+
+
+}
+
+function authenticateAdmin($data)
+{
+	$dbCon = mysqli_connect("localhost", "root", "root", "doctor");
+	
+	$username = cleanInput($dbCon, $data['username']);
+	$password = cleanInput($dbCon, $data['password']);
+
+	$sql = "SELECT username, password, adID FROM adminInfo WHERE username='$username'";
+	$query = mysqli_query($dbCon, $sql);
+
+	if($query)
+	{
+		$row = mysqli_fetch_row($query);
+		$DBusenrame = $row[0];
+		$DBpassword = $row[1];
+
+		if($username == $DBusenrame && $password == $DBpassword)
+		{
+			$_SESSION['username'] = $username;	
+			$_SESSION['name'] = "Admin";		
+			$_SESSION['isDoc'] = false;
+			$_SESSION['isUser'] = false;
+			$_SESSION['isAdmin'] = true;
+			$_SESSION['adID'] = $row[2];
 			return "Success";
 		}
 		return null;
