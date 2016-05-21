@@ -122,6 +122,10 @@ function deleteProduct($pID)
 	
 	$sql = "DELETE FROM products WHERE pID='$pID'";
 	$query = mysqli_query($dbCon, $sql);
+
+	$sql = "DELETE FROM cart WHERE pID='$pID'";
+	$query = mysqli_query($dbCon, $sql);
+
 	return $query;
 }
 
