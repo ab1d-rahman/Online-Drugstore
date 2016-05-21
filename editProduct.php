@@ -155,8 +155,16 @@ if($_POST['submit'])
 			    	<textarea name="keywords" cols="29" rows="2" placeholder="Keywords"></textarea>
 			    	<br><br> Category: 
 					<select name="category">
-					  <option value="Mobile">Mobile</option>
-					  <option value="Laptop">Laptop</option>
+					  <option value="Anti-infectives">Anti-infectives</option>
+                      <option value="Cough and Cold Relief">Cough and Cold Relief</option>
+                      <option value="Diabetes Managements">Diabetes Managements</option>
+                      <option value="Digestion and Nausea">Digestion and Nausea</option>
+                      <option value="Eye, Nose and Ear Care">Eye, Nose and Ear Care</option>
+                      <option value="Oral Care">Oral Care</option>
+                      <option value="Pain and Fever Relief">Pain and Fever Relief</option>
+                      <option value="Respiratory and Cardiovascular">Respiratory and Cardiovascular</option>
+                      <option value="Skin Care">Skin Care</option>
+                      <option value="Vitamins and Minerals">Vitamins and Minerals</option>
 					</select> 
 			        <br> <br>
 			        Image: <input type="file" name="image">
