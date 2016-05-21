@@ -34,7 +34,7 @@ function allProducts()
 {
 	$dbCon = mysqli_connect("localhost", "root", "root", "doctor");
 
-	$sql = "SELECT * FROM products";
+	$sql = "SELECT * FROM products ORDER BY name asc";
 	$query = mysqli_query($dbCon, $sql);
 	$r = 0;
 
