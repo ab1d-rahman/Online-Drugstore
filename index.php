@@ -167,7 +167,7 @@ if(isset($_GET['addToCart']))
             <h2 id="banner"> Latest Products </h2>
             <?php 
 
-            $data = $productController->getAllProducts();
+            $data = $productController->getLatesProducts();
 
             foreach ($data as $d) 
             {

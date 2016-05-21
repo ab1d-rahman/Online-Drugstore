@@ -50,6 +50,26 @@ function allProducts()
 	return $data;
 }
 
+function latestProducts()
+{
+	$dbCon = mysqli_connect("localhost", "root", "root", "doctor");
+
+	$sql = "SELECT * FROM products ORDER BY pID desc LIMIT 8";
+	$query = mysqli_query($dbCon, $sql);
+	$r = 0;
+
+	while($row = mysqli_fetch_assoc($query)) 
+	{
+		$data[$r][0] = $row['name'];
+		$data[$r][1] = $row['price'];
+		$data[$r][2] = $row['image'];
+		$data[$r][3] = $row['pID'];
+		$r++;
+	}
+
+	return $data;
+}
+
 function categoricalProducts($category)
 {
 	$dbCon = mysqli_connect("localhost", "root", "root", "doctor");

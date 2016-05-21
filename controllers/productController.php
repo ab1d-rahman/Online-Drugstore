@@ -67,6 +67,11 @@ class productController
 	{
 		return categoricalProducts($category);
 	}
+
+	public function getLatesProducts()
+	{
+		return latestProducts();
+	}
 }
 
 
