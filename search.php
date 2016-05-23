@@ -1,37 +1,15 @@
 <html>
 <head>
-<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-<title>city - Free CSS Template by ZyPOP</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>All Products</title>
 
-
-<link rel="stylesheet" href="css/reset.css" type="text/css" />
-<link rel="stylesheet" href="css/styles.css" type="text/css" />
-<link href="http://maxcdn.bootstrapcdn.com/font-awesome/4.1.0/css/font-awesome.min.css" rel="stylesheet">
-
-
-<!--[if lt IE 9]>
-<script src="http://html5shiv.googlecode.com/svn/trunk/html5.js"></script>
-<![endif]
-
-<script type="text/javascript" src="js/jquery.js"></script>
-<script type="text/javascript" src="js/slider.js"></script>
-<script type="text/javascript" src="js/superfish.js"></script>
-
-<script type="text/javascript" src="js/custom.js"></script> -->
-
-<meta name="viewport" content="width=device-width, minimum-scale=1.0, maximum-scale=1.0" />
-
-<!--
-city, a free CSS web template by ZyPOP (zypopwebtemplates.com/)
-
-Download: http://zypopwebtemplates.com/
-
-License: Creative Commons Attribution
-//-->
+    <link rel="stylesheet" href="bootstrap/css/bootstrap.css">
 </head>
-
-
 <body>
+
+<script type="text/javascript" src="bootstrap/js/jquery.min.js"></script>
+<script type="text/javascript" src="bootstrap/js/bootstrap.min.js"></script>
+
 
 <?php
 
@@ -47,7 +25,6 @@ if($_GET['submit'])
     $query = htmlspecialchars($query, ENT_QUOTES, 'UTF-8');
     $query =  mysqli_real_escape_string(mysqli_connect("localhost", "root", "root", "doctor"), $query);
 }
-
 
 if(isset($_GET['addToCart']))
 {
@@ -85,194 +62,168 @@ if(isset($_GET['addToCart']))
     }
 }
 
+$cartItems = 0;
+
+if($_SESSION['isUser'] == true)
+{
+    $data = $productController->getTotalItemsAndPrice($_SESSION['uID']);
+    $cartItems = $data['items'];
+}
 
 ?>
-<div id="container">
 
-    <div id="header"> 
-
-	   <div class="width">
-
-    	   <h1><a href="index.php">Online<strong>DrugStore</strong></a></h1>
-		      <nav>
-	
-        			<ul class="sf-menu dropdown">
-
-    			
-                		<li><a href="index.php"><i class="fa fa-home"></i> Home</a></li>
-
-                    
-        				<li><a href="#"><i class="fa fa-database"></i> All Products</a> </li>
-                    
-        				<li><a href="#"><i class="fa fa-phone"></i> Contact</a></li>
-
-        				<?php
-        				if($_SESSION['username'])
-        				{
-        				?>				
-        					<li><a href=<?php if($_SESSION['isUser'] == true) echo "userProfile.php"; else if($_SESSION['isDoc'] == true) echo "doctorProfile.php"; else echo "adminActions.php"; ?>><i class="fa fa-user"></i> <?php echo $_SESSION['name']; ?> </a>
-                            <li><a href="logout.php"><i class="fa fa-sign-in"></i> Logout </a></li>
-
-        				<?php
-        				}
-
-        				else
-        				{
-        				?>
-                        <li><a href="#"><i class="fa fa-sign-in"></i> Sign In</a>
-                        	<ul>
-                        			<li><a href="userLogin.php">As User</a></li>
-                           			<li><a href="doctorLogin.php">As Doctor</a></li>
-                        	</ul>
-                        </li>
-                        <li><a href="#"><i class="fa fa-key"></i> Register</a>
-                        	<ul>
-                        			<li><a href="userRegister.php">As User</a></li>
-                           			<li><a href="doctorRegister.php">As Doctor</a></li>
-                        	</ul>
-                        </li>
-                        <?php
-                    	}
-                        ?>
-
-           			</ul>
-
-    			
-    		  </nav>
-       	</div>
-
-	    <div class="clear"></div>
-
-       
+<nav class="navbar navbar-inverse navbar-fixed-top">
+  <div class="container-fluid">
+    <div class="navbar-header">
+      <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
+        <span class="sr-only">Toggle navigation</span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+      <h1><a class="navbar-brand" href="index.php">Online<myTag style="color: #2A5BBB;">DrugStore</myTag></a></h1>
     </div>
 
-    
-
-
-    <div id="body" class="width">
-
-        <div id="cart">
-            <?php 
-
-            $data = $productController->getTotalItemsAndPrice($_SESSION['uID']);
-            echo "Shopping Cart - ( Items: " . $data['items'] . "   -- Total Price: " . $data['price'] ." TK )";
-
-            ?>
-            
-            <a class="button" href="cart.php"> Go To Cart </a>
-
+    <!-- Collect the nav links, forms, and other content for toggling -->
+    <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+      <ul class="nav navbar-nav navbar-left">
+        <li class="active"><a href="index.php"><span class="glyphicon glyphicon-home"></span> Home</a></li>
+        <li><a href="allProducts.php"><span class="glyphicon glyphicon-list"></span> All Products</a></li>
+        <li class="dropdown">
+          <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">
+                    <span class="glyphicon glyphicon-phone-alt"></span> Contact Us<span class="caret"></span></a>
+          <ul class="dropdown-menu">            
+            <li><p style="margin-left: 15px">Hotline: 01XXXXXXX</p></li>
+            <li role="separator" class="divider"></li>
+            <li><p style="margin-left: 15px">E-mail: help@drugstore.com</p></li>
+          </ul>
+        </li>
+      </ul>
+      <form class="navbar-form navbar-right" role="search" style="line-height: 50px;" action="search.php" method="get">
+        <div class="form-group" >           
+            <input type="text" class="form-control" placeholder="Search for any product..." required name="query">                   
         </div>
-
-
-        <form class="form-wrapper cf" action="search.php" method="get">
-            <input type="text" placeholder="Search for any product..." required name="query"> <br>
-            <button type="submit" name="submit" value="Submit">Search</button>
-        </form>
-
-
-        <div id="products_box">
-        <h2 id="banner"> Search results for: <?php echo $query; ?></h2>
-
-        <?php 
-        if($_GET['submit'])
+        <button type="submit" class="btn btn-default" name="submit" value="Submit"><span class="glyphicon glyphicon-search"></span>Search</button> 
+      </form>
+      <ul class="nav navbar-nav navbar-right">       
+        <li><a href="cart.php"><span class="glyphicon glyphicon-shopping-cart" style="color: #57C5A0;"><?php echo $cartItems; ?></span> Cart</a></li>
+        
+        <?php
+        if($_SESSION['username'])
         {
-            $data = $productController->getSearchedProducts($query);
+        ?>
+        <li><a href=<?php if($_SESSION['isUser'] == true) echo "userProfile.php"; else if($_SESSION['isDoc'] == true) echo "doctorProfile.php"; else echo "adminActions.php"; ?>><span class="glyphicon glyphicon-user"></span> <?php echo $_SESSION['name']; ?></a></li>
 
-            foreach ($data as $d) 
-            {
-                echo "
-                    <div id='single_product'>".
-                    $d[0]." <br>";
+        <li><a href="logout.php"><span class="glyphicon glyphicon-log-out"></span> Logout</a></li>
 
-                if($_SESSION['isAdmin'] == true)
-                {
-                    echo "Product ID: " . $d[3] . "<br>";
-                }
+        <?php
+        }
 
-                echo"<img src=\"data:image;base64," . $d[2] . "\" height=\"180\" width=\"180\">
-                    <br>Price: ". $d[1]." TK <br>
-                    <a href='#'> Details </a> <br>
-                    <a class='button' id='link' href='search.php?query=".$query."&submit=Submit&addToCart&pID=" . $d[3] . "' >Add To Cart!</a>
-                    </div>
+        else
+        {
+        ?>
 
-                    ";
-            }
+        <li class="dropdown">        
+          <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">
+                        <span class="glyphicon glyphicon-log-in"></span> Login<span class="caret"></span></a>
+          <ul class="dropdown-menu">
+            <li><a href="userLogin.php">As User</a></li>
+            <li role="separator" class="divider"></li>
+            <li><a href="doctorLogin.php">As Doctor</a></li>
+            <li role="separator" class="divider"></li>
+            <li><a href="adminLogin.php">As Admin</a></li>
+          </ul>
+        </li>
+        <li class="dropdown">
+          <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">
+                            <span class="glyphicon glyphicon-share"></span> Sign Up<span class="caret"></span></a>
+          <ul class="dropdown-menu">
+            <li><a href="userRegister.php">As User</a></li>
+            <li role="separator" class="divider"></li>
+            <li><a href="doctorRegister.php">As Doctor</a></li>
+          </ul>
+        </li>
 
+        <?php
         }
         ?>
 
+      </ul>
+    </div><!-- /.navbar-collapse -->
+  </div><!-- /.container-fluid -->
+</nav>
+
+
+
+<div class="container">
+    <div class="row">
+        <div class="col-lg-9 col-md-9 col-sm-9 col-xs-9">
+            <div class="panel panel-default">
+                <div class="panel-body">Search results for: <?php echo $query; ?></div>
+            </div>
+
+            <?php 
+
+            if($_GET['submit'])
+            {
+
+                $data = $productController->getSearchedProducts($query);
+
+                foreach ($data as $d) 
+                {
+                    echo "<div class=\"col-lg-3 col-md-3 col-sm-3 col-xs-3\" style=\"height: 380px; width: 250px; margin: 10px 10px 10px 10px;\">
+                    <div class=\"thumbnail\" style=\"height: 380px; width: 250px;\">
+                        <img src=\"data:image;base64," . $d[2] . "\" style=\"height: 180px; width: 180px;\" alt=\"...\">
+                        <div class=\"caption\">
+                            <p style=\"text-align: center; font-weight: bold;\">" . $d[0] . "</p>
+                            <p style=\"text-align: center;\">";
+                            if($_SESSION['isAdmin'] == true)
+                            {
+                                echo "Product ID: " . $d[3] . "<br>";
+                            }
+
+                            echo "Price: ". $d[1]." TK <br>
+                            <a href='#'> Details </a> <br>
+                            </p>
+                            <p style=\"text-align: center;\"><a href=\"search.php?query=".$query."&submit=Submit&addToCart&pID=" . $d[3] . "\" class=\"btn btn-primary\" role=\"button\"><span class=\"glyphicon glyphicon-shopping-cart\" ></span> Add To Cart</a></p>
+                        </div>
+                    </div>
+                </div>";
+
+                }
+            }
+
+            ?>      
+            
         </div>
-        
-        <div class="sidebar small-sidebar right-sidebar" >
-	
-            <ul>	
-               <li>
-                    <h4>Categories</h4>
-                    <ul class="blocklist">
-                        <li><a href="category.php?category=1" style="font-weight: bold;">Anti-infectives</a></li>
-                        <li><a href="category.php?category=2" style="font-weight: bold;">Cough and Cold Relief</a></li>
-                        <li><a href="category.php?category=3" style="font-weight: bold;">Diabetes Managements</a></li>
-                        <li><a href="category.php?category=4" style="font-weight: bold;">Digestion and Nausea</a></li>
-                        <li><a href="category.php?category=5" style="font-weight: bold;">Eye, Nose and Ear Care</a></li>
-                        <li><a href="category.php?category=6" style="font-weight: bold;">Oral Care</a></li>
-                        <li><a href="category.php?category=7" style="font-weight: bold;">Pain and Fever Relief</a></li>
-                        <li><a href="category.php?category=8" style="font-weight: bold;">Respiratory and Cardiovascular</a></li>
-                        <li><a href="category.php?category=9" style="font-weight: bold;">Skin Care</a></li>
-                        <li><a href="category.php?category=10" style="font-weight: bold;">Vitamins and Minerals</a></li>
-                    </ul>
-                </li>  
-            </ul>
-		
+
+        <div class="col-lg-3 col-md-3 col-sm-3 col-xs-4" >
+            <h3 style="text-align: center;">Categories</h3>
+            <div class="list-group">
+                <a href="category.php?category=1" class="list-group-item" style="font-weight: bold;">Anti-infectives</a>
+                <a href="category.php?category=2" class="list-group-item" style="font-weight: bold;">Cough and Cold Relief</a>
+                <a href="category.php?category=3" class="list-group-item" style="font-weight: bold;">Diabetes Managements</a>
+                <a href="category.php?category=4" class="list-group-item" style="font-weight: bold;">Digestion and Nausea</a>
+                <a href="category.php?category=5" class="list-group-item" style="font-weight: bold;">Eye, Nose and Ear Care</a>
+                <a href="category.php?category=6" class="list-group-item" style="font-weight: bold;">Oral Care</a>
+                <a href="category.php?category=7" class="list-group-item" style="font-weight: bold;">Pain and Fever Relief</a>
+                <a href="category.php?category=8" class="list-group-item" style="font-weight: bold;">Respiratory and Cardiovascular</a>
+                <a href="category.php?category=9" class="list-group-item" style="font-weight: bold;">Skin Care</a>
+                <a href="category.php?category=10" class="list-group-item" style="font-weight: bold;">Vitamins and Minerals</a>
+            </div>
         </div>
-
-
-    	<div class="clear"> </div>
-
-
-
-    </div>
-
+    </div>  
 </div>
 
 
-<div id="footer">
-    <div class="footer-content width">
-        
-        
-        <ul class="endfooter">
 
-        	<li><h4>SHARE</h4></li>
-
-            <li>Share our website on social media. <br /><br />
-
-                <div class="social-icons">
-
-                    <a href="#"><i class="fa fa-facebook fa-2x"></i></a>
-                    <a href="#"><i class="fa fa-twitter fa-2x"></i></a>
-                    <a href="#"><i class="fa fa-youtube fa-2x"></i></a>
-                    <a href="#"><i class="fa fa-instagram fa-2x"></i></a>
-
-                </div>
-
-            </li>
-
-         </ul>
-                    
-        <div class="clear"></div>
-
+<footer>
+    <div class="container-fluid" style="background: black; color: white; height: 70px; margin-top: 200px;">
+        <div class="row">
+            <h4 style="line-height: 50px; text-align: center;">Copyright &copy;2016 Abid, Salim, Jubayer</h4>
+        </div>
     </div>
-
-    <div class="footer-bottom">
-
-        <p>&copy;Abid, Rony, Saqib!2016</p>
-
-    </div>
-
-</div>
-
-
-
+</footer>
 
 </body>
 </html>
-
