@@ -99,7 +99,7 @@ if($_SESSION['isUser'] == true)
         <button type="submit" class="btn btn-default" name="submit" value="Submit"><span class="glyphicon glyphicon-search"></span>Search</button> 
       </form>
       <ul class="nav navbar-nav navbar-right">       
-        <li><a href="#"><span class="glyphicon glyphicon-shopping-cart" style="color: #57C5A0;"><?php echo $cartItems; ?></span> Cart</a></li>
+        <li><a href="cart.php"><span class="glyphicon glyphicon-shopping-cart" style="color: #57C5A0;"><?php echo $cartItems; ?></span> Cart</a></li>
         
         <?php
         if($_SESSION['username'])
@@ -250,7 +250,7 @@ if($_SESSION['isUser'] == true)
         <div class="col-lg-3 col-md-3 col-sm-3 col-xs-4" >
             <h3 style="text-align: center;">Categories</h3>
             <div class="list-group">
-                <a href="category.php?category=1" class="list-group-item active" style="font-weight: bold;">Anti-infectives</a>
+                <a href="category.php?category=1" class="list-group-item" style="font-weight: bold;">Anti-infectives</a>
                 <a href="category.php?category=2" class="list-group-item" style="font-weight: bold;">Cough and Cold Relief</a>
                 <a href="category.php?category=3" class="list-group-item" style="font-weight: bold;">Diabetes Managements</a>
                 <a href="category.php?category=4" class="list-group-item" style="font-weight: bold;">Digestion and Nausea</a>
