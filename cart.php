@@ -71,7 +71,7 @@ if($_SESSION['isUser'] == true)
     <!-- Collect the nav links, forms, and other content for toggling -->
     <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
       <ul class="nav navbar-nav navbar-left">
-        <li class="active"><a href="index.php"><span class="glyphicon glyphicon-home"></span> Home</a></li>
+        <li><a href="index.php"><span class="glyphicon glyphicon-home"></span> Home</a></li>
         <li><a href="allProducts.php"><span class="glyphicon glyphicon-list"></span> All Products</a></li>
         <li class="dropdown">
           <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">
@@ -90,7 +90,7 @@ if($_SESSION['isUser'] == true)
         <button type="submit" class="btn btn-default" name="submit" value="Submit"><span class="glyphicon glyphicon-search"></span>Search</button> 
       </form>
       <ul class="nav navbar-nav navbar-right">       
-        <li><a href="cart.php"><span class="glyphicon glyphicon-shopping-cart" style="color: #57C5A0;"><?php echo $cartItems; ?></span> Cart</a></li>
+        <li class="active"><a href="cart.php"><span class="glyphicon glyphicon-shopping-cart" style="color: #57C5A0;"><?php echo $cartItems; ?></span> Cart</a></li>
         
         <?php
         if($_SESSION['username'])
@@ -147,7 +147,7 @@ if($_SESSION['isUser'] == true)
     </div>
 
     <form action="cart.php" method="post" >
-        <table id="cart" class="table table-hover table-condensed">
+        <table id="cart" class="table table-hover table-condensed table-responsive">
             <thead>
                 <tr>
                     <th style="width:50%">Product</th>
@@ -171,7 +171,7 @@ if($_SESSION['isUser'] == true)
                     echo "<tr>
                     <td data-th=\"Product\">
                         <div class=\"row\">
-                            <div class=\"col-sm-3 hidden-xs\"><img style=\"height:100px;width: 100px;\" src=\"data:image;base64," . $d[4] . "\"  alt=\"...\" class=\"img-responsive\"/></div>
+                            <div class=\"col-sm-3\"><img style=\"height:100px;width: 100px;\" src=\"data:image;base64," . $d[4] . "\"  alt=\"...\" class=\"img-responsive\"/></div>
                             <div class=\"col-sm-9\" >
                                 <h4 class=\"nomargin\" style=\"line-height:75px;\">". $d[0] ."</h4>
                                 
@@ -199,8 +199,8 @@ if($_SESSION['isUser'] == true)
             <tfoot>                     
                 <tr>
                     <td></td>
-                    <td colspan="2" class="hidden-xs"></td>
-                    <td class="hidden-xs text-center"><strong>Total: <?php echo $totalPriceData['price'] . " TK"; ?></strong></td>
+                    <td colspan="2" class=""></td>
+                    <td class="text-center"><strong>Total: <?php echo $totalPriceData['price'] . " TK"; ?></strong></td>
                     <?php 
                     if($totalPriceData['items'] > 0) 
                     echo "<td><a href=\"#\" class=\"btn btn-success btn-block\"><span class=\"glyphicon glyphicon-check\"></span> Checkout</i></a></td>";
