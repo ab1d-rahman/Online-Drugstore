@@ -23,8 +23,8 @@ function insertProduct($data)
 	$image = base64_encode($image);
 
 
-	$sql = "INSERT INTO products (name, price, category, description, keywords, image) 
-			VALUES ('$name', '$price', '$category', '$description', '$keywords', '$image')";
+	$sql = "INSERT INTO products (name, price, category, description, keywords, soldunits, image) 
+			VALUES ('$name', '$price', '$category', '$description', '$keywords', '0', '$image')";
 	$query = mysqli_query($dbCon, $sql);
 	return $query;
 }
