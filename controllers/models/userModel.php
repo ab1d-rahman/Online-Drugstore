@@ -138,7 +138,7 @@ function deleteAppointment($uID, $aID, $sID)
 
 	$sql = "DELETE FROM appointments WHERE aID='$aID' AND uID='$uID'";
     $query = mysqli_query($dbCon, $sql);
-    if($query)
+    if(mysqli_affected_rows($dbCon))
     {
     	$sql = "UPDATE doctorSchedule SET apptaken = apptaken - 1 WHERE sID='$sID'";
         $query = mysqli_query($dbCon, $sql);
