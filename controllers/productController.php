@@ -72,6 +72,12 @@ class productController
 	{
 		return latestProducts();
 	}
+
+	public function getProductDetails($pID)
+	{
+		return productDetails($pID);
+
+	}
 }
 
 

@@ -1,8 +1,10 @@
 <html>
 <head>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>All Products</title>
+    <title>Product Details</title>
 
+    
+    <!-- <link rel="stylesheet" href="css/styles.css"> -->
     <link rel="stylesheet" href="bootstrap/css/bootstrap.css">
 </head>
 <body>
@@ -19,12 +21,21 @@ session_regenerate_id();
 
 include_once "controllers/productController.php";
 
-if($_GET['submit'])
+
+
+$cartItems = 0;
+
+if($_SESSION['isUser'] == true)
 {
-    $query = $_GET['query'];
-    $query = htmlspecialchars($query, ENT_QUOTES, 'UTF-8');
-    $query =  mysqli_real_escape_string(mysqli_connect("localhost", "root", "root", "doctor"), $query);
+    $data = $productController->getTotalItemsAndPrice($_SESSION['uID']);
+    $cartItems = $data['items'];
 }
+
+if($_GET['pID']) 
+{
+    $pID = $_GET['pID'];
+}
+
 
 if(isset($_GET['addToCart']))
 {
@@ -62,13 +73,7 @@ if(isset($_GET['addToCart']))
     }
 }
 
-$cartItems = 0;
 
-if($_SESSION['isUser'] == true)
-{
-    $data = $productController->getTotalItemsAndPrice($_SESSION['uID']);
-    $cartItems = $data['items'];
-}
 
 ?>
 
@@ -87,7 +92,7 @@ if($_SESSION['isUser'] == true)
     <!-- Collect the nav links, forms, and other content for toggling -->
     <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
       <ul class="nav navbar-nav navbar-left">
-        <li class="active"><a href="index.php"><span class="glyphicon glyphicon-home"></span> Home</a></li>
+        <li><a href="index.php"><span class="glyphicon glyphicon-home"></span> Home</a></li>
         <li><a href="allProducts.php"><span class="glyphicon glyphicon-list"></span> All Products</a></li>
         <li class="dropdown">
           <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">
@@ -112,7 +117,7 @@ if($_SESSION['isUser'] == true)
         if($_SESSION['username'])
         {
         ?>
-        <li><a href=<?php if($_SESSION['isUser'] == true) echo "userProfile.php"; else if($_SESSION['isDoc'] == true) echo "doctorProfile.php"; else echo "adminActions.php"; ?>><span class="glyphicon glyphicon-user"></span> <?php echo $_SESSION['name']; ?></a></li>
+        <li class="active"><a href=<?php if($_SESSION['isUser'] == true) echo "userProfile.php"; else if($_SESSION['isDoc'] == true) echo "doctorProfile.php"; else echo "adminActions.php"; ?>><span class="glyphicon glyphicon-user"></span> <?php echo $_SESSION['name']; ?></a></li>
 
         <li><a href="logout.php"><span class="glyphicon glyphicon-log-out"></span> Logout</a></li>
 
@@ -154,75 +159,35 @@ if($_SESSION['isUser'] == true)
 </nav>
 
 
-
-<div class="container">
-    <div class="row">
-        <div class="col-lg-9 col-md-9 col-sm-9 col-xs-9">
-            <div class="panel panel-default">
-                <div class="panel-body">Search results for: <?php echo $query; ?></div>
+<div class="container" style="margin-top: 150px">
+    <div class="panel" style="height: auto;">
+    <?php 
+                        $data = $productController->getProductDetails($pID);
+                    ?>
+        <div class="row">
+            <div class="col-md-6 col-sm-6 col-xs-6">
+                <img style="height: 300px; width: 300px; margin: 50 0 10 70" src=<?php echo "\"data:image;base64," . $data[4] . "\""; ?>>
+                <p style="margin: 10 0 50 70;"><a href=<?php echo "\"productDetails.php?pID=".$pID."&addToCart\""?> class="btn btn-primary" role="button"><span class="glyphicon glyphicon-shopping-cart" ></span> Add To Cart</a></p>
             </div>
 
-            <?php 
+            <div class="col-md-6 col-sm-6 col-xs-7">
+                <span class="pull-left" style="margin-top: 50px;">                    
+                    <h1 style="margin-bottom: 35px;"><?php echo $data[0]; ?></h1>
+                    <h4 style="margin-bottom: 35px;"><?php echo $data[3]; ?></h4>
 
-            if($_GET['submit'])
-            {
-
-                $data = $productController->getSearchedProducts($query);
-
-                foreach ($data as $d) 
-                {
-                    echo "<div class=\"col-lg-3 col-md-3 col-sm-3 col-xs-3\" style=\"height: 380px; width: 250px; margin: 10px 10px 10px 10px;\">
-                <div class=\"thumbnail\" style=\"height: 380px; width: 250px;\">
-                    <img src=\"data:image;base64," . $d[2] . "\" style=\"height: 180px; width: 180px;\" alt=\"...\">
-                    <div class=\"caption\">
-                        <p style=\"text-align: center; font-weight: bold;\">" . $d[0] . "</p>
-                        <p style=\"text-align: center;\">";
-                        if($_SESSION['isAdmin'] == true)
-                        {
-                            echo "Product ID: " . $d[3] . "<br>";
-                        }
-
-                        echo "Price: ". $d[1]." TK <br>
-                        <a href=\"productDetails.php?pID=".$d[3]."\"> Details </a> <br>";
-
-                        if($d[4]) echo"</p><p style=\"text-align: center;\"><a href=\"search.php?query=".$query."&submit=Submit&addToCart&pID=" . $d[3] . "\" class=\"btn btn-primary\" role=\"button\"><span class=\"glyphicon glyphicon-shopping-cart\" ></span> Add To Cart</a></p>";
-                        else echo"</p><p style=\"text-align: center;\"><a href=\"\" class=\"btn btn-danger disabled\" role=\"button\"><span class=\"glyphicon glyphicon-shopping-cart\" ></span> Out Of Stock</a></p>";
-                    echo "
-                    </div>
-                </div>
-            </div>";
-
-                    
-
-                }
-            }
-
-            ?>      
+                    <h4 style="margin-bottom: 35px;"><strong>Category: </strong> <?php echo $data[2]; ?></h4>
+                    <h4><strong>Price: </strong> <?php echo $data[1]; ?></h4>
             
-        </div>
-
-        <div class="col-lg-3 col-md-3 col-sm-3 col-xs-4" >
-            <h3 style="text-align: center;">Categories</h3>
-            <div class="list-group">
-                <a href="category.php?category=1" class="list-group-item" style="font-weight: bold;">Anti-infectives</a>
-                <a href="category.php?category=2" class="list-group-item" style="font-weight: bold;">Cough and Cold Relief</a>
-                <a href="category.php?category=3" class="list-group-item" style="font-weight: bold;">Diabetes Managements</a>
-                <a href="category.php?category=4" class="list-group-item" style="font-weight: bold;">Digestion and Nausea</a>
-                <a href="category.php?category=5" class="list-group-item" style="font-weight: bold;">Eye, Nose and Ear Care</a>
-                <a href="category.php?category=6" class="list-group-item" style="font-weight: bold;">Oral Care</a>
-                <a href="category.php?category=7" class="list-group-item" style="font-weight: bold;">Pain and Fever Relief</a>
-                <a href="category.php?category=8" class="list-group-item" style="font-weight: bold;">Respiratory and Cardiovascular</a>
-                <a href="category.php?category=9" class="list-group-item" style="font-weight: bold;">Skin Care</a>
-                <a href="category.php?category=10" class="list-group-item" style="font-weight: bold;">Vitamins and Minerals</a>
+                </span>
             </div>
         </div>
-    </div>  
+    </div>
 </div>
 
 
 
 <footer>
-    <div class="container-fluid" style="background: black; color: white; height: 70px; margin-top: 200px;">
+    <div class="container-fluid" style="background: black; color: white; height: 70px; margin-top: 300px;">
         <div class="row">
             <h4 style="line-height: 50px; text-align: center;">Copyright &copy;2016 Abid, Salim, Jubayer</h4>
         </div>

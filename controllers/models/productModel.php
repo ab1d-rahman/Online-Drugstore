@@ -392,5 +392,18 @@ function removeFromCart($pID, $uID)
 	$query = mysqli_query($dbCon, $sql);
 }
 
+function productDetails($pID)
+{
+	$dbCon = mysqli_connect("localhost", "root", "root", "doctor");
+
+	$sql = "SELECT name, price, category, description, image FROM products WHERE pID='$pID'";
+	$query = mysqli_query($dbCon, $sql);
+	$row = mysqli_fetch_row($query);
+	// echo $row['quantity'] . " " . $pID . " " . $_row[0] . "\n";
+
+
+
+	return $row;
+}
 
 ?>

@@ -173,7 +173,7 @@ if($_SESSION['isUser'] == true)
                         }
 
                         echo "Price: ". $d[1]." TK <br>
-                        <a href='#'> Details </a> <br>";
+                        <a href=\"productDetails.php?pID=".$d[3]."\"> Details </a> <br>";
 
                         if($d[4]) echo"</p><p style=\"text-align: center;\"><a href=\"allProducts.php?addToCart&pID=" . $d[3] . "\" class=\"btn btn-primary\" role=\"button\"><span class=\"glyphicon glyphicon-shopping-cart\" ></span> Add To Cart</a></p>";
                         else echo"</p><p style=\"text-align: center;\"><a href=\"\" class=\"btn btn-danger disabled\" role=\"button\"><span class=\"glyphicon glyphicon-shopping-cart\" ></span> Out Of Stock</a></p>";

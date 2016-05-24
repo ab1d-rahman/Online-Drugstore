@@ -174,6 +174,7 @@ if($_POST['submit'])
 		<form action="addProduct.php" method="post" enctype="multipart/form-data">
 			<input type="text" required title="Name"  placeholder="Name" name="name"> 
 	    	<input type="text" required title="Price"  placeholder="Price"  name="price">
+        <input type="text" required title="Price"  placeholder="Quantity"  name="stock">
 	    	<textarea name="description" cols="29" rows="10" placeholder="Product Description"></textarea>
 	    	<textarea name="keywords" cols="29" rows="2" placeholder="Keywords"></textarea>
 	    	<br><br> Category: 
