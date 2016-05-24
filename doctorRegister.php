@@ -186,11 +186,13 @@ if($_SESSION['isUser'] == true)
 	        <input type="password" required title="Password required" placeholder="Retype Password"  name="repassword">
 	        <br><br> Specialty: 
 				<select style="color: black;" name="specialty">
-				  <option value="Heart">Heart</option>
-				  <option value="Bone">Bone</option>
-				  <option value="Kidney">Kidney</option>
-				  <option value="Skin">Skin</option>
-				  <option value="Eye">Eye</option>
+				  <option value="Cadiology">Cadiology</option>
+				  <option value="ENT">ENT</option>
+				  <option value="Gynecology">Gynecology</option>
+				  <option value="Medicine">Medicine</option>
+          <option value="Neurology">Neurology</option>
+          <option value="Orthopedic">Orthopedic</option>
+				  <option value="Urology">Urology</option>
 				</select> <br> <br>
 			Image: <input type="file" name="image" required>
 	        <button class="enviar" type="submit" value="Submit" name="submit">Register</button> 
