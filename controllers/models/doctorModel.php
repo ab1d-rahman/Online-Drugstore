@@ -166,4 +166,31 @@ function allDoctors()
 	return $data;
 }
 
+function recoverDocPassword($email)
+{
+	$dbCon = mysqli_connect("localhost", "root", "root", "doctor");
+
+	$email = cleanInput($dbCon, $email);
+
+	$sql =  "SELECT email FROM doctorInfo WHERE email='$email'";
+	$query = mysqli_query($dbCon, $sql);
+	if(mysqli_num_rows($query))
+	{
+		$recoverytoken = generateRandomString();
+		echo $recoverytoken;
+		$sql =  "UPDATE doctorInfo SET recoverytoken = '$recoverytoken' WHERE email='$email'";
+		$query = mysqli_query($dbCon, $sql);
+
+		sendMail($email, "Password Recovery",
+		"Your password recovery request has been acknowledged.\n\nYour Recovery Token is $recoverytoken\n\n 
+		Go To http://localhost/doctor/recoverPassword.php and use your recovery token to setup a new password.",
+		"From: webmaster@example.com" . "\r\n" .
+		"CC: somebodyelse@example.com");
+
+		return "Success";
+	}
+
+	return null;
+}
+
 ?>

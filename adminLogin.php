@@ -155,9 +155,7 @@ if($_SESSION['isUser'] == true)
             <form action="adminLogin.php" method="post" >
                 <input type="text" required title="Username required" placeholder="Username"  name="username">
                 <input type="password" required title="Password required" placeholder="Password"  name="password">
-                <div class="olvido">
-                    <div class="col"><a href="#" title="Recuperar Password">Forgot Password?</a></div>
-                </div>
+                
                 <button class="enviar" type="submit" value="Submit" name="submit">Login</button> 
             </form>
         </section>

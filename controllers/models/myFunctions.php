@@ -14,85 +14,13 @@ function hashPassword($value)
 	return password_hash($value, PASSWORD_DEFAULT, ['cost' => 12]);
 }
 
-function getProducts($dbCon)
+function sendMail($to, $subject, $txt, $headers)
 {
-	$sql = "SELECT * FROM products";
-	$query = mysqli_query($dbCon, $sql);
-
-	if($query)
-	{
-		while($row = mysqli_fetch_assoc($query))
-		{			
-			$prodName = $row["name"];
-			$prodPrice = $row["price"];
-
-			echo "
-			<div id='single_product'>
-			$prodName <br>
-			<img src=\"data:image;base64," . $row["image"] . "\" height=\"180\" width=\"180\">
-			<br>
-			$prodPrice TK <br>
-			<a href='#'> Details </a> <br>
-			<a class='button' id='link' href='#' >Add To Cart!</a>
-			</div>
-
-			";
-		}
-	}
+	mail($to,$subject,$txt,$headers);
 }
 
-function searchProducts($dbCon, $query)
-{
-	$sql = "SELECT * FROM products WHERE keywords LIKE LOWER('%$query%')";
-	$query = mysqli_query($dbCon, $sql);
-
-	if($query)
-	{
-		while($row = mysqli_fetch_assoc($query))
-		{			
-			$prodName = $row["name"];
-			$prodPrice = $row["price"];
-
-			echo "
-			<div id='single_product'>
-			$prodName <br>
-			<img src=\"data:image;base64," . $row["image"] . "\" height=\"180\" width=\"180\">
-			<br>
-			$prodPrice TK <br>
-			<a href='#'> Details </a> <br>
-			<a class='button' id='link' href='#' >Add To Cart!</a>
-			</div>
-
-			";
-		}
-	}
-}
-
-function categorizeProducts($dbCon, $category)
-{
-	$sql = "SELECT * FROM products WHERE category = '$category'";
-	$query = mysqli_query($dbCon, $sql);
-
-	if($query)
-	{
-		while($row = mysqli_fetch_assoc($query))
-		{			
-			$prodName = $row["name"];
-			$prodPrice = $row["price"];
-
-			echo "
-			<div id='single_product'>
-			$prodName <br>
-			<img src=\"data:image;base64," . $row["image"] . "\" height=\"180\" width=\"180\">
-			<br>
-			$prodPrice TK <br>
-			<a href='#'> Details </a> <br>
-			<a class='button' id='link' href='#' >Add To Cart!</a>
-			</div>
-
-			";
-		}
-	}
+function generateRandomString($length = 10) {
+    return substr(str_shuffle("0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ"), 0, $length);
 }
 
 ?>

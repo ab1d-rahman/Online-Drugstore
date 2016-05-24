@@ -155,7 +155,7 @@ if($_SESSION['isUser'] == true)
                 <input type="email" required title="Email required" placeholder="Email" name="email">
                 <input type="password" required title="Password required" placeholder="Password"  name="password">
                 <div class="olvido">
-                    <div class="col"><a href="#" title="Recuperar Password">Forgot Password?</a></div>
+                    <div class="col"><a href="passwordRecovery.php" title="Recuperar Password">Forgot Password?</a></div>
                 </div>
                 <button class="enviar" type="submit" value="Submit" name="submit">Login</button> 
             </form>
