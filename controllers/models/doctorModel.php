@@ -136,8 +136,36 @@ function deleteSchedule($sID)
 {
 	$dbCon = mysqli_connect("localhost", "root", "root", "doctor");
 
-	$sql = "DELETE FROM appointments WHERE sID='$sID'";
-	$query = mysqli_query($dbCon, $sql);
+	$sql = "SELECT date, time, dID FROM doctorSchedule WHERE sID='$sID'";
+    $query = mysqli_query($dbCon, $sql);
+    $row = mysqli_fetch_row($query);
+
+    $date = $row[0];
+    $time = $row[1];
+    $dID = $row[2];
+
+    $sql = "SELECT name FROM doctorInfo WHERE dID='$dID'";
+    $query = mysqli_query($dbCon, $sql);
+    $row = mysqli_fetch_row($query);
+    $doctorName = $row[0];
+
+	$sql = "SELECT * FROM appointments WHERE sID='$sID'";
+    $query = mysqli_query($dbCon, $sql);
+    while($row = mysqli_fetch_assoc($query))
+    {
+    	$uID = $row['uID'];
+
+    	$_sql = "SELECT email FROM userInfo WHERE uID='$uID'";
+    	$_query = mysqli_query($dbCon, $_sql);
+    	$_row = mysqli_fetch_row($_query);
+
+    	$userEmail = $_row[0];
+
+    	sendMail($userEmail, "Doctor Schedule Cancelled",
+		"Your appointment with $doctorName on $date at $time has been cancelled by the doctor.",
+		"From: webmaster@example.com" . "\r\n" .
+		"CC: somebodyelse@example.com");
+    }
 
 	$sql = "DELETE FROM doctorSchedule WHERE sID='$sID'";
 	$query = mysqli_query($dbCon, $sql);

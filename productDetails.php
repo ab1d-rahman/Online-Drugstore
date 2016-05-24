@@ -162,8 +162,8 @@ if(isset($_GET['addToCart']))
 <div class="container" style="margin-top: 150px">
     <div class="panel" style="height: auto;">
     <?php 
-                        $data = $productController->getProductDetails($pID);
-                    ?>
+        $data = $productController->getProductDetails($pID);
+    ?>
         <div class="row">
             <div class="col-md-6 col-sm-6 col-xs-6">
                 <img style="height: 300px; width: 300px; margin: 50 0 10 70" src=<?php echo "\"data:image;base64," . $data[4] . "\""; ?>>

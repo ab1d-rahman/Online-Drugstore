@@ -118,7 +118,7 @@ if($_SESSION['isUser'] == true)
 
 <?php $data = $doctorController->getAllDoctors(); ?>
 
-<div class="container">
+<div class="container" style="margin-top: 150px;">
   <h2>Available Doctors</h2>                                                                                    
   <div class="table-responsive">          
   <table class="table table-hover">
@@ -156,7 +156,7 @@ if($_SESSION['isUser'] == true)
 
 
 <footer>
-    <div class="container-fluid" style="background: black; color: white; height: 70px; margin-top: 200px;">
+    <div class="container-fluid" style="background: black; color: white; height: 70px; margin-top: 300px;">
         <div class="row">
             <h4 style="line-height: 50px; text-align: center;">Copyright &copy;2016 Abid, Salim, Jubayer</h4>
         </div>

@@ -137,13 +137,24 @@ if($_SESSION['isDoc'] == true)
 		?>
 
 		<div class="container">
+
 			<div class="panel panel-default" style="height: atuo;">
-			<img style="height: 250px; width:250px; float: right; margin: 20 20 20 20; border: 2px solid black;" src=<?php echo "\"data:image;base64," . 
-																									$data['image'] . "\""; ?>>
-			<h2><p style="margin: 80 0 0 15;">Name: <?php echo $data['name']; ?> </p></h2>
-			<h2><p style="margin: 0 0 0 15;">Email: <?php echo $data['email']; ?> </p></h2>
-			<h2><p style="margin: 0 0 70 15;">Specialty: <?php echo $data['specialty']; ?> </p></h2>
-			</div>
+				<div class="row">
+	                <div class="col-md-6 col-sm-6 col-xs-6">
+	                    <img style="height: 300px; width: 300px; margin: 50 0 60 70" src=<?php echo "\"data:image;base64," . $data['image'] . "\""; ?>>                    
+	                </div>
+
+	                <div class="col-md-6 col-sm-6 col-xs-7">
+	                    <span class="pull-left" style="margin-top: 50px;">                    
+	                        <h1 style="margin-bottom: 35px;"><?php echo $data['name']; ?></h1>
+	                        <h4 style="margin-bottom: 35px;"><strong>Email: </strong> <?php echo $data['email']; ?></h4>
+	                        <h4 style="margin-bottom: 35px;"><strong>Specialty: </strong> <?php echo $data['specialty']; ?></h4>
+	                
+	                    </span>
+	                </div>
+            	</div>
+                
+            </div>			
 
 			
 		  <?php $data = $doctorController->getDoctorSchedule($dID);  ?>
@@ -195,12 +206,21 @@ if($_SESSION['isDoc'] == true)
 
 		<div class="container">
 			<div class="panel panel-default" style="height: atuo;">
-			<img style="height: 250px; width:250px; float: right; margin: 20 20 20 20; border: 2px solid black;" src=<?php echo "\"data:image;base64," . 
-																									$data['image'] . "\""; ?>>
-			<h2><p style="margin: 80 0 0 15;">Name: <?php echo $data['name']; ?> </p></h2>
-			<h2><p style="margin: 0 0 0 15;">Email: <?php echo $data['email']; ?> </p></h2>
-			<h2><p style="margin: 0 0 70 15;">Specialty: <?php echo $data['specialty']; ?> </p></h2>
-			</div>
+				<div class="row">
+	                <div class="col-md-6 col-sm-6 col-xs-6">
+	                    <img style="height: 300px; width: 300px; margin: 50 0 60 70" src=<?php echo "\"data:image;base64," . $data['image'] . "\""; ?>>                    
+	                </div>
+
+	                <div class="col-md-6 col-sm-6 col-xs-7">
+	                    <span class="pull-left" style="margin-top: 50px;">                    
+	                        <h1 style="margin-bottom: 35px;"><?php echo $data['name']; ?></h1>
+	                        <h4 style="margin-bottom: 35px;"><strong>Email: </strong> <?php echo $data['email']; ?></h4>
+	                        <h4 style="margin-bottom: 35px;"><strong>Specialty: </strong> <?php echo $data['specialty']; ?></h4>
+	                
+	                    </span>
+	                </div>
+            	</div>
+            </div>	
 
 			
 		  <?php $data = $doctorController->getDoctorSchedule($dID);  ?>
@@ -284,11 +304,20 @@ else
 
 		<div class="container">
 			<div class="panel panel-default" style="height: atuo;">
-			<img style="height: 250px; width:250px; float: right; margin: 20 20 20 20; border: 2px solid black;" src=<?php echo "\"data:image;base64," . 
-																									$data['image'] . "\""; ?>>
-			<h2><p style="margin: 80 0 0 15;">Name: <?php echo $data['name']; ?> </p></h2>
-			<h2><p style="margin: 0 0 0 15;">Email: <?php echo $data['email']; ?> </p></h2>
-			<h2><p style="margin: 0 0 70 15;">Specialty: <?php echo $data['specialty']; ?> </p></h2>
+				<div class="row">
+	                <div class="col-md-6 col-sm-6 col-xs-6">
+	                    <img style="height: 300px; width: 300px; margin: 50 0 60 70" src=<?php echo "\"data:image;base64," . $data['image'] . "\""; ?>>                    
+	                </div>
+
+	                <div class="col-md-6 col-sm-6 col-xs-7">
+	                    <span class="pull-left" style="margin-top: 50px;">                    
+	                        <h1 style="margin-bottom: 35px;"><?php echo $data['name']; ?></h1>
+	                        <h4 style="margin-bottom: 35px;"><strong>Email: </strong> <?php echo $data['email']; ?></h4>
+	                        <h4 style="margin-bottom: 35px;"><strong>Specialty: </strong> <?php echo $data['specialty']; ?></h4>
+	                
+	                    </span>
+	                </div>
+            	</div>
 			</div>
 
 			
