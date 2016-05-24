@@ -56,6 +56,12 @@ class doctorController
 		return recoverDocPassword($email);
 	}
 
+	public function changeDoctorPassword($data)
+	{
+		return changeDocPassword($data);
+	}
+
+
 }
 
 

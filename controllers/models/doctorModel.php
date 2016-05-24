@@ -177,12 +177,11 @@ function recoverDocPassword($email)
 	if(mysqli_num_rows($query))
 	{
 		$recoverytoken = generateRandomString();
-		echo $recoverytoken;
 		$sql =  "UPDATE doctorInfo SET recoverytoken = '$recoverytoken' WHERE email='$email'";
 		$query = mysqli_query($dbCon, $sql);
 
 		sendMail($email, "Password Recovery",
-		"Your password recovery request has been acknowledged.\n\nYour Recovery Token is $recoverytoken\n\n 
+		"Your password recovery request has been acknowledged.\n\nYour Recovery Token is $recoverytoken\n\n
 		Go To http://localhost/doctor/recoverPassword.php and use your recovery token to setup a new password.",
 		"From: webmaster@example.com" . "\r\n" .
 		"CC: somebodyelse@example.com");
@@ -191,6 +190,41 @@ function recoverDocPassword($email)
 	}
 
 	return null;
+}
+
+function changeDocPassword($data)
+{
+	$dbCon = mysqli_connect("localhost", "root", "root", "doctor");
+
+	$email = $data['email'];
+	$password = $data['password'];
+	$recoverytoken = $data['recoverytoken'];
+
+	$email = cleanInput($dbCon, $email);
+	$password = cleanInput($dbCon, $password);
+	$recoverytoken = cleanInput($dbCon, $recoverytoken);
+
+	$sql =  "SELECT email, recoverytoken FROM doctorInfo WHERE email='$email'";
+	$query = mysqli_query($dbCon, $sql);
+
+	if(mysqli_num_rows($query))
+	{
+		$row = mysqli_fetch_row($query);
+
+		if($row[1] == $recoverytoken)
+		{
+			$password = hashPassword($password);
+			$sql =  "UPDATE doctorInfo SET password='$password', recoverytoken = NULL WHERE recoverytoken='$recoverytoken'";
+			$query = mysqli_query($dbCon, $sql);
+
+			return "Success";
+		}		
+
+		return "token";
+	}
+
+	return "email";
+
 }
 
 ?>
