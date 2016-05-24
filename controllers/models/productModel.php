@@ -116,6 +116,13 @@ function updateProduct($data)
 
 	} 
 
+	if($data['stock'])
+	{
+		$stock = $data['stock'];
+		$sql = $sql . " stock = stock + '$stock',";
+
+	} 
+
 	if($data['description'])
 	{
 		$description= $data['description'];
@@ -130,7 +137,7 @@ function updateProduct($data)
 
 	} 
 
-	if($data['category'])
+	if($data['category'] && $data['category']!="null")
 	{
 		$category = $data['category'];
 		$sql = $sql . " category = '$category',";

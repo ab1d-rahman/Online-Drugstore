@@ -19,6 +19,7 @@ session_regenerate_id();
 
 include_once "controllers/productController.php";
 
+
 if(isset($_GET['addToCart']))
 {
     if($_SESSION['isUser'] == false)
@@ -146,52 +147,35 @@ if($_SESSION['isUser'] == true)
   </div><!-- /.container-fluid -->
 </nav>
 
-<div class="container" style="margin-bottom: 25px;">
+<div class="container" >
   <br>
-  <div id="myCarousel" class="carousel slide" data-ride="carousel">
+  <div id="myCarousel" class="carousel slide" data-ride="carousel" style="margin-bottom: 35px;">
     <!-- Indicators -->
     <ol class="carousel-indicators">
       <li data-target="#myCarousel" data-slide-to="0" class="active"></li>
       <li data-target="#myCarousel" data-slide-to="1"></li>
-      <li data-target="#myCarousel" data-slide-to="2"></li>
-      <li data-target="#myCarousel" data-slide-to="3"></li>
     </ol>
 
     <!-- Wrapper for slides -->
     <div class="carousel-inner" role="listbox">
 
       <div class="item active">
-        <img src="img_chania.jpg" alt="Chania" width="460" height="345">
+        <img src="images/1.jpg" alt="Chania" width="auto" >
         <div class="carousel-caption">
-          <h3>Need Appointment From A Doctor?</h3>
-          <p>Find A Doctor Now!</p>
-          <p><a href="availDoctors.php">Doctor List</a></p>
+          <h2 style="color:black; text-shadow: -1px 0 black, 0 1px black, 1px 0 black, 0 -1px black;">Need Appointment From A Doctor?</h2>
+          <p style="color:black;">Find A Doctor Now!</p>
+          <p><a href="cart.php" class="btn btn-success" role="button"><span class="glyphicon glyphicon-info-sign"></span> Doctor List</a></p>
         </div>
       </div>
 
       <div class="item">
-        <img src="img_chania2.jpg" alt="Chania" width="460" height="345">
+        <img src="images/2.jpg" alt="Chania" >
         <div class="carousel-caption">
-          <h3>Chania</h3>
-          <p>The atmosphere in Chania has a touch of Florence and Venice.</p>
-        </div>
-      </div>
-    
-      <div class="item">
-        <img src="img_flower.jpg" alt="Flower" width="460" height="345">
-        <div class="carousel-caption">
-          <h3>Flowers</h3>
-          <p>Beatiful flowers in Kolymbari, Crete.</p>
-        </div>
-      </div>
-
-      <div class="item">
-        <img src="img_flower2.jpg" alt="Flower" width="460" height="345">
-        <div class="carousel-caption">
-          <h3>Flowers</h3>
-          <p>Beatiful flowers in Kolymbari, Crete.</p>
-        </div>
-      </div>
+          <h2 style="color:black; text-shadow: -1px 0 black, 0 1px black, 1px 0 black, 0 -1px black;">Want Medicines Delivered Straight To Your Home?</h2>
+          <p style="color:black;">Browse Our Products And Start Ordering Now!</p>
+          <p><a href="cart.php" class="btn btn-success" role="button"><span class="glyphicon glyphicon-list"></span> Our Products</a></p>
+      </div> 
+     
   
     </div>
 

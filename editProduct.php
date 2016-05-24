@@ -47,6 +47,7 @@ if($_POST['submit'])
         'description' => $_POST['description'],
         'category' => $_POST['category'],
         'keywords' => $_POST['keywords'],
+        'stock' => $_POST['stock'],
         'image' => $_FILES['image']['tmp_name']
     );
     
@@ -165,11 +166,13 @@ if($_POST['submit'])
                 <form action="editProduct.php" method="post" enctype="multipart/form-data">
                     <input type="text"  title="Product ID"  required placeholder="Product ID" name="pID"> 
                     <input type="text"  title="Name"  placeholder="Name" name="name"> 
-                    <input type="text"  title="Price"  placeholder="Price"  name="price">
+                    <input type="text"  title="Price"  placeholder="Price"  name="price">                    
+                    <input type="text"  title="Price"  placeholder="Quantity to add"  name="stock">
                     <textarea name="description" cols="29" rows="10" placeholder="Product Description"></textarea>
                     <textarea name="keywords" cols="29" rows="2" placeholder="Keywords"></textarea>
                     <br><br> Category: 
-                    <select name="category">
+                    <select name="category" style="color: black;">
+                    <option value="null">--</option>
                       <option value="Anti-infectives">Anti-infectives</option>
                       <option value="Cough and Cold Relief">Cough and Cold Relief</option>
                       <option value="Diabetes Managements">Diabetes Managements</option>
