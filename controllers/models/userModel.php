@@ -213,4 +213,65 @@ function makeAppointment($sID, $uID)
 }
 
 
+function recoverUsrPassword($email)
+{
+	$dbCon = mysqli_connect("localhost", "root", "root", "doctor");
+
+	$email = cleanInput($dbCon, $email);
+
+	$sql =  "SELECT email FROM userInfo WHERE email='$email'";
+	$query = mysqli_query($dbCon, $sql);
+	if(mysqli_num_rows($query))
+	{
+		$recoverytoken = generateRandomString();
+		$sql =  "UPDATE userInfo SET recoverytoken = '$recoverytoken' WHERE email='$email'";
+		$query = mysqli_query($dbCon, $sql);
+
+		sendMail($email, "Password Recovery",
+		"Your password recovery request has been acknowledged.\n\nYour Recovery Token is $recoverytoken\n\n
+		Go To http://localhost/doctor/recoverPassword.php and use your recovery token to setup a new password.",
+		"From: webmaster@example.com" . "\r\n" .
+		"CC: somebodyelse@example.com");
+
+		return "Success";
+	}
+
+	return null;
+}
+
+function changeUsrPassword($data)
+{
+	$dbCon = mysqli_connect("localhost", "root", "root", "doctor");
+
+	$email = $data['email'];
+	$password = $data['password'];
+	$recoverytoken = $data['recoverytoken'];
+
+	$email = cleanInput($dbCon, $email);
+	$password = cleanInput($dbCon, $password);
+	$recoverytoken = cleanInput($dbCon, $recoverytoken);
+
+	$sql =  "SELECT email, recoverytoken FROM userInfo WHERE email='$email'";
+	$query = mysqli_query($dbCon, $sql);
+
+	if(mysqli_num_rows($query))
+	{
+		$row = mysqli_fetch_row($query);
+
+		if($row[1] == $recoverytoken)
+		{
+			$password = hashPassword($password);
+			$sql =  "UPDATE userInfo SET password='$password', recoverytoken = NULL WHERE recoverytoken='$recoverytoken'";
+			$query = mysqli_query($dbCon, $sql);
+
+			return "Success";
+		}		
+
+		return "token";
+	}
+
+	return "email";
+
+}
+
 ?>

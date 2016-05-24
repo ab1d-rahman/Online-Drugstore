@@ -57,6 +57,32 @@ if($_POST['submit'])
         }
     }
 
+    else if($_POST['type'] == "user")
+    {
+        if($userController->recoverUsrPassword($email))
+        {
+            ?>
+
+            <script type="text/javascript">
+                alert("An Email has been sent to your email address with sufficient information.");
+            </script>
+
+
+            <?php 
+        }
+        else
+        {
+            ?>
+
+            <script type="text/javascript">
+                alert("There are no such accounts registered using this email address");
+            </script>
+
+
+            <?php 
+        }
+    }
+
     
 } 
 

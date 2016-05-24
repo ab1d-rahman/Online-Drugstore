@@ -56,6 +56,16 @@ class userController
 	{
 		deleteAppointment($uID, $aID, $sID);
 	}
+
+	public function recoverUserPassword($email)
+	{
+		return recoverUsrPassword($email);
+	}
+
+	public function changeUserPassword($data)
+	{
+		return changeUsrPassword($data);
+	}
 }
 
 

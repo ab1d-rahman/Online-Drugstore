@@ -75,6 +75,45 @@ if($_POST['submit'])
         }
     }
 
+    else if($_POST['type'] == "user")
+    {
+        $ret = $userController->changeUsrPassword($data);
+
+        if($ret == "Success")
+        {
+            ?>
+
+            <script type="text/javascript">
+                alert("Password Successfully Changed.");
+            </script>
+
+
+            <?php 
+        }
+        else if($ret == "email")
+        {
+            ?>
+
+            <script type="text/javascript">
+                alert("There are no such accounts registered using this email address");
+            </script>
+
+
+            <?php 
+        }
+        else
+        {
+            ?>
+
+            <script type="text/javascript">
+                alert("The recovery token is invalid.");
+            </script>
+
+
+            <?php 
+        }
+    }
+
     
 } 
 
