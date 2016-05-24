@@ -107,7 +107,7 @@ if($_POST['submit'])
         if($_SESSION['username'])
         {
         ?>
-        <li><a href=<?php if($_SESSION['isUser'] == true) echo "userProfile.php"; else if($_SESSION['isDoc'] == true) echo "doctorProfile.php"; else echo "adminActions.php"; ?>><span class="glyphicon glyphicon-user"></span> <?php echo $_SESSION['name']; ?></a></li>
+        <li class="active"><a href=<?php if($_SESSION['isUser'] == true) echo "userProfile.php"; else if($_SESSION['isDoc'] == true) echo "doctorProfile.php"; else echo "adminActions.php"; ?>><span class="glyphicon glyphicon-user"></span> <?php echo $_SESSION['name']; ?></a></li>
 
         <li><a href="logout.php"><span class="glyphicon glyphicon-log-out"></span> Logout</a></li>
 

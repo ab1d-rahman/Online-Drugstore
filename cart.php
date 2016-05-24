@@ -37,7 +37,7 @@ if(isset($_POST['submit']))
 {
     $update = $_POST['update'];  
     $updatePID = $_POST['updatePID']; 
-    $productController->updateTheCart($_SESSION['uID'], $update, $updatePID);
+    $ret = $productController->updateTheCart($_SESSION['uID'], $update, $updatePID);
 }
 
 if(isset($_GET['remove']))
@@ -165,6 +165,7 @@ if($_SESSION['isUser'] == true)
                 $data = $productController->getCartItems($_SESSION['uID']);
                 $totalPriceData = $productController->getTotalItemsAndPrice($_SESSION['uID']);
 
+                $i = 0;
                 foreach ($data as $d) 
                 {                       
 
@@ -181,8 +182,11 @@ if($_SESSION['isUser'] == true)
                     <td data-th=\"Price\">".$d[2]." TK</td>
                     <td data-th=\"Quantity\">
                         <input type=\"number\" class=\"form-control text-center\" name=\"update[]\" value=\"".$d[1]."\">
-                        <input type=\"hidden\" name=\"updatePID[]\" value=\"".$d[3]."\">
-                    </td>
+                        <input type=\"hidden\" name=\"updatePID[]\" value=\"".$d[3]."\">";
+
+                    if($ret[$i]>0) echo "Out Of Stock<br>Available: ". $ret[$i];
+                    else if($ret[$i] == -1) echo "Out Of Stock<br>Available: 0";
+                    echo "</td>
                     <td data-th=\"Subtotal\" class=\"text-center\">". $d[1]*$d[2]." TK</td>
                     <td class=\"actions\" data-th=\"\">
 
@@ -191,6 +195,8 @@ if($_SESSION['isUser'] == true)
                                                    
                     </td>
                 </tr>";
+
+                $i++;
                 }
 
             ?>                

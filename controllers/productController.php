@@ -37,7 +37,7 @@ class productController
 
 	public function updateTheCart($uID, $update, $updatePID)
 	{
-		updateCart($uID, $update, $updatePID);
+		return updateCart($uID, $update, $updatePID);
 	}
 
 	public function removeProductFromCart($pID, $uID)

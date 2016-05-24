@@ -44,6 +44,7 @@ function allProducts()
 		$data[$r][1] = $row['price'];
 		$data[$r][2] = $row['image'];
 		$data[$r][3] = $row['pID'];
+		$data[$r][4] = $row['stock'];
 		$r++;
 	}
 
@@ -64,6 +65,7 @@ function latestProducts()
 		$data[$r][1] = $row['price'];
 		$data[$r][2] = $row['image'];
 		$data[$r][3] = $row['pID'];
+		$data[$r][4] = $row['stock'];
 		$r++;
 	}
 
@@ -84,6 +86,7 @@ function categoricalProducts($category)
 		$data[$r][1] = $row['price'];
 		$data[$r][2] = $row['image'];
 		$data[$r][3] = $row['pID'];
+		$data[$r][4] = $row['stock'];
 		$r++;
 	}
 
@@ -185,6 +188,7 @@ function searchedProducts($query)
 		$data[$r][1] = $row['price'];
 		$data[$r][2] = $row['image'];
 		$data[$r][3] = $row['pID'];
+		$data[$r][4] = $row['stock'];
 		$r++;
 	}
 
@@ -204,10 +208,19 @@ function addToCart($pID, $uID)
 
 	if(mysqli_num_rows($query) == 1 && mysqli_num_rows($_query) == 0)
 	{
-		$sql = "INSERT INTO cart (uID, pID, quantity) VALUES ('$uID', '$pID', '1')";
+		$sql = "SELECT stock FROM products WHERE pID='$pID'";
 		$query = mysqli_query($dbCon, $sql);
+		$row = mysqli_fetch_row($query);
+		$availableStock = $row[0];
+		if($availableStock) 
+		{
+			$sql = "INSERT INTO cart (uID, pID, quantity) VALUES ('$uID', '$pID', '1')";
+			$query = mysqli_query($dbCon, $sql);
 
-		return $query;
+			$sql = "UPDATE products SET stock = stock - 1 WHERE pID='$pID'";
+			$query = mysqli_query($dbCon, $sql);
+			return "Successful";
+		}	
 	}
 	
 	return null;
@@ -280,28 +293,102 @@ function updateCart($uID, $update, $updatePID)
 	$dbCon = mysqli_connect("localhost", "root", "root", "doctor");
 
 	$cnt = count($update);
+	$ret;
 
 	for($i=0; $i<$cnt; $i++)
 	{
-		if($update[$i] && $update[$i]>0)
+		if($update[$i]>0)
 		{
 			$quantity = $update[$i];
 			$quantity = cleanInput($dbCon, $quantity);
 			$pID = $updatePID[$i];
 
-			$sql = "UPDATE cart SET quantity = '$quantity' WHERE uID='$uID' AND pID='$pID'";
+			$sql = "SELECT quantity FROM cart WHERE uID='$uID' AND pID='$pID'";
 			$query = mysqli_query($dbCon, $sql);
+			$row = mysqli_fetch_row($query);
+			$DBquantity = $row[0];
+
+			if($quantity < $DBquantity)
+			{
+				$sql = "UPDATE cart SET quantity = '$quantity' WHERE uID='$uID' AND pID='$pID'";
+				$query = mysqli_query($dbCon, $sql);
+
+				$newStock = $DBquantity - $quantity;
+
+				$sql = "UPDATE products SET stock = stock + $newStock WHERE pID='$pID'";
+				$query = mysqli_query($dbCon, $sql);
+				$ret[$i] = 0;
+			}
+
+			else if($quantity > $DBquantity)
+			{
+				$sql = "SELECT stock FROM products WHERE pID='$pID'";
+				$query = mysqli_query($dbCon, $sql);
+				$row = mysqli_fetch_row($query);
+				$availableStock = $row[0];
+				$stockNeeded = $quantity - $DBquantity;
+
+				if($availableStock >= $stockNeeded)
+				{
+					$sql = "UPDATE cart SET quantity = '$quantity' WHERE uID='$uID' AND pID='$pID'";
+					$query = mysqli_query($dbCon, $sql);
+
+					$newStock = $availableStock - $stockNeeded;
+					$sql = "UPDATE products SET stock = '$newStock' WHERE pID='$pID'";
+					$query = mysqli_query($dbCon, $sql);
+
+					$ret[$i] = 0;
+				}
+				else 
+				{
+					if($availableStock == 0) $ret[$i] = -1;
+					else $ret[$i] = $availableStock;
+				}
+			}
+			else $ret[$i] = 0;
 		}
+		
+		else $ret[$i] = 0;
 	}
+
+	return $ret;
 }
+
+// function updateCart($uID, $update, $updatePID)
+// {
+// 	$dbCon = mysqli_connect("localhost", "root", "root", "doctor");
+
+// 	$cnt = count($update);
+
+	
+// 		if($update)
+// 		{
+// 			echo "GG";
+// 			$quantity = $update;
+// 			$quantity = cleanInput($dbCon, $quantity);
+// 			$pID = $updatePID;
+
+// 			$sql = "UPDATE cart SET quantity = '$quantity' WHERE uID='$uID' AND pID='$pID'";
+// 			$query = mysqli_query($dbCon, $sql);
+// 		}
+	
+// }
 
 function removeFromCart($pID, $uID)
 {
 	$dbCon = mysqli_connect("localhost", "root", "root", "doctor");
 
 	$pID = cleanInput($dbCon, $pID);
+
+	$sql = "SELECT quantity FROM cart WHERE uID='$uID' AND pID='$pID'";
+	$query = mysqli_query($dbCon, $sql);
+	$row = mysqli_fetch_row($query);
+	$quantity = $row[0];
 	
 	$sql = "DELETE FROM cart WHERE uID='$uID' AND pID='$pID'";
+	$query = mysqli_query($dbCon, $sql);	
+
+	$sql = "UPDATE products SET stock = stock + $quantity WHERE pID='$pID'";
 	$query = mysqli_query($dbCon, $sql);
 }
 
