@@ -14,7 +14,8 @@ function insertProduct($data)
 	$name = cleanInput($dbCon, $data['name']);
 	$price = cleanInput($dbCon, $data['price']);
 	$description = cleanInput($dbCon, $data['description']);
-	$category = cleanInput($dbCon, $data['category']);
+	$category = cleanInput($dbCon, $data['category']);	
+	$stock = cleanInput($dbCon, $data['stock']);
 	$keywords = cleanInput($dbCon, $data['keywords']);
 
 
@@ -23,8 +24,8 @@ function insertProduct($data)
 	$image = base64_encode($image);
 
 
-	$sql = "INSERT INTO products (name, price, category, description, keywords, soldunits, image) 
-			VALUES ('$name', '$price', '$category', '$description', '$keywords', '0', '$image')";
+	$sql = "INSERT INTO products (name, price, category, description, keywords, stock, soldunits, image) 
+			VALUES ('$name', '$price', '$category', '$description', '$keywords', '$stock', '0', '$image')";
 	$query = mysqli_query($dbCon, $sql);
 	return $query;
 }

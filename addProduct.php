@@ -57,6 +57,7 @@ if($_POST['submit'])
 			'description' => $_POST['description'],
 			'category' => $_POST['category'],
 			'keywords' => $_POST['keywords'],
+      'stock' => $_POST['stock'],
 			'image' => $_FILES['image']['tmp_name']
 		);
 		
