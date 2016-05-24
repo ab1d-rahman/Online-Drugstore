@@ -155,7 +155,7 @@ if($_SESSION['isUser'] == true)
     <section class="login">
         <div class="titulo">Add Schedule</div>
         <form action="addSchedule.php" method="post" >
-            <input type="text" required  placeholder="Date (Format: DD-MM-YYYY)" name="date">
+            <input type="date" required  placeholder="Date" name="date">
             <input type="text" required  placeholder="Time (Format: HH:MM)" name="time"> <br>
             <input type="text" required  placeholder="Maximum Appointments" name="maxapp">        
             <button class="enviar" type="submit" value="Submit" name="submit">Add</button> 

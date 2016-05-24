@@ -1,7 +1,7 @@
 <html>
 <head>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Shopping Cart</title>
+    <title>Avaialble Doctors</title>
 
     
     <!-- <link rel="stylesheet" href="css/styles.css"> -->

@@ -164,7 +164,7 @@ if($_SESSION['isUser'] == true)
         <div class="carousel-caption">
           <h2 style="color:black; text-shadow: -1px 0 black, 0 1px black, 1px 0 black, 0 -1px black;">Need Appointment From A Doctor?</h2>
           <p style="color:black;">Find A Doctor Now!</p>
-          <p><a href="cart.php" class="btn btn-success" role="button"><span class="glyphicon glyphicon-info-sign"></span> Doctor List</a></p>
+          <p><a href="availDoctors.php" class="btn btn-success" role="button"><span class="glyphicon glyphicon-info-sign"></span> Available Doctors</a></p>
         </div>
       </div>
 
@@ -173,7 +173,7 @@ if($_SESSION['isUser'] == true)
         <div class="carousel-caption">
           <h2 style="color:black; text-shadow: -1px 0 black, 0 1px black, 1px 0 black, 0 -1px black;">Want Medicines Delivered Straight To Your Home?</h2>
           <p style="color:black;">Browse Our Products And Start Ordering Now!</p>
-          <p><a href="cart.php" class="btn btn-success" role="button"><span class="glyphicon glyphicon-list"></span> Our Products</a></p>
+          <p><a href="allProducts.php" class="btn btn-success" role="button"><span class="glyphicon glyphicon-list"></span> Our Products</a></p>
       </div> 
      
   

@@ -122,7 +122,7 @@ function addSchedule($data)
 	$apptaken = 0;
 
 	$time = $time .":00";
-    $date = substr($date, 6, 4) . substr($date, 2, 4) . substr($date, 0, 2);
+    // $date = substr($date, 6, 4) . substr($date, 2, 4) . substr($date, 0, 2);
 
 	$sql = "INSERT INTO doctorSchedule (dID, date, time, maxapp, apptaken) 
 							VALUES ('$dID', '$date', '$time', '$maxapp', '$apptaken')";

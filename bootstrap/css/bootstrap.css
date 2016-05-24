@@ -6807,7 +6807,7 @@ button.close {
     color: #b5b5b5;
 }
 
-.login form input[type=text], .login form input[type=password] {
+.login form input[type=text], .login form input[type=password], .login form input[type=date], .login form input[type=email] {
     width: 535px;
     font-size: 15px;
     padding-top: 14px;
@@ -6819,6 +6819,8 @@ button.close {
     outline: none;
     margin: 3px;
 }
+
+
 
 .login form textarea {
   width: 535px;
@@ -6925,3 +6927,13 @@ button.close {
   table#cart tfoot td .btn{display:block;}
   
 }
+
+input[type="date"]:before {
+    content: attr(placeholder) !important;
+    color: #aaa;
+    margin-right: 0.5em;
+  }
+  input[type="date"]:focus:before,
+  input[type="date"]:valid:before {
+    content: "";
+  }
