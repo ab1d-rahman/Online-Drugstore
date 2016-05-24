@@ -53,7 +53,6 @@ if($_POST['submit'])
     	{
     		$data = array(
     			'name' => $_POST['name'], 
-    			'username' => $_POST['username'],
     			'password' => $_POST['password'],
     			'email' => $_POST['email'],
     			'image' => $_FILES['image']['tmp_name']
@@ -72,7 +71,7 @@ if($_POST['submit'])
     		{
     			?>
     			<script type="text/javascript">
-    			alert("Username Already Exists!");
+    			alert("Email Already Exists!");
     			</script>
     			<?php
     		}	
@@ -183,10 +182,9 @@ if($_SESSION['isUser'] == true)
 			<div class="titulo">User Registration</div>
 				<form action="userRegister.php" method="post" enctype="multipart/form-data">
 					<input type="text" required title="Name required" placeholder="Name" name="name"> 
-			    	<input type="text" required title="Username required" placeholder="Username"  name="username">
-              <input type="password" required title="Password required" placeholder="Password"  name="password">
+                    <input type="email" required title="Email required" placeholder="Email" name="email">
+                    <input type="password" required title="Password required" placeholder="Password"  name="password">
 			        <input type="password" required title="Password required" placeholder="Retype Password"  name="repassword">
-			        <input type="email" required title="Email required" placeholder="Email" name="email">
 			        <br> <br>
 			        Image: <input type="file" name="image" required>
 			        <button class="enviar" type="submit" value="Submit" name="submit">Register</button> 

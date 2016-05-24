@@ -54,7 +54,6 @@ if($_POST['submit'])
   	{
   		$data = array(
   			'name' => $_POST['name'], 
-  			'username' => $_POST['username'],
   			'password' => $_POST['password'],
   			'email' => $_POST['email'],
   			'specialty' => $_POST['specialty'],
@@ -73,7 +72,7 @@ if($_POST['submit'])
   		{
   			?>
   			<script type="text/javascript">
-  			alert("Username Already Exists!");
+  			alert("Email Already Exists!");
   			</script>
   			<?php
   		}
@@ -182,10 +181,9 @@ if($_SESSION['isUser'] == true)
 
 		<form action="doctorRegister.php" method="post" enctype="multipart/form-data">
 			<input type="text" required title="Name required" placeholder="Name" name="name"> 
-	    	<input type="text" required title="Username required" placeholder="Username"  name="username">
+          <input type="email" required title="Email required" placeholder="Email" name="email">
 	        <input type="password" required title="Password required" placeholder="Password"  name="password">
 	        <input type="password" required title="Password required" placeholder="Retype Password"  name="repassword">
-          <input type="email" required title="Email required" placeholder="Email" name="email">
 	        <br><br> Specialty: 
 				<select style="color: black;" name="specialty">
 				  <option value="Heart">Heart</option>

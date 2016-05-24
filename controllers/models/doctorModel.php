@@ -12,7 +12,6 @@ function insertDoctor($data)
 
 
 	$name = cleanInput($dbCon, $data['name']);
-	$username = cleanInput($dbCon, $data['username']);
 	$password = cleanInput($dbCon, $data['password']);
 	$email = cleanInput($dbCon, $data['email']);
 	$specialty = cleanInput($dbCon, $data['specialty']);
@@ -26,8 +25,8 @@ function insertDoctor($data)
 	$image = base64_encode($image);
 
 
-	$sql = "INSERT INTO doctorInfo (name, username, password, email, specialty, image) 
-							VALUES ('$name', '$username', '$password', '$email', '$specialty', '$image')";
+	$sql = "INSERT INTO doctorInfo (name, email, password, specialty, image) 
+							VALUES ('$name', '$email', '$password', '$specialty', '$image')";
 	$query = mysqli_query($dbCon, $sql);
 	return $query;
 }
@@ -36,21 +35,21 @@ function authenticateDoctor($data)
 {
 	$dbCon = mysqli_connect("localhost", "root", "root", "doctor");
 	
-	$username = cleanInput($dbCon, $data['username']);
+	$email = cleanInput($dbCon, $data['email']);
 	$password = cleanInput($dbCon, $data['password']);
 
-	$sql = "SELECT username, password, dID, name FROM doctorInfo WHERE username='$username'";
+	$sql = "SELECT email, password, dID, name FROM doctorInfo WHERE email='$email'";
 	$query = mysqli_query($dbCon, $sql);
 
 	if($query)
 	{
 		$row = mysqli_fetch_row($query);
-		$DBusenrame = $row[0];
+		$DBemail = $row[0];
 		$DBpassword = $row[1];
 
-		if($username == $DBusenrame && password_verify($password, $DBpassword) == true)
+		if($email == $DBemail && password_verify($password, $DBpassword) == true)
 		{
-			$_SESSION['username'] = $username;
+			$_SESSION['username'] = "sth";
 			$_SESSION['name'] = $row[3];
 			$_SESSION['isDoc'] = true;
 			$_SESSION['isUser'] = false;			

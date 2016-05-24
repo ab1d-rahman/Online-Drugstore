@@ -29,7 +29,7 @@ if($_SESSION['username'])
 if($_POST['submit'])
 {
     $data = array(            
-            'username' => $_POST['username'],
+            'email' => $_POST['email'],
             'password' => $_POST['password']            
         );
 
@@ -45,7 +45,7 @@ if($_POST['submit'])
         ?>
 
         <script type="text/javascript">
-            alert("Invalid Username / Password!");
+            alert("Invalid Email / Password!");
         </script>
 
 
@@ -152,7 +152,7 @@ if($_SESSION['isUser'] == true)
     <section class="login">
             <div class="titulo">User Login</div>
             <form action="userLogin.php" method="post" >
-                <input type="text" required title="Username required" placeholder="Username"  name="username">
+                <input type="email" required title="Email required" placeholder="Email" name="email">
                 <input type="password" required title="Password required" placeholder="Password"  name="password">
                 <div class="olvido">
                     <div class="col"><a href="#" title="Recuperar Password">Forgot Password?</a></div>
