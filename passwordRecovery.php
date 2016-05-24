@@ -59,8 +59,10 @@ if($_POST['submit'])
 
     else if($_POST['type'] == "user")
     {
-        if($userController->recoverUsrPassword($email))
+
+        if($userController->recoverUserPassword($email))
         {
+
             ?>
 
             <script type="text/javascript">
@@ -70,6 +72,7 @@ if($_POST['submit'])
 
             <?php 
         }
+
         else
         {
             ?>

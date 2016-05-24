@@ -216,6 +216,7 @@ function makeAppointment($sID, $uID)
 function recoverUsrPassword($email)
 {
 	$dbCon = mysqli_connect("localhost", "root", "root", "doctor");
+	echo "here";
 
 	$email = cleanInput($dbCon, $email);
 

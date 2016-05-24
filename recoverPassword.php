@@ -77,7 +77,7 @@ if($_POST['submit'])
 
     else if($_POST['type'] == "user")
     {
-        $ret = $userController->changeUsrPassword($data);
+        $ret = $userController->changeUserPassword($data);
 
         if($ret == "Success")
         {
