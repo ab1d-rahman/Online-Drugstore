@@ -242,12 +242,12 @@ if($_SESSION['isUser'] == true)
 
     <div id="checkout" class="collapse">
 
-    <section class="login">
+    <section class="login" style="margin-top: 150px">
         <div class="titulo">Checkout</div>
         <form action="cart.php" method="post" enctype="multipart/form-data">            
             <input type="text" required title="Phone"  placeholder="Phone Number"  name="phone">
             <textarea name="address" cols="29" rows="5" placeholder="Delivery Address"></textarea>
-            <input type="text" name="method" value="Cash On Delivery" readonly><br>
+            <input type="text" name="method" value="Payment Method: Cash On Delivery" readonly><br>
             
             <button class="enviar" type="submit" value="Submit" name="checkout">Place Order</button> 
         </form>

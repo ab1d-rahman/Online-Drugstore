@@ -6762,7 +6762,7 @@ button.close {
 
 
 .login {
-    width: 300px;
+    width: 550px;
     height: auto;
     overflow: hidden;
     background: #1e1e1e;
@@ -6772,7 +6772,7 @@ button.close {
 }
 
 .login .titulo {
-    width: 298px;
+    width: 548px;
     height: 44px;
     padding-top: 13px;
     padding-bottom: 13px;
@@ -6788,8 +6788,18 @@ button.close {
     font-family: Arial;
 }
 
-.login form {
+/*.login form {
     width: 240px;
+    height: auto;
+    overflow: hidden;
+    margin-left: auto;
+    margin-right: auto;
+    color: #b5b5b5;
+}*/
+
+
+.login form {
+    width: 540px;
     height: auto;
     overflow: hidden;
     margin-left: auto;
@@ -6798,7 +6808,7 @@ button.close {
 }
 
 .login form input[type=text], .login form input[type=password] {
-    width: 235px;
+    width: 535px;
     font-size: 15px;
     padding-top: 14px;
     padding-bottom: 14px;
@@ -6811,7 +6821,7 @@ button.close {
 }
 
 .login form textarea {
-  width: 235px;
+  width: 535px;
     font-size: 15px;
     padding-top: 14px;
     padding-bottom: 14px;
@@ -6851,10 +6861,11 @@ button.close {
     font-family: Arial;
     margin-top: 10px;
     margin-bottom: 10px;
+    margin-left: 150px;
 }
 
 .login .olvido {
-    width: 240px;
+    width: 535px;
     height: auto;
     overflow: hidden;
     padding-top: 25px;
