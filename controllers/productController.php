@@ -78,6 +78,11 @@ class productController
 		return productDetails($pID);
 
 	}
+
+	public function checkoutCartItems($data)
+	{
+		return checkoutItems($data);
+	}
 }
 
 

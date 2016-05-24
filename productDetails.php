@@ -117,7 +117,7 @@ if(isset($_GET['addToCart']))
         if($_SESSION['username'])
         {
         ?>
-        <li class="active"><a href=<?php if($_SESSION['isUser'] == true) echo "userProfile.php"; else if($_SESSION['isDoc'] == true) echo "doctorProfile.php"; else echo "adminActions.php"; ?>><span class="glyphicon glyphicon-user"></span> <?php echo $_SESSION['name']; ?></a></li>
+        <li><a href=<?php if($_SESSION['isUser'] == true) echo "userProfile.php"; else if($_SESSION['isDoc'] == true) echo "doctorProfile.php"; else echo "adminActions.php"; ?>><span class="glyphicon glyphicon-user"></span> <?php echo $_SESSION['name']; ?></a></li>
 
         <li><a href="logout.php"><span class="glyphicon glyphicon-log-out"></span> Logout</a></li>
 
@@ -167,7 +167,10 @@ if(isset($_GET['addToCart']))
         <div class="row">
             <div class="col-md-6 col-sm-6 col-xs-6">
                 <img style="height: 300px; width: 300px; margin: 50 0 10 70" src=<?php echo "\"data:image;base64," . $data[4] . "\""; ?>>
-                <p style="margin: 10 0 50 70;"><a href=<?php echo "\"productDetails.php?pID=".$pID."&addToCart\""?> class="btn btn-primary" role="button"><span class="glyphicon glyphicon-shopping-cart" ></span> Add To Cart</a></p>
+                <?php 
+                if($data[5]) echo "<p style=\"margin: 10 0 50 70;\"><a href=\"productDetails.php?pID=".$pID."&addToCart\" class=\"btn btn-primary\" role=\"button\"><span class=\"glyphicon glyphicon-shopping-cart\" ></span> Add To Cart</a></p>";
+                else echo "<p style=\"margin: 10 0 50 70;\"><a href=\"\" class=\"btn btn-danger disabled\" role=\"button\"><span class=\"glyphicon glyphicon-shopping-cart\" ></span> Out Of Stock</a></p>";
+                ?>
             </div>
 
             <div class="col-md-6 col-sm-6 col-xs-7">

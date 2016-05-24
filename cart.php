@@ -23,13 +23,6 @@ include_once "controllers/productController.php";
 
 if($_SESSION['isUser'] == false)
 {
-    ?>
-    <script type="text/javascript">
-        alert("You need to be logged in as a user to view this page.");
-    </script>
-
-    <?php 
-
     header("Location: index.php");
 }
 
@@ -38,6 +31,30 @@ if(isset($_POST['submit']))
     $update = $_POST['update'];  
     $updatePID = $_POST['updatePID']; 
     $ret = $productController->updateTheCart($_SESSION['uID'], $update, $updatePID);
+}
+
+if(isset($_POST['checkout']))
+{
+    $data[0] = $_SESSION['uID'];
+    $data[1] = $_POST['phone'];
+    $data[2] = $_POST['address'];
+    $ret = $productController->checkoutCartItems($data);
+    if($ret)
+    {
+        ?>
+        <script type="text/javascript">
+        alert("Success");
+        </script>
+        <?php
+    }
+    else 
+    {
+        ?>
+        <script type="text/javascript">
+        alert("Error");
+        </script>
+        <?php
+    }
 }
 
 if(isset($_GET['remove']))
@@ -189,8 +206,7 @@ if($_SESSION['isUser'] == true)
                     echo "</td>
                     <td data-th=\"Subtotal\" class=\"text-center\">". $d[1]*$d[2]." TK</td>
                     <td class=\"actions\" data-th=\"\">
-
-                        <button type=\"submit\" value=\"submit\" name=\"submit\" class=\"btn btn-info btn-sm\"><span class=\"glyphicon glyphicon-refresh\"></span></button>
+                        
                         <a href=\"cart.php?remove&pID=". $d[3] ."\" class=\"btn btn-danger btn-sm\" role=\"button\"><span class=\"glyphicon glyphicon-trash\"></span></a>
                                                    
                     </td>
@@ -204,19 +220,41 @@ if($_SESSION['isUser'] == true)
             </tbody>
             <tfoot>                     
                 <tr>
-                    <td></td>
+                 <?php 
+                    if($totalPriceData['items'] > 0) echo"
+                    <td><button type=\"submit\" value=\"submit\" name=\"submit\" class=\"btn btn-info\"><span class=\"glyphicon glyphicon-refresh\"></span>Update Cart</button></td>";
+                    else echo"
+                    <td><button type=\"button\" class=\"btn btn-info disabled\"><span class=\"glyphicon glyphicon-refresh\"></span>Update Cart</button></td>";
+                ?>
+
                     <td colspan="2" class=""></td>
                     <td class="text-center"><strong>Total: <?php echo $totalPriceData['price'] . " TK"; ?></strong></td>
                     <?php 
                     if($totalPriceData['items'] > 0) 
-                    echo "<td><a href=\"#\" class=\"btn btn-success btn-block\"><span class=\"glyphicon glyphicon-check\"></span> Checkout</i></a></td>";
+                    echo "<td><button type=\"button\" class=\"btn btn-success\" data-toggle=\"collapse\" data-target=\"#checkout\"><span class=\"glyphicon glyphicon-check\"></span> Checkout</i></button></td>";
                     else
-                    echo "<td><a href=\"#\" class=\"btn btn-success btn-block disabled\"><span class=\"glyphicon glyphicon-check\"></span> Checkout</i></a></td>";
+                    echo "<td><button type=\"button\" class=\"btn btn-success disabled\" ><span class=\"glyphicon glyphicon-check\"></span> Checkout</i></button></td>";
                     ?>
                 </tr>
             </tfoot>
         </table>
-                </form>
+    </form>
+
+    <div id="checkout" class="collapse">
+
+    <section class="login">
+        <div class="titulo">Checkout</div>
+        <form action="cart.php" method="post" enctype="multipart/form-data">            
+            <input type="text" required title="Phone"  placeholder="Phone Number"  name="phone">
+            <textarea name="address" cols="29" rows="5" placeholder="Delivery Address"></textarea>
+            <input type="text" name="method" value="Cash On Delivery" readonly><br>
+            
+            <button class="enviar" type="submit" value="Submit" name="checkout">Place Order</button> 
+        </form>
+    </section>
+
+
+    </div>
 </div>
 
 
