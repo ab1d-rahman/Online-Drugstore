@@ -77,9 +77,9 @@ function doctorProfile($dID)
 
 		$data = array(            
             'name' => $row[1],
-            'email' => $row[4],
-            'specialty' => $row[5],
-            'image' => $row[6]        
+            'email' => $row[2],
+            'specialty' => $row[4],
+            'image' => $row[5]        
         );
 
         return $data;

@@ -75,8 +75,8 @@ function userProfile($uID)
 
 		$data = array(            
             'name' => $row[1],
-            'email' => $row[4],
-            'image' => $row[5]        
+            'email' => $row[2],
+            'image' => $row[4]        
         );
 
         return $data;
