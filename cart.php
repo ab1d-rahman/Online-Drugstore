@@ -17,7 +17,7 @@
 
 error_reporting(~E_NOTICE);
 session_start();
-session_regenerate_id();
+session_regenerate_id(true);
 
 include_once "controllers/productController.php";
 
@@ -51,7 +51,7 @@ if(isset($_POST['checkout']))
     {
         ?>
         <script type="text/javascript">
-        alert("Error");
+        alert("Error: Some of your ordered products may be currently out of stock.");
         </script>
         <?php
     }

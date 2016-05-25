@@ -14,7 +14,7 @@
 <?php 
 
 session_start();
-session_regenerate_id();
+session_regenerate_id(true);
 
 // Unsetting all of the session variables.
 $_SESSION = array();
