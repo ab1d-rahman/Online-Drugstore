@@ -76,7 +76,7 @@ if($_SESSION['isUser'] == true)
         if($_SESSION['username'])
         {
         ?>
-        <li class="active"><a href=<?php if($_SESSION['isUser'] == true) echo "userProfile.php"; else if($_SESSION['isDoc'] == true) echo "doctorProfile.php"; else echo "adminActions.php"; ?>><span class="glyphicon glyphicon-user"></span> <?php echo $_SESSION['name']; ?></a></li>
+        <li><a href=<?php if($_SESSION['isUser'] == true) echo "userProfile.php"; else if($_SESSION['isDoc'] == true) echo "doctorProfile.php"; else echo "adminActions.php"; ?>><span class="glyphicon glyphicon-user"></span> <?php echo $_SESSION['name']; ?></a></li>
 
         <li><a href="logout.php"><span class="glyphicon glyphicon-log-out"></span> Logout</a></li>
 
@@ -126,7 +126,7 @@ if($_SESSION['isDoc'] == true)
 
 	if($_GET['sID'])		// Doctor Pressed Cancel Appointment
 	{
-		$doctorController->cancelDoctorSchedule($_GET['sID']);
+		$doctorController->cancelDoctorSchedule($_GET['sID'], $_SESSION['dID']);
 	}
 
 	if((isset($_GET['dID']) && $dID == $_GET['dID']) || (empty($_GET['dID']) && $_SESSION['isDoc'] == true))   // Doctor visiting his own profile

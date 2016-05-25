@@ -120,55 +120,64 @@ function addSchedule($data)
 	$maxapp = cleanInput($dbCon, $data['maxapp']);   
 	$apptaken = 0;
 
-	$time = $time .":00";
-    // $date = substr($date, 6, 4) . substr($date, 2, 4) . substr($date, 0, 2);
+	if($maxapp > 0)
+	{
 
-	$sql = "INSERT INTO doctorSchedule (dID, date, time, maxapp, apptaken) 
-							VALUES ('$dID', '$date', '$time', '$maxapp', '$apptaken')";
+		$time = $time .":00";
+	    $date = substr($date, 6, 4) . substr($date, 2, 4) . substr($date, 0, 2);
 
-	$query = mysqli_query($dbCon, $sql);
+		$sql = "INSERT INTO doctorSchedule (dID, date, time, maxapp, apptaken) 
+								VALUES ('$dID', '$date', '$time', '$maxapp', '$apptaken')";
 
-	return $query;
+		$query = mysqli_query($dbCon, $sql);
+
+		return $query;
+	}
+
+	return null;
 }
 
 
-function deleteSchedule($sID)
+function deleteSchedule($sID, $dID)
 {
 	$dbCon = mysqli_connect("localhost", "root", "root", "doctor");
 
-	$sql = "SELECT date, time, dID FROM doctorSchedule WHERE sID='$sID'";
+	$sql = "SELECT date, time, dID FROM doctorSchedule WHERE sID='$sID' AND dID='$dID'";
     $query = mysqli_query($dbCon, $sql);
-    $row = mysqli_fetch_row($query);
-
-    $date = $row[0];
-    $time = $row[1];
-    $dID = $row[2];
-
-    $sql = "SELECT name FROM doctorInfo WHERE dID='$dID'";
-    $query = mysqli_query($dbCon, $sql);
-    $row = mysqli_fetch_row($query);
-    $doctorName = $row[0];
-
-	$sql = "SELECT * FROM appointments WHERE sID='$sID'";
-    $query = mysqli_query($dbCon, $sql);
-    while($row = mysqli_fetch_assoc($query))
+    if(mysqli_num_rows($query))
     {
-    	$uID = $row['uID'];
+	    $row = mysqli_fetch_row($query);
 
-    	$_sql = "SELECT email FROM userInfo WHERE uID='$uID'";
-    	$_query = mysqli_query($dbCon, $_sql);
-    	$_row = mysqli_fetch_row($_query);
 
-    	$userEmail = $_row[0];
+	    $date = $row[0];
+	    $time = $row[1];
 
-    	sendMail($userEmail, "Doctor Schedule Cancelled",
-		"Your appointment with $doctorName on $date at $time has been cancelled by the doctor.",
-		"From: webmaster@example.com" . "\r\n" .
-		"CC: somebodyelse@example.com");
-    }
+	    $sql = "SELECT name FROM doctorInfo WHERE dID='$dID'";
+	    $query = mysqli_query($dbCon, $sql);
+	    $row = mysqli_fetch_row($query);
+	    $doctorName = $row[0];
 
-	$sql = "DELETE FROM doctorSchedule WHERE sID='$sID'";
-	$query = mysqli_query($dbCon, $sql);
+		$sql = "SELECT * FROM appointments WHERE sID='$sID'";
+	    $query = mysqli_query($dbCon, $sql);
+	    while($row = mysqli_fetch_assoc($query))
+	    {
+	    	$uID = $row['uID'];
+
+	    	$_sql = "SELECT email FROM userInfo WHERE uID='$uID'";
+	    	$_query = mysqli_query($dbCon, $_sql);
+	    	$_row = mysqli_fetch_row($_query);
+
+	    	$userEmail = $_row[0];
+
+	    	sendMail($userEmail, "Doctor Schedule Cancelled",
+			"Your appointment with $doctorName on $date at $time has been cancelled by the doctor.",
+			"From: webmaster@example.com" . "\r\n" .
+			"CC: somebodyelse@example.com");
+	    }
+
+		$sql = "DELETE FROM doctorSchedule WHERE sID='$sID'";
+		$query = mysqli_query($dbCon, $sql);
+	}
 }
 	
 

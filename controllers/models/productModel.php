@@ -56,7 +56,28 @@ function latestProducts()
 {
 	$dbCon = mysqli_connect("localhost", "root", "root", "doctor");
 
-	$sql = "SELECT * FROM products ORDER BY pID desc LIMIT 8";
+	$sql = "SELECT * FROM products ORDER BY pID desc LIMIT 9";
+	$query = mysqli_query($dbCon, $sql);
+	$r = 0;
+
+	while($row = mysqli_fetch_assoc($query)) 
+	{
+		$data[$r][0] = $row['name'];
+		$data[$r][1] = $row['price'];
+		$data[$r][2] = $row['image'];
+		$data[$r][3] = $row['pID'];
+		$data[$r][4] = $row['stock'];
+		$r++;
+	}
+
+	return $data;
+}
+
+function mostPopularProducts()
+{
+	$dbCon = mysqli_connect("localhost", "root", "root", "doctor");
+
+	$sql = "SELECT * FROM products ORDER BY soldunits desc, name asc LIMIT 9";
 	$query = mysqli_query($dbCon, $sql);
 	$r = 0;
 
@@ -445,7 +466,7 @@ function checkoutItems($data)
 			$sql = "INSERT INTO orderedItems (oID, pID, quantity) VALUES ('$oID', '$pID', '$quantity')";
 			$query = mysqli_query($dbCon, $sql);
 
-			$sql = "UPDATE products SET stock = stock - $quantity WHERE pID='$pID'";
+			$sql = "UPDATE products SET stock = stock - '$quantity', soldunits = soldunits + '$quantity' WHERE pID='$pID'";
 			$query = mysqli_query($dbCon, $sql);
 
 			$sql = "DELETE FROM cart WHERE uID='$uID'";

@@ -41,9 +41,9 @@ class doctorController
 		return "Error";
 	}
 
-	public function cancelDoctorSchedule($sID)
+	public function cancelDoctorSchedule($sID, $dID)
 	{
-		deleteSchedule($sID);
+		deleteSchedule($sID, $dID);
 	}
 
 	public function getAllDoctors()

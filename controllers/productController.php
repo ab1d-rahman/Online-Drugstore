@@ -83,6 +83,11 @@ class productController
 	{
 		return checkoutItems($data);
 	}
+
+	public function getMostPopularProducts()
+	{
+		return mostPopularProducts();
+	}
 }
 
 

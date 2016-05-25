@@ -250,6 +250,47 @@ if($_SESSION['isUser'] == true)
             </div>
         </div>
     </div>  
+
+    <div class="row" style="margin-top: 70px;">
+      <div class="col-lg-9 col-md-9 col-sm-9 col-xs-9">
+            <div class="panel panel-default">
+                <div class="panel-body">Most Popular Products</div>
+            </div>
+
+            <?php 
+
+            $data = $productController->getMostPopularProducts();
+
+            foreach ($data as $d) 
+            {
+                echo "<div class=\"col-lg-3 col-md-3 col-sm-3 col-xs-3\" style=\"height: 380px; width: 250px; margin: 10px 10px 10px 10px;\">
+                <div class=\"thumbnail\" style=\"height: 380px; width: 250px;\">
+                    <img src=\"data:image;base64," . $d[2] . "\" style=\"height: 180px; width: 180px;\" alt=\"...\">
+                    <div class=\"caption\">
+                        <p style=\"text-align: center; font-weight: bold;\">" . $d[0] . "</p>
+                        <p style=\"text-align: center;\">";
+                        if($_SESSION['isAdmin'] == true)
+                        {
+                            echo "Product ID: " . $d[3] . "<br>";
+                        }
+
+                        echo "Price: ". $d[1]." TK <br>
+                        <a href=\"productDetails.php?pID=".$d[3]."\"> Details </a> <br>";
+                        if($d[4]) echo "</p><p style=\"text-align: center;\"><a href=\"index.php?addToCart&pID=" . $d[3] . "\" class=\"btn btn-primary\" role=\"button\"><span class=\"glyphicon glyphicon-shopping-cart\" ></span> Add To Cart</a></p>";
+
+                        else echo "</p><p style=\"text-align: center;\"><a href=\"\" class=\"btn btn-danger disabled\" role=\"button\"><span class=\"glyphicon glyphicon-shopping-cart\" ></span> Out Of Stock</a></p>";
+
+                    echo"    
+                    </div>
+                </div>
+            </div>";
+
+            }
+
+            ?>      
+            
+        </div>
+    </div>
 </div>
 
 

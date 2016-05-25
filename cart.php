@@ -43,7 +43,7 @@ if(isset($_POST['checkout']))
     {
         ?>
         <script type="text/javascript">
-        alert("Success");
+        alert("Order Successfully Placed");
         </script>
         <?php
     }

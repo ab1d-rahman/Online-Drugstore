@@ -90,7 +90,7 @@ if($_SESSION['isUser'] == true)
     <!-- Collect the nav links, forms, and other content for toggling -->
     <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
       <ul class="nav navbar-nav navbar-left">
-        <li class="active"><a href="index.php"><span class="glyphicon glyphicon-home"></span> Home</a></li>
+        <li><a href="index.php"><span class="glyphicon glyphicon-home"></span> Home</a></li>
         <li><a href="allProducts.php"><span class="glyphicon glyphicon-list"></span> All Products</a></li>
         <li class="dropdown">
           <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">
